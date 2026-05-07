@@ -1,0 +1,156 @@
+---
+/**
+ * TestimonialFeature Section - Combined feature showcase with testimonial
+ *
+ * Refactored to use TestimonialFeatureSection type from @/types/Page
+ * Handles Strapi media transformation for images
+ */
+import CTAButton from "../ui/CTAButton.astro";
+import { getStrapiMedia } from "@/lib/api";
+import type { TestimonialFeatureSection as TestimonialFeatureSectionProps } from "@/types/Page";
+
+// Make props optional for backwards compatibility with old pages
+type Props = Partial<TestimonialFeatureSectionProps>;
+
+const {
+  position = "right",
+  title = "",
+  description = "",
+  features = [],
+  image = null,
+  imageAlt = "Testimonial",
+  testimonial = { quote: "", author: "", role: "" },
+  ctaText,
+  ctaHref,
+  footerText,
+} = Astro.props;
+
+// Transform Strapi media to URL
+const imageUrl = image ? getStrapiMedia(image.url) : null;
+
+// Determine order classes based on position
+const imageOrderClass = position === "left" ? "lg:order-1" : "lg:order-2";
+const contentOrderClass = position === "left" ? "lg:order-2" : "lg:order-1";
+
+// Handle testimonial fields - support both old format (quote/author) and new Strapi format (content/name)
+const testimonialContent =
+  (testimonial as any)?.content || testimonial?.quote || "";
+const testimonialAuthor =
+  (testimonial as any)?.name || testimonial?.author || "";
+const testimonialRole = testimonial?.role || "";
+const testimonialCompany = (testimonial as any)?.company || "";
+---
+
+<section class="py-16 lg:py-24 bg-gradient-to-b from-white to-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Content Side -->
+      <div class={`${contentOrderClass}`}>
+        <div class="space-y-8">
+          <!-- Title & Description -->
+          <div class="space-y-3">
+            <h2
+              class="text-3xl md:text-4xl font-medium text-brand italic leading-tight"
+            >
+              {title}
+            </h2>
+            <p class="text-base md:text-lg text-gray-600 leading-relaxed">
+              {description}
+            </p>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+            {
+              features.map((feature, index) => {
+                // Cycle through icon colors
+                const iconColors = [
+                  "text-purple-600",
+                  "text-blue-500",
+                  "text-orange-500",
+                  "text-pink-500",
+                ];
+                const iconColorClass = iconColors[index % iconColors.length];
+
+                return (
+                  <div class="flex gap-3 items-start">
+                    <div class={`flex-shrink-0 text-3xl ${iconColorClass}`}>
+                      {feature.icon}
+                    </div>
+                    <div class="space-y-1">
+                      <h3 class="font-semibold text-gray-900 text-base leading-tight">
+                        {feature.title}
+                      </h3>
+                      <p class="text-xs text-gray-600 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+
+          <!-- Optional CTA Button -->
+          {
+            ctaText && (
+              <div class="pt-2">
+                <a
+                  href={ctaHref || "#"}
+                  class="inline-block px-6 py-3 border-2 border-blue-500 text-blue-500 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                >
+                  {ctaText}
+                </a>
+              </div>
+            )
+          }
+
+          <!-- Optional Footer Text -->
+          {
+            footerText && (
+              <p class="text-sm text-gray-600 italic pt-2">{footerText}</p>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Image Side with Testimonial -->
+      <div class={`${imageOrderClass}`}>
+        <div class="flex flex-col items-center">
+          <!-- Image Card with rotation -->
+          {
+            imageUrl && (
+              <div class="-rotate-3 rounded-lg shadow-2xl p-5 pb-8 bg-white max-w-60 md:max-w-80">
+                <img
+                  src={imageUrl}
+                  alt={imageAlt}
+                  class="w-full rounded object-cover"
+                  loading="eager"
+                />
+              </div>
+            )
+          }
+
+          <!-- Testimonial Card with opposite rotation and overlap -->
+          <div
+            class="rotate-3 rounded-lg shadow-2xl p-5 -mt-5 bg-white text-center max-w-lg"
+          >
+            <!-- Quote Text -->
+            <p class="text-lg mb-4 text-gray-700">
+              {testimonialContent}
+            </p>
+
+            <!-- Author Info -->
+            <p class="text-xl text-primary-600 font-bold">
+              {testimonialAuthor}
+            </p>
+            <p class="text-secondary-600">
+              {testimonialRole}
+              {testimonialCompany && ` • ${testimonialCompany}`}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

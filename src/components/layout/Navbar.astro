@@ -1,0 +1,381 @@
+---
+/**
+ * Navbar - Componente de navegación principal
+ *
+ * Refactorizado para usar Settings dinámicos desde Strapi con fallback completo.
+ * Mantiene toda la lógica JavaScript y estilos originales.
+ */
+
+import CTAButton from "../ui/CTAButton.astro";
+import { getSettings } from "../../services/settings";
+import { getStrapiMedia } from "../../lib/api";
+import type { NavItem } from "../../types/Settings";
+
+// Obtener settings dinámicos desde Strapi
+const settings = await getSettings();
+
+// Fallback completo: usar configuración hardcodeada si settings es null
+const navItems: NavItem[] = settings?.navbar.items || [
+  { id: 1, label: "Inicio", href: "/" },
+  {
+    id: 2,
+    label: "Casos de Uso",
+    href: "#",
+    children: [
+      { id: 21, label: "Academia de Danzas", href: "/danzas/" },
+      { id: 22, label: "Artes Escénicas", href: "/artes-escenicas/" },
+      { id: 23, label: "Artes Marciales", href: "/artes-marciales/" },
+      { id: 24, label: "Artes Plásticas", href: "/artes-plasticas/" },
+      { id: 25, label: "Pre-escolar", href: "/pre-escolar/" },
+      { id: 26, label: "Academia Deportiva", href: "/deportiva/" },
+      { id: 27, label: "Academia de Música", href: "/musica/" },
+    ],
+  },
+  { id: 3, label: "Precios", href: "/#pricing" },
+  { id: 4, label: "Contacto", href: "/#contact" },
+];
+
+// Logo dinámico con fallback
+const logoUrl = settings?.navbar.logo
+  ? getStrapiMedia(settings.navbar.logo.url)
+  : "/AKDEMIApp-Logo.png";
+const logoAlt = settings?.navbar.logo?.alternativeText || "AkdemiApp Logo";
+
+// CTA Button dinámico con fallback
+const ctaButton = settings?.navbar.ctaButton || {
+  id: 1,
+  text: "Prueba Gratis 14 Días",
+  link: "/#contact",
+  variant: "primary" as const,
+};
+---
+
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  transition:persist
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="flex items-center space-x-3 transition-transform hover:scale-105"
+      >
+        <img src={logoUrl} alt={logoAlt} class="w-10 h-10 object-contain" />
+        <span class="text-xl font-bold text-gray-900">
+          AKDEMI<span class="text-brand">App</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden xl:flex items-center space-x-8">
+        {
+          navItems.map((item) => (
+            <div class="relative group">
+              {item.children && item.children.length > 0 ? (
+                <>
+                  <button
+                    class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 flex items-center gap-1"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    {item.label}
+                    <svg
+                      class="w-4 h-4 transition-transform group-hover:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div class="absolute top-full left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
+                    <div class="bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+                      {item.children.map((subItem) => (
+                        <a
+                          href={subItem.href}
+                          class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                        >
+                          {subItem.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <a
+                  href={item.href}
+                  class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
+                >
+                  {item.label}
+                </a>
+              )}
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- CTA Button & Mobile Menu -->
+      <div class="flex items-center gap-4">
+        <div class="hidden sm:block">
+          <CTAButton
+            variant="navbar"
+            href={ctaButton.link}
+            label={ctaButton.text}
+          />
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-button"
+          class="xl:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          aria-expanded="false"
+          aria-label="Abrir menú"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              class="menu-icon"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+            <path
+              class="close-icon hidden"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div
+    id="mobile-menu-overlay"
+    class="fixed inset-0 bg-black/50 z-40 hidden xl:hidden transition-opacity duration-300"
+  >
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="xl:hidden hidden bg-white border-t border-gray-100 shadow-lg transition-transform duration-300 relative z-50"
+  >
+    <div class="px-4 py-4 space-y-3">
+      {
+        navItems.map((item) => (
+          <div>
+            {item.children && item.children.length > 0 ? (
+              <>
+                <button
+                  class="mobile-dropdown-button w-full text-left text-gray-700 font-medium py-2 flex items-center justify-between"
+                  data-dropdown-id={item.id}
+                  aria-expanded="false"
+                  aria-controls={`mobile-dropdown-${item.id}`}
+                >
+                  {item.label}
+                  <svg
+                    class="w-4 h-4 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id={`mobile-dropdown-${item.id}`}
+                  class="hidden pl-4 space-y-2 mt-2"
+                >
+                  {item.children.map((subItem) => (
+                    <a
+                      href={subItem.href}
+                      class="mobile-nav-link block py-2 text-gray-600 hover:text-primary-600 transition-colors"
+                    >
+                      {subItem.label}
+                    </a>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <a
+                href={item.href}
+                class="mobile-nav-link block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
+              >
+                {item.label}
+              </a>
+            )}
+          </div>
+        ))
+      }
+      <div class="block w-full">
+        <CTAButton
+          variant="navbar"
+          class="w-full text-center"
+          href={ctaButton.link}
+          label={ctaButton.text}
+        />
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Navbar scroll effect
+  function handleScroll() {
+    const navbar = document.getElementById("navbar");
+    if (!navbar) return;
+
+    if (window.scrollY > 10) {
+      navbar.classList.add("bg-white/90", "backdrop-blur-md", "shadow-md");
+    } else {
+      navbar.classList.remove("bg-white/90", "backdrop-blur-md", "shadow-md");
+    }
+  }
+
+  // Mobile menu state management
+  let mobileMenuOpen = false;
+
+  function toggleMobileMenu() {
+    const button = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    const overlay = document.getElementById("mobile-menu-overlay");
+    const menuIcon = button?.querySelector(".menu-icon");
+    const closeIcon = button?.querySelector(".close-icon");
+
+    if (!button || !menu || !overlay) return;
+
+    mobileMenuOpen = !mobileMenuOpen;
+
+    if (mobileMenuOpen) {
+      // Open menu
+      menu.classList.remove("hidden");
+      overlay.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+      button.setAttribute("aria-expanded", "true");
+      button.setAttribute("aria-label", "Cerrar menú");
+      document.body.style.overflow = "hidden";
+    } else {
+      // Close menu
+      menu.classList.add("hidden");
+      overlay.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-label", "Abrir menú");
+      document.body.style.overflow = "";
+    }
+  }
+
+  function closeMobileMenu() {
+    if (mobileMenuOpen) {
+      toggleMobileMenu();
+    }
+  }
+
+  // Mobile menu toggle
+  function setupMobileMenu() {
+    const button = document.getElementById("mobile-menu-button");
+    const overlay = document.getElementById("mobile-menu-overlay");
+
+    if (!button || !overlay) return;
+
+    // Remove old listeners by cloning and replacing elements
+    const newButton = button.cloneNode(true) as HTMLElement;
+    const newOverlay = overlay.cloneNode(true) as HTMLElement;
+    button.parentNode?.replaceChild(newButton, button);
+    overlay.parentNode?.replaceChild(newOverlay, overlay);
+
+    // Toggle menu on button click
+    newButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+
+    // Close menu when clicking overlay
+    newOverlay.addEventListener("click", () => {
+      closeMobileMenu();
+    });
+
+    // Close menu when clicking navigation links
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        setTimeout(() => closeMobileMenu(), 100);
+      });
+    });
+
+    // Mobile dropdown toggles
+    document.querySelectorAll(".mobile-dropdown-button").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const button = e.currentTarget as HTMLElement;
+        const dropdownId = button.getAttribute("data-dropdown-id");
+        const dropdown = document.getElementById(
+          `mobile-dropdown-${dropdownId}`
+        );
+        const icon = button.querySelector("svg");
+        const isHidden = dropdown?.classList.contains("hidden");
+
+        // Close all other dropdowns
+        document.querySelectorAll("[id^='mobile-dropdown-']").forEach((dd) => {
+          if (dd.id !== `mobile-dropdown-${dropdownId}`) {
+            dd.classList.add("hidden");
+            const otherButton = document.querySelector(
+              `[data-dropdown-id="${dd.id.replace("mobile-dropdown-", "")}"]`
+            );
+            otherButton?.setAttribute("aria-expanded", "false");
+            otherButton?.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current dropdown
+        dropdown?.classList.toggle("hidden");
+        icon?.classList.toggle("rotate-180");
+        button?.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      });
+    });
+  }
+
+  // Handle ESC key globally
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === "Escape" && mobileMenuOpen) {
+      closeMobileMenu();
+    }
+  }
+
+  // Reset menu state before navigation
+  document.addEventListener("astro:before-preparation", () => {
+    closeMobileMenu();
+  });
+
+  // Initialize on page load
+  document.addEventListener("astro:page-load", () => {
+    handleScroll();
+    setupMobileMenu();
+    window.addEventListener("scroll", handleScroll);
+
+    // Remove old keydown listener and add new one
+    document.removeEventListener("keydown", handleKeydown);
+    document.addEventListener("keydown", handleKeydown);
+  });
+</script>

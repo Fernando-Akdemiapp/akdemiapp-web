@@ -1,0 +1,182 @@
+---
+/**
+ * Dynamic Catch-All Route
+ *
+ * This route handles all dynamic pages created in Strapi CMS.
+ * It uses Astro's Static Site Generation (SSG) to pre-render
+ * all pages at build time.
+ *
+ * Flow:
+ * 1. getStaticPaths() fetches all pages from Strapi at build time
+ * 2. Generates a static route for each page based on its slug
+ * 3. Each page is rendered with its sections and SEO metadata
+ * 4. DynamicPageRenderer handles the section-to-component mapping
+ *
+ * Features:
+ * - Build-time page generation
+ * - Full SEO support (meta tags, Open Graph, structured data)
+ * - Dynamic section rendering
+ * - 404 handling for non-existent pages
+ *
+ * @example Strapi page with slug "academia-musica" becomes:
+ * - URL: /academia-musica
+ * - Rendered with all sections from the page's sections field
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/layout/Navbar.astro';
+import Footer from '@/components/layout/Footer.astro';
+import DynamicPageRenderer from '@/components/DynamicPageRenderer.astro';
+import { getPages } from '@/services';
+import type { Page } from '@/types';
+
+/**
+ * Generate static paths at build time
+ *
+ * Fetches all active pages from Strapi and creates a static
+ * route for each one. This function runs during the build process.
+ *
+ * @returns Array of page paths with their data
+ */
+export async function getStaticPaths() {
+  try {
+    // Fetch all active pages from Strapi
+    const pages = await getPages();
+
+    // Handle case where no pages are returned
+    if (!pages || pages.length === 0) {
+      console.warn('[...slug].astro: No pages returned from getPages()');
+      return [];
+    }
+
+    console.info(`[...slug].astro: Generating ${pages.length} static page(s)`);
+
+    // Map each page to a static path
+    return pages.map((page) => {
+      // Log page generation for debugging
+      console.info(`  → Generating page: /${page.slug} (${page.title})`);
+
+      return {
+        params: {
+          // The slug becomes the URL path
+          // Note: Astro's [...slug] captures the entire path
+          slug: page.slug,
+        },
+        props: {
+          // Pass the entire page object as props
+          page,
+        },
+      };
+    });
+  } catch (error) {
+    console.error('[...slug].astro: Error in getStaticPaths:', error);
+    // Return empty array to prevent build failure
+    // Pages will show 404 instead
+    return [];
+  }
+}
+
+// Extract page from props (provided by getStaticPaths)
+const { page } = Astro.props as { page: Page };
+
+// Handle missing page (should not happen in production)
+if (!page) {
+  console.error('[...slug].astro: Page prop is missing');
+  return Astro.redirect('/404');
+}
+
+// Destructure page data for easier access
+const { title, slug, sections, seo } = page;
+
+// Build SEO metadata with fallbacks
+const metaTitle = seo?.metaTitle || title;
+const metaDescription = seo?.metaDescription || page.description || '';
+const canonicalURL = seo?.canonicalURL || `/${slug}`;
+
+// Get OG image URL (use metaImage from SEO or fallback)
+const ogImageURL = seo?.metaImage?.url || '/og-image.jpg';
+
+// Log page render for debugging (only in dev mode)
+if (import.meta.env.DEV) {
+  console.info(`[...slug].astro: Rendering page /${slug}`);
+}
+---
+
+<Layout
+  title={metaTitle}
+  description={metaDescription}
+  canonical={canonicalURL}
+  ogImage={ogImageURL}
+>
+  <!-- Navigation -->
+  <Navbar />
+
+  <!-- Main content area -->
+  <main class="min-h-screen">
+    <!--
+      DynamicPageRenderer maps each section to its component
+      and renders them in order
+    -->
+    <DynamicPageRenderer sections={sections} />
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+
+  <!-- SEO: Structured Data (JSON-LD) -->
+  {seo?.structuredData && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(seo.structuredData)}
+    />
+  )}
+
+  <!-- SEO: Additional Meta Tags -->
+  {seo?.keywords && (
+    <meta name="keywords" content={seo.keywords} slot="head" />
+  )}
+
+  {seo?.metaRobots && (
+    <meta name="robots" content={seo.metaRobots} slot="head" />
+  )}
+
+  {seo?.metaViewport && (
+    <meta name="viewport" content={seo.metaViewport} slot="head" />
+  )}
+
+  <!-- SEO: Social Media Meta Tags -->
+  {seo?.metaSocial?.map((social) => {
+    const prefix = social.socialNetwork === 'Twitter' ? 'twitter' : 'og';
+    const imageUrl = social.image?.url || ogImageURL;
+
+    return (
+      <>
+        <meta
+          property={`${prefix}:title`}
+          content={social.title}
+          slot="head"
+        />
+        <meta
+          property={`${prefix}:description`}
+          content={social.description}
+          slot="head"
+        />
+        {imageUrl && (
+          <meta
+            property={`${prefix}:image`}
+            content={imageUrl}
+            slot="head"
+          />
+        )}
+      </>
+    );
+  })}
+</Layout>
+
+<style>
+  /* Ensure main content takes full height for proper footer positioning */
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

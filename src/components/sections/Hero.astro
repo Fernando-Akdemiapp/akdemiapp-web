@@ -1,0 +1,211 @@
+---
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+import CTAButton from "../ui/CTAButton.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import { fade } from "astro:transitions";
+import { getStrapiMedia } from "@/lib/api";
+import type { HeroSection as HeroSectionProps } from "@/types/Page";
+
+type Props = HeroSectionProps;
+
+const {
+  title,
+  subtitle,
+  description,
+  ctaText,
+  ctaLink,
+  secondaryCtaText,
+  secondaryCtaLink,
+  badge,
+  image,
+  showStats = false,
+  totalAcademies = 500,
+  activeUsers = 10000,
+  satisfactionRate = 98,
+} = Astro.props;
+
+// Get image URL if provided
+console.log('[Hero] Image data received:', JSON.stringify(image));
+const imageUrl = image ? getStrapiMedia(image.url) : null;
+const imageAlt = image?.alternativeText || title;
+console.log('[Hero] Image URL:', imageUrl);
+---
+
+<section
+  class="relative min-h-3/5 flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50"
+  id="hero"
+>
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"
+    >
+    </div>
+    <div
+      class="absolute top-40 right-10 w-72 h-72 bg-secondary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"
+    >
+    </div>
+    <div
+      class="absolute bottom-20 left-1/2 w-72 h-72 bg-accent-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"
+    >
+    </div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Content -->
+      <div class="text-center lg:text-left" transition:animate={fade({ duration: "0.6s" })}>
+        {badge && <Badge variant="primary" class="mb-6">{badge}</Badge>}
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          {title}
+          <span
+            class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+          >
+            {subtitle}
+          </span>
+        </h1>
+
+        <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0">
+          {description}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <Button href={ctaLink} variant="primary" size="lg">
+            {ctaText}
+          </Button>
+
+          {secondaryCtaText && secondaryCtaLink && (
+            <Button href={secondaryCtaLink} variant="outline" size="lg">
+              {secondaryCtaText}
+            </Button>
+          )}
+        </div>
+
+        <!-- Stats -->
+        {showStats && (
+          <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200">
+          <div>
+            <p class="text-3xl font-bold text-primary-600">{totalAcademies}+</p>
+            <p class="text-sm text-gray-600">Academias</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-primary-600">{activeUsers >= 1000 ? `${Math.floor(activeUsers / 1000)}K` : activeUsers}+</p>
+            <p class="text-sm text-gray-600">Usuarios Activos</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-primary-600">{satisfactionRate}%</p>
+            <p class="text-sm text-gray-600">Satisfacción</p>
+          </div>
+        </div>
+        )}
+      </div>
+
+      <!-- Hero Image / Illustration -->
+      <div class="relative lg:block" transition:animate={fade({ duration: "0.8s" })}>
+        <div class="relative z-10">
+          {imageUrl ? (
+            <!-- Image from Strapi -->
+            <div
+              class="aspect-square rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300"
+            >
+              <img
+                src={imageUrl}
+                alt={imageAlt}
+                class="w-full h-full object-cover"
+                loading="eager"
+              />
+            </div>
+          ) : (
+            <!-- Placeholder for main image - you can replace with actual mockup -->
+            <div
+              class="aspect-square rounded-2xl bg-gradient-to-br from-primary-100 to-secondary-100 shadow-2xl p-8 transform hover:scale-105 transition-transform duration-300"
+            >
+              <div class="w-full h-full bg-white rounded-xl shadow-inner flex items-center justify-center">
+                <div class="text-center p-8">
+                  <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center">
+                    <svg
+                      class="w-12 h-12 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <p class="text-gray-600 font-medium">
+                    AkdemiApp Mobile Dashboard
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <svg
+      class="w-6 h-6 text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</section>
+
+<style>
+  @keyframes blob {
+    0%,
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+</style>

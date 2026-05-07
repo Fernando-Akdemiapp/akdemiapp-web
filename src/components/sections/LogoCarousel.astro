@@ -1,0 +1,214 @@
+---
+/**
+ * LogoCarousel Section - Client logos infinite scroll
+ *
+ * Refactored to use LogoCarouselSection type from @/types/Page
+ * Fetches logos from Strapi
+ */
+import Badge from "../ui/Badge.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import { getClientLogos } from "@/services/clients";
+import type { LogoCarouselSection as LogoCarouselSectionProps } from '@/types/Page';
+
+// Make props optional for backwards compatibility with old pages
+type Props = Partial<LogoCarouselSectionProps>;
+
+const {
+  title = "Empresas que confían en",
+  subtitle = "nosotros",
+  description = "Únete a cientos de organizaciones que ya transformaron su gestión académica",
+  showBadge = true,
+  badgeText = "Nuestros Clientes",
+  trustIndicatorText,
+  animationSpeed = 15
+} = Astro.props;
+
+const finalBadge = showBadge ? badgeText : null;
+
+// Fetch logos from Strapi API
+const apiLogos = await getClientLogos();
+
+// Production logging for missing data
+if (import.meta.env.PROD && apiLogos.length === 0) {
+  console.warn('⚠️ LogoCarousel Section: No client logos available from API');
+}
+
+// Transform API logos
+const logos = apiLogos.map((logo) => ({
+  src: logo.logo, // getStrapiMedia already transformed to full URL
+  alt: logo.name,
+  url: logo.url || "",
+}));
+---
+
+<section
+  class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-white to-gray-50"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      {finalBadge && <Badge variant="primary" class="mb-4">{finalBadge}</Badge>}
+
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        {title}
+        {subtitle && (
+          <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+            {" "}{subtitle}
+          </span>
+        )}
+      </h2>
+
+      {description && (
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          {description}
+        </p>
+      )}
+    </div>
+
+    <!-- Carousel Container -->
+    {logos.length > 0 ? (
+      <div class="relative">
+        <!-- Fade effect overlays -->
+        <div
+          class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
+        >
+        </div>
+        <div
+          class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"
+        >
+        </div>
+
+        <!-- Scrolling Track -->
+        <div class="carousel-track">
+          <div class="carousel-content" style={`--animation-speed: ${animationSpeed}s`}>
+            <!-- First set of logos -->
+            {
+              logos.map((logo) => (
+                <div class="carousel-item">
+                  {logo.url ? (
+                    <a
+                      href={logo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.alt}
+                        class="h-24 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      class="h-24 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                    />
+                  )}
+                </div>
+              ))
+            }
+            <!-- Duplicate set for infinite loop -->
+            {
+              logos.map((logo) => (
+                <div class="carousel-item" aria-hidden="true">
+                  {logo.url ? (
+                    <a
+                      href={logo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.alt}
+                        class="h-24 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      class="h-24 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                    />
+                  )}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    ) : (
+      <EmptyContentState
+        title="Logos No Disponibles"
+        message="Los logos de clientes no están disponibles en este momento."
+        icon="🖼️"
+      />
+    )}
+
+    <!-- Trust indicator (optional) -->
+    {trustIndicatorText && (
+      <div class="text-center mt-12">
+        <p class="text-sm text-gray-500" set:html={trustIndicatorText}></p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style is:global>
+  .carousel-track {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .carousel-content {
+    display: flex;
+    animation: logoScroll var(--animation-speed, 30s) linear infinite;
+    will-change: transform;
+    flex-shrink: 0;
+  }
+
+  .carousel-item {
+    flex: 0 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+  }
+
+  /* Pause animation on hover */
+  .carousel-track:hover .carousel-content {
+    animation-play-state: paused;
+  }
+
+  @keyframes logoScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .carousel-item {
+      min-width: 150px;
+      padding: 0 1.5rem;
+    }
+
+    .carousel-content {
+      animation-duration: 20s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-item {
+      min-width: 120px;
+      padding: 0 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,194 @@
+---
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import { fade } from "astro:transitions";
+import { getStrapiMedia } from "@/lib/api";
+import { getSiteStats } from "@/services/stats";
+import type { UseCaseHeroSection as UseCaseHeroSectionProps } from "@/types/Page";
+
+type Props = UseCaseHeroSectionProps;
+
+const {
+  title,
+  subtitle,
+  description,
+  badge,
+  icon,
+  image,
+  imageAlt,
+  accentColor = "primary",
+} = Astro.props;
+
+// Get image URL if provided
+const imageUrl = image ? getStrapiMedia(image.url) : null;
+const finalImageAlt = imageAlt || image?.alternativeText || "Caso de uso";
+
+// Fetch stats for display
+const stats = await getSiteStats();
+
+// Production logging for missing stats
+if (import.meta.env.PROD && !stats) {
+  console.warn("⚠️ UseCaseHero Section: Stats not available from API");
+}
+---
+
+<section
+  class="relative min-h-3/5 flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50"
+  id="hero"
+>
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"
+    >
+    </div>
+    <div
+      class="absolute top-40 right-10 w-72 h-72 bg-secondary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"
+    >
+    </div>
+    <div
+      class="absolute bottom-20 left-1/2 w-72 h-72 bg-accent-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"
+    >
+    </div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+      transition:animate={fade({ duration: "0.6s" })}
+    >
+      <!-- Content Column -->
+      <div class="text-center lg:text-left">
+        <Badge variant="primary" class="mb-6">
+          {badge}
+        </Badge>
+
+        <div
+          class="mb-6 inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl"
+        >
+          <span class="text-4xl">{icon}</span>
+        </div>
+
+        <h1
+          class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight"
+        >
+          {title}
+          <span
+            class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent block mt-2"
+          >
+            {subtitle}
+          </span>
+        </h1>
+
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          {description}
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+        >
+          <Button href="/#callback-form" variant="primary" size="lg">
+            Solicitar Demostración
+          </Button>
+
+          <Button href="#features" variant="outline" size="lg">
+            Ver Características
+          </Button>
+        </div>
+
+        <!-- Stats -->
+        {
+          stats && (
+            <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-200">
+              <div>
+                <p class="text-3xl font-bold text-primary-600">
+                  {stats.totalAcademies}+
+                </p>
+                <p class="text-sm text-gray-600">Academias</p>
+              </div>
+              <div>
+                <p class="text-3xl font-bold text-primary-600">
+                  {stats.activeUsers >= 1000
+                    ? `${Math.floor(stats.activeUsers / 1000)}K`
+                    : stats.activeUsers}
+                  +
+                </p>
+                <p class="text-sm text-gray-600">Usuarios</p>
+              </div>
+              <div>
+                <p class="text-3xl font-bold text-primary-600">
+                  {stats.satisfactionRate}%
+                </p>
+                <p class="text-sm text-gray-600">Satisfacción</p>
+              </div>
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Image Column -->
+      {
+        imageUrl && (
+          <div class="relative">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src={imageUrl}
+                alt={finalImageAlt}
+                class="w-full h-auto object-cover"
+                loading="eager"
+              />
+            </div>
+            {/* Decorative element */}
+            <div class="absolute -z-10 top-10 right-10 w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl opacity-20" />
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+  >
+    <svg
+      class="w-6 h-6 text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</section>
+
+<style>
+  @keyframes blob {
+    0%,
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+</style>

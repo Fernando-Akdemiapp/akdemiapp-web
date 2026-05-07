@@ -1,0 +1,139 @@
+---
+/**
+ * Dynamic Page Renderer Component
+ *
+ * Renders a dynamic array of sections by mapping each section to its
+ * corresponding Astro component using the component registry.
+ *
+ * This component is the core of the Page Builder system, enabling
+ * content editors to create pages in Strapi CMS that are automatically
+ * rendered on the frontend without code changes.
+ *
+ * Features:
+ * - Component registry lookup for dynamic rendering
+ * - Error handling for unknown components
+ * - Props pass-through to child components
+ * - Developer-friendly error messages
+ *
+ * @example
+ * ```astro
+ * <DynamicPageRenderer sections={page.sections} />
+ * ```
+ */
+
+import type { Section } from '@/types';
+import { getComponentForSection } from '@/lib/componentRegistry';
+
+interface Props {
+  sections: Section[];
+}
+
+const { sections } = Astro.props;
+
+console.log('[DynamicPageRenderer] Received sections:', sections?.length || 0);
+console.log('[DynamicPageRenderer] Sections types:', sections?.map(s => s.__component).join(', '));
+
+// Log ALL sections details for debugging
+if (sections && sections.length > 0) {
+  sections.forEach((section, index) => {
+    console.log(`[DynamicPageRenderer] Section ${index + 1} (${section.__component}):`, JSON.stringify(section, null, 2));
+  });
+}
+
+// Validate sections array
+if (!sections || !Array.isArray(sections)) {
+  console.error('DynamicPageRenderer: sections prop is required and must be an array');
+}
+
+// Filter out any null/undefined sections
+const validSections = sections?.filter((section) => section != null) || [];
+console.log('[DynamicPageRenderer] Valid sections:', validSections.length);
+---
+
+{validSections.length === 0 ? (
+  <!-- Empty state: No sections to render -->
+  <div class="container mx-auto px-4 py-16 text-center">
+    <div class="max-w-md mx-auto">
+      <div class="text-6xl mb-4">📄</div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">
+        No Content Available
+      </h2>
+      <p class="text-gray-600">
+        This page doesn't have any content sections yet.
+      </p>
+    </div>
+  </div>
+) : (
+  validSections.map((section, index) => {
+    // Get the Astro component for this section type
+    const Component = getComponentForSection(section);
+
+    // Handle unknown component types
+    if (!Component) {
+      console.error(
+        `DynamicPageRenderer: Unknown component type "${section.__component}" at index ${index}`
+      );
+
+      return (
+        <div
+          class="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg m-4"
+          role="alert"
+        >
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <div class="flex-1">
+              <p class="font-semibold text-base mb-1">
+                Component Not Found
+              </p>
+              <p class="text-sm">
+                Component type <code class="bg-red-100 px-1.5 py-0.5 rounded font-mono text-xs">{section.__component}</code> is not registered in the component registry.
+              </p>
+              <details class="mt-2">
+                <summary class="text-sm font-medium cursor-pointer hover:underline">
+                  View Details
+                </summary>
+                <pre class="mt-2 text-xs bg-red-100 p-2 rounded overflow-x-auto">
+{JSON.stringify(section, null, 2)}
+                </pre>
+              </details>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Render the component with all section props
+    // The spread operator passes all section properties as props
+    return <Component {...section} key={`section-${section.id || index}`} />;
+  })
+)}
+
+<style>
+  /* Error state styling */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+  }
+
+  details[open] summary::before {
+    transform: rotate(90deg);
+  }
+</style>

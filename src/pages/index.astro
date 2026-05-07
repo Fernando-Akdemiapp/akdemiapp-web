@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import DynamicPageRenderer from "../components/DynamicPageRenderer.astro";
+import EmptyContentState from "../components/ui/EmptyContentState.astro";
+import { getPageBySlug } from "../services/pages";
+import type { Page } from "../types";
+
+// Attempt to fetch dynamic page from Strapi CMS
+const homePage: Page | null = await getPageBySlug('home');
+
+// Log warning if no home page in production
+if (import.meta.env.PROD && !homePage) {
+  console.warn('⚠️ Home Page: No "home" page found in Strapi CMS');
+}
+
+// SEO metadata: Use dynamic page SEO or fallback to defaults
+const pageTitle = homePage?.seo?.metaTitle || "AkdemiApp - Software de Gestión para Academias y Escuelas";
+const pageDescription = homePage?.seo?.metaDescription || "Optimiza, organiza y simplifica la gestión de tu academia con AkdemiApp. Software integral para control de alumnos, profesores, pagos, horarios y más.";
+const pageKeywords = homePage?.seo?.keywords;
+const pageRobots = homePage?.seo?.metaRobots;
+const canonicalURL = homePage?.seo?.canonicalURL;
+const structuredData = homePage?.seo?.structuredData;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Navbar />
+  <main>
+    {homePage ? (
+      <!-- Dynamic rendering: Use Page Builder system when page exists in CMS -->
+      <DynamicPageRenderer sections={homePage.sections} />
+    ) : (
+      <!-- Empty state: Show friendly message when no CMS page exists -->
+      <div class="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50">
+        <EmptyContentState
+          title="Página no disponible"
+          message="Estamos teniendo algunos problemas, trabajamos para solucionarlos."
+          icon="🏠"
+        />
+      </div>
+    )}
+  </main>
+  <Footer />
+</Layout>
+
+{structuredData && (
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+)}

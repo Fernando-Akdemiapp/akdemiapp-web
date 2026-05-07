@@ -1,0 +1,133 @@
+---
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+import Button from "../ui/Button.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import type { UseCaseFeaturesSection as UseCaseFeaturesSectionProps } from "@/types/Page";
+import type { BenefitItem } from "@/types/Page";
+
+type Props = UseCaseFeaturesSectionProps;
+
+const {
+  benefitsTitle,
+  benefitsSubtitle,
+  benefitsBadge,
+  benefits,
+  featuresTitle,
+  featuresSubtitle,
+  featuresDescription,
+  featuresBadge,
+  mainFeatures,
+  showCTA = false,
+  ctaText,
+} = Astro.props;
+
+// Production logging for missing data
+if (import.meta.env.PROD && (!mainFeatures || mainFeatures.length === 0)) {
+  console.warn('⚠️ UseCaseFeatures Section: No main features available');
+}
+---
+
+<section id="features" class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Benefits Section -->
+    <div class="text-center mb-16">
+      {benefitsBadge && <Badge variant="primary" class="mb-4">{benefitsBadge}</Badge>}
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        {benefitsTitle}
+        <span
+          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+        >
+          {benefitsSubtitle}
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+      {
+        benefits.map((benefit) => (
+          <Card hover padding="lg" class="text-center">
+            <div class="text-5xl mb-4">{benefit.icon}</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
+            <p class="text-gray-600">{benefit.description}</p>
+          </Card>
+        ))
+      }
+    </div>
+
+    <!-- Main Features Section -->
+    <div class="text-center mb-16">
+      {featuresBadge && <Badge variant="secondary" class="mb-4">{featuresBadge}</Badge>}
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        {featuresTitle}
+        <span
+          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+        >
+          {featuresSubtitle}
+        </span>
+      </h2>
+      {featuresDescription && (
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          {featuresDescription}
+        </p>
+      )}
+    </div>
+
+    {mainFeatures && mainFeatures.length > 0 ? (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          mainFeatures.map((feature) => (
+            <Card hover padding="lg" class="relative">
+              {feature.badge && (
+                <div class="absolute top-4 right-4">
+                  <Badge variant="accent" class="text-xs">
+                    {feature.badge}
+                  </Badge>
+                </div>
+              )}
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-lg flex items-center justify-center text-2xl">
+                  {feature.icon}
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p class="text-gray-600 text-sm">{feature.description}</p>
+                </div>
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    ) : (
+      <EmptyContentState
+        title="Características No Disponibles"
+        message="Las características principales no están disponibles en este momento. Por favor, intenta más tarde."
+        icon="⚙️"
+      />
+    )}
+
+    <!-- CTA within features -->
+    {showCTA && (
+      <div class="mt-16 text-center">
+        <div class="inline-flex items-center gap-2 bg-primary-50 px-6 py-3 rounded-full border border-primary-200">
+          <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <p class="text-primary-800 font-medium inline-flex items-center gap-2">
+            {ctaText || "¿Necesitas alguna funcionalidad específica?"}
+            <Button
+              href="/#callback-form"
+              variant="outline"
+              size="sm"
+              class="underline hover:text-primary-600 inline-flex"
+            >
+              Contáctanos
+            </Button>
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+</section>

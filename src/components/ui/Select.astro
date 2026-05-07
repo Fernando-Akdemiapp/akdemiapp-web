@@ -1,0 +1,199 @@
+---
+/**
+ * Select - Componente de select/dropdown reutilizable
+ *
+ * Select field con label, opciones, validación y accesibilidad completa.
+ * Diseñado para integrarse con el sistema de diseño de AkdemiApp.
+ */
+
+interface Option {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  /**
+   * Nombre del campo (atributo name del select)
+   */
+  name: string;
+
+  /**
+   * Etiqueta visible del campo
+   */
+  label: string;
+
+  /**
+   * Array de opciones disponibles
+   */
+  options: Option[];
+
+  /**
+   * Si el campo es obligatorio
+   */
+  required?: boolean;
+
+  /**
+   * Mensaje de error a mostrar
+   */
+  error?: string;
+
+  /**
+   * Valor por defecto seleccionado
+   */
+  value?: string;
+
+  /**
+   * Texto del placeholder (primera opción disabled)
+   */
+  placeholder?: string;
+
+  /**
+   * Clases CSS adicionales
+   */
+  class?: string;
+
+  /**
+   * ID del campo (si no se proporciona, usa name)
+   */
+  id?: string;
+}
+
+const {
+  name,
+  label,
+  options,
+  required = false,
+  error,
+  value = "",
+  placeholder = "Selecciona una opción",
+  class: className = "",
+  id = name,
+} = Astro.props;
+
+const errorId = `${id}-error`;
+const hasError = error && error.length > 0;
+---
+
+<div class={`form-group ${className}`}>
+  <label
+    for={id}
+    class="block text-sm font-medium text-gray-700 mb-2"
+  >
+    {label}
+    {required && <span class="text-red-500 ml-1" aria-label="obligatorio">*</span>}
+  </label>
+
+  <div class="relative">
+    <select
+      id={id}
+      name={name}
+      required={required}
+      aria-required={required}
+      aria-invalid={hasError}
+      aria-describedby={hasError ? errorId : undefined}
+      class={`
+        w-full px-4 py-3
+        rounded-lg
+        border-2
+        ${hasError ? 'border-red-500 focus:border-red-600 focus:ring-red-500/20' : 'border-gray-200 focus:border-primary-600 focus:ring-primary-500/20'}
+        bg-white
+        text-gray-900
+        transition-all duration-200
+        hover:border-gray-300
+        focus:outline-none focus:ring-4
+        disabled:bg-gray-100 disabled:cursor-not-allowed
+        appearance-none
+        cursor-pointer
+      `}
+    >
+      {placeholder && (
+        <option value="" disabled selected={!value}>
+          {placeholder}
+        </option>
+      )}
+
+      {options.map((option) => (
+        <option
+          value={option.value}
+          disabled={option.disabled}
+          selected={value === option.value}
+        >
+          {option.label}
+        </option>
+      ))}
+    </select>
+
+    <!-- Icono de flecha personalizado -->
+    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+      <svg
+        class="w-5 h-5 text-gray-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+  </div>
+
+  {hasError && (
+    <div
+      id={errorId}
+      class="mt-2 flex items-center gap-2 text-red-600 text-sm animate-slideDown"
+      role="alert"
+    >
+      <svg
+        class="w-4 h-4 flex-shrink-0"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span>{error}</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .form-group {
+    position: relative;
+  }
+
+  /* Animación para mostrar errores */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slideDown {
+    animation: slideDown 0.2s ease-out;
+  }
+
+  /* Estado de validación exitosa */
+  select:not([value=""]):valid:not(:focus) {
+    border-color: #10b981; /* green-500 */
+  }
+
+  /* Eliminar la flecha por defecto en IE */
+  select::-ms-expand {
+    display: none;
+  }
+</style>

@@ -1,0 +1,212 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/ui/Button.astro";
+
+interface Props {
+  error?: unknown;
+}
+
+const { error } = Astro.props;
+
+// Only show error details in development
+const isDev = import.meta.env.DEV;
+const errorMessage =
+  error instanceof Error && isDev ? error.message : "Ha ocurrido un error inesperado";
+
+const title = "500 - Error del servidor";
+const description = "Ha ocurrido un error inesperado en el servidor.";
+---
+
+<Layout title={title} description={description}>
+  <main class="min-h-screen flex items-center justify-center px-4 py-16">
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- Error Code -->
+      <div class="mb-8">
+        <h1 class="text-9xl font-bold text-red-600 mb-4">500</h1>
+        <div class="w-24 h-1 bg-red-400 mx-auto"></div>
+      </div>
+
+      <!-- Error Message -->
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Error del servidor
+      </h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-md mx-auto">
+        Lo sentimos, ha ocurrido un error inesperado en el servidor. Nuestro
+        equipo ha sido notificado y estamos trabajando para solucionarlo.
+      </p>
+
+      {
+        isDev && error && (
+          <div class="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg text-left max-w-lg mx-auto">
+            <p class="text-sm font-mono text-red-800 break-all">
+              {errorMessage}
+            </p>
+          </div>
+        )
+      }
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Button
+          href="/"
+          variant="primary"
+          size="lg"
+          onclick="window.location.reload()"
+        >
+          Reintentar
+        </Button>
+        <Button href="/" variant="outline" size="lg">
+          Volver al inicio
+        </Button>
+      </div>
+
+      <!-- Support Information -->
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <p class="text-sm text-gray-500 mb-4">
+          Si el problema persiste, contáctanos:
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center text-sm">
+          <a
+            href="mailto:soporte@akdemiapp.com"
+            class="text-primary hover:text-primary/80 transition-colors"
+          >
+            soporte@akdemiapp.com
+          </a>
+          <span class="hidden sm:inline text-gray-300">|</span>
+          <a
+            href="/#contacto"
+            class="text-primary hover:text-primary/80 transition-colors"
+          >
+            Formulario de contacto
+          </a>
+        </div>
+      </div>
+
+      <!-- Troubleshooting Tips -->
+      <div class="mt-8 p-6 bg-gray-50 rounded-lg text-left max-w-lg mx-auto">
+        <h3 class="font-semibold text-gray-900 mb-3">Posibles soluciones:</h3>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-start gap-2">
+            <svg
+              class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span>Recarga la página en unos minutos</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg
+              class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span>Limpia la caché de tu navegador</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg
+              class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span>Verifica tu conexión a internet</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg
+              class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span>Intenta acceder desde otro dispositivo</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Illustration -->
+      <div class="mt-12 opacity-50">
+        <svg
+          class="w-64 h-64 mx-auto text-gray-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Animation for the error code */
+  h1 {
+    animation: shakeAndFade 0.8s ease-out;
+  }
+
+  @keyframes shakeAndFade {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    25% {
+      transform: translateX(10px);
+    }
+    50% {
+      transform: translateX(-10px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Pulse animation for the divider */
+  .w-24 {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+</style>

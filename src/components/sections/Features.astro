@@ -1,0 +1,164 @@
+---
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+import Button from "../ui/Button.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import { getFeatures } from "@/services";
+import type { FeaturesSection as FeaturesSectionProps } from "@/types/Page";
+import type { BenefitItem } from "@/types/Page";
+
+type Props = FeaturesSectionProps;
+
+const {
+  sectionTitle,
+  sectionSubtitle,
+  sectionDescription,
+  badge: sectionBadge,
+  features: providedFeatures,
+  showCTA = false,
+  ctaTitle,
+  ctaDescription,
+  ctaButtonText,
+  ctaButtonLink,
+} = Astro.props;
+
+// If features is an array of IDs (numbers), fetch from API
+// Otherwise, use the provided features directly
+let features: BenefitItem[] = [];
+
+if (Array.isArray(providedFeatures) && providedFeatures.length > 0) {
+  // Check if first element is a number (ID) or an object (BenefitItem)
+  if (typeof providedFeatures[0] === 'number') {
+    // Fetch features from API using IDs
+    const apiFeatures = await getFeatures();
+    features = apiFeatures.filter(f => providedFeatures.includes(f.id));
+  } else {
+    // Use provided features directly
+    features = providedFeatures as BenefitItem[];
+  }
+}
+
+// Log warning in production if no features
+if (import.meta.env.PROD && features.length === 0) {
+  console.warn('⚠️ Features Section: No features data available in production build');
+}
+---
+
+<section id="features" class="py-16 lg:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      {sectionBadge && <Badge variant="primary" class="mb-4">{sectionBadge}</Badge>}
+      <h2
+        class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+      >
+        {sectionTitle}
+        <span
+          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+        >
+          {sectionSubtitle}
+        </span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        {sectionDescription}
+      </p>
+    </div>
+
+    <!-- Features Grid or Empty State -->
+    {features.length > 0 ? (
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          features.map((feature, index) => (
+            <Card
+              hover
+              class="group relative overflow-hidden"
+              style={`animation-delay: ${index * 100}ms`}
+            >
+              {feature.badge && (
+                <div class="absolute top-4 right-4">
+                  <Badge
+                    variant={
+                      feature.badge === "Popular"
+                        ? "accent"
+                        : feature.badge === "Seguro"
+                          ? "secondary"
+                          : "primary"
+                    }
+                  >
+                    {feature.badge}
+                  </Badge>
+                </div>
+              )}
+
+              <div class="flex flex-col h-full">
+                {/* Icon */}
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <span class="text-3xl">{feature.icon}</span>
+                </div>
+
+                {/* Content */}
+                <h3 class="text-xl font-bold text-gray-900 mb-3">
+                  {feature.title}
+                </h3>
+                <p class="text-gray-600 flex-grow">{feature.description}</p>
+
+                {/* Hover effect */}
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    ) : (
+      <EmptyContentState
+        title="Funcionalidades No Disponibles"
+        message="Las funcionalidades de esta sección se cargarán pronto desde nuestro sistema de gestión de contenidos."
+        icon="⚙️"
+      />
+    )}
+
+    <!-- CTA Section -->
+    {showCTA && (
+      <div class="mt-16 text-center">
+        <div
+          class="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100"
+        >
+          <div class="text-left">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+              {ctaTitle || "Compruébalo tú mismo sin riesgo"}
+            </h3>
+            <p class="text-gray-600">
+              {ctaDescription || "Agenda una demostración personalizada de 30 minutos para conocer todas las funcionalidades."}
+            </p>
+          </div>
+          <Button
+            href={ctaButtonLink || "/#callback-form"}
+            variant="primary"
+            size="md"
+            class="shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap"
+          >
+            {ctaButtonText || "Agendar Demostración"}
+          </Button>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .grid > * {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+</style>

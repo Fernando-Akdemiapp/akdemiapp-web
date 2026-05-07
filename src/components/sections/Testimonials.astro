@@ -1,0 +1,225 @@
+---
+import Badge from "../ui/Badge.astro";
+import { getStrapiMedia } from "@/lib/api";
+import type { TestimonialsSection as TestimonialsSectionProps } from "@/types/Page";
+
+type Props = TestimonialsSectionProps;
+
+const {
+  sectionTitle,
+  sectionSubtitle,
+  sectionDescription,
+  badge,
+  // Backwards compatibility
+  title,
+  subtitle,
+  description,
+  testimonials = [],
+  layout = "carousel",
+  showRatings = true,
+  showAvatars = true,
+} = Astro.props;
+
+// Use new props or fall back to old ones for backwards compatibility
+const finalTitle = sectionTitle || title || "Testimonios";
+const finalSubtitle = sectionSubtitle || subtitle || "";
+const finalDescription = sectionDescription || description || "";
+
+// Generate star rating
+function getStars(rating: number) {
+  return Array.from({ length: 5 }, (_, i) => i < rating);
+}
+---
+
+<section class="py-16 lg:py-24 bg-gray-50" id="testimonials">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      {badge && <Badge variant="primary" class="mb-4">{badge}</Badge>}
+
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        {finalTitle}
+        {finalSubtitle && (
+          <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+            {" "}{finalSubtitle}
+          </span>
+        )}
+      </h2>
+
+      {finalDescription && (
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          {finalDescription}
+        </p>
+      )}
+    </div>
+
+    <!-- Testimonials Grid/Carousel -->
+    {layout === "carousel" ? (
+      <!-- Carousel Layout -->
+      <div class="relative">
+        <div class="overflow-hidden">
+          <div class="flex gap-6 animate-scroll">
+            {testimonials.concat(testimonials).map((testimonial) => (
+              <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3">
+                <div class="bg-white rounded-xl p-6 shadow-md h-full">
+                  <!-- Rating -->
+                  {showRatings && testimonial.rating && (
+                    <div class="flex gap-1 mb-4">
+                      {getStars(testimonial.rating).map((filled) => (
+                        <svg
+                          class={`w-5 h-5 ${filled ? 'text-yellow-400' : 'text-gray-300'}`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  )}
+
+                  <!-- Content -->
+                  <p class="text-gray-700 mb-6 italic">
+                    "{testimonial.content}"
+                  </p>
+
+                  <!-- Author -->
+                  <div class="flex items-center gap-4">
+                    {showAvatars && testimonial.avatar && (
+                      <img
+                        src={getStrapiMedia(testimonial.avatar.url) || "/placeholder-avatar.png"}
+                        alt={testimonial.name}
+                        class="w-12 h-12 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <p class="font-semibold text-gray-900">{testimonial.name}</p>
+                      {testimonial.role && (
+                        <p class="text-sm text-gray-600">
+                          {testimonial.role}
+                          {testimonial.company && ` • ${testimonial.company}`}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ) : layout === "grid" ? (
+      <!-- Grid Layout -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {testimonials.map((testimonial) => (
+          <div class="bg-white rounded-xl p-6 shadow-md">
+            <!-- Rating -->
+            {showRatings && testimonial.rating && (
+              <div class="flex gap-1 mb-4">
+                {getStars(testimonial.rating).map((filled) => (
+                  <svg
+                    class={`w-5 h-5 ${filled ? 'text-yellow-400' : 'text-gray-300'}`}
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            )}
+
+            <!-- Content -->
+            <p class="text-gray-700 mb-6 italic">
+              "{testimonial.content}"
+            </p>
+
+            <!-- Author -->
+            <div class="flex items-center gap-4">
+              {showAvatars && testimonial.avatar && (
+                <img
+                  src={getStrapiMedia(testimonial.avatar.url) || "/placeholder-avatar.png"}
+                  alt={testimonial.name}
+                  class="w-12 h-12 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <p class="font-semibold text-gray-900">{testimonial.name}</p>
+                {testimonial.role && (
+                  <p class="text-sm text-gray-600">
+                    {testimonial.role}
+                    {testimonial.company && ` • ${testimonial.company}`}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <!-- Masonry Layout -->
+      <div class="columns-1 md:columns-2 lg:columns-3 gap-6">
+        {testimonials.map((testimonial) => (
+          <div class="bg-white rounded-xl p-6 shadow-md mb-6 break-inside-avoid">
+            <!-- Rating -->
+            {showRatings && testimonial.rating && (
+              <div class="flex gap-1 mb-4">
+                {getStars(testimonial.rating).map((filled) => (
+                  <svg
+                    class={`w-5 h-5 ${filled ? 'text-yellow-400' : 'text-gray-300'}`}
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+            )}
+
+            <!-- Content -->
+            <p class="text-gray-700 mb-6 italic">
+              "{testimonial.content}"
+            </p>
+
+            <!-- Author -->
+            <div class="flex items-center gap-4">
+              {showAvatars && testimonial.avatar && (
+                <img
+                  src={getStrapiMedia(testimonial.avatar.url) || "/placeholder-avatar.png"}
+                  alt={testimonial.name}
+                  class="w-12 h-12 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <p class="font-semibold text-gray-900">{testimonial.name}</p>
+                {testimonial.role && (
+                  <p class="text-sm text-gray-600">
+                    {testimonial.role}
+                    {testimonial.company && ` • ${testimonial.company}`}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+</style>

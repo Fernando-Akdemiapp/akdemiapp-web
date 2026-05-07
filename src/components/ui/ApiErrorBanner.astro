@@ -1,0 +1,38 @@
+---
+/**
+ * ApiErrorBanner Component
+ * Displays a banner when the API is unavailable (dev mode only by default)
+ */
+
+interface Props {
+  message?: string;
+  showInProduction?: boolean;
+}
+
+const {
+  message = "La API de contenido no está disponible. Mostrando contenido limitado.",
+  showInProduction = false
+} = Astro.props;
+
+const isDev = import.meta.env.DEV;
+const shouldShow = isDev || showInProduction;
+---
+
+{shouldShow && (
+  <div class="w-full bg-yellow-50 border-b border-yellow-200 py-3 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-center gap-3 flex-wrap">
+      <span class="text-xl">⚠️</span>
+      <p class="text-sm text-yellow-800 font-medium">{message}</p>
+      {isDev && (
+        <a
+          href="http://localhost:1337/admin"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-yellow-600 hover:text-yellow-700 underline font-medium"
+        >
+          Ir a Strapi Admin →
+        </a>
+      )}
+    </div>
+  </div>
+)}

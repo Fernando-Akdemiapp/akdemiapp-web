@@ -1,0 +1,202 @@
+---
+import Card from "../ui/Card.astro";
+import Badge from "../ui/Badge.astro";
+import Button from "../ui/Button.astro";
+import EmptyContentState from "../ui/EmptyContentState.astro";
+import { getPricingPlans } from '@/services';
+import type { PricingSection as PricingSectionProps } from '@/types/Page';
+import type { Plan } from '@/types';
+
+type Props = PricingSectionProps;
+
+const {
+  sectionTitle,
+  sectionSubtitle,
+  sectionDescription,
+  badge: sectionBadge,
+  showToggle = true,
+  enterpriseText,
+  enterpriseCTAText,
+} = Astro.props;
+
+// Fetch plans from API
+const plans = await getPricingPlans();
+
+// Production logging for missing data
+if (import.meta.env.PROD && plans.length === 0) {
+  console.warn('⚠️ Pricing Section: No pricing plans available from API');
+}
+---
+
+<section id="pricing" class="py-16 lg:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      {sectionBadge && <Badge variant="primary" class="mb-4">{sectionBadge}</Badge>}
+      <h2
+        class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+      >
+        {sectionTitle}
+        <span
+          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+        >
+          {sectionSubtitle}
+        </span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+        {sectionDescription}
+      </p>
+
+      <!-- Toggle -->
+      {showToggle && (
+        <div class="inline-flex items-center bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+          <button
+            id="monthly-toggle"
+            class="px-6 py-2 rounded-md font-medium transition-all duration-200 bg-primary-600 text-white"
+          >
+            Mensual
+          </button>
+          <button
+            id="yearly-toggle"
+            class="px-6 py-2 rounded-md font-medium transition-all duration-200 text-gray-600"
+          >
+            Anual
+            <span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+              Ahorra 15%
+            </span>
+          </button>
+        </div>
+      )}
+    </div>
+
+    <!-- Pricing Cards -->
+    {plans.length > 0 ? (
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {
+          plans.map((plan, index) => (
+            <Card
+              class={`relative ${plan.isPopular ? "ring-2 ring-primary-600 shadow-xl scale-105" : ""}`}
+              padding="lg"
+            >
+              {plan.isPopular && (
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <Badge variant="accent" class="px-4 py-1 text-sm font-bold">
+                    MÁS POPULAR
+                  </Badge>
+                </div>
+              )}
+
+              <div class="text-center mb-6">
+                <span class="text-4xl mb-2 block">{plan.icon}</span>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                  {plan.name}
+                </h3>
+                <p class="text-gray-600 text-sm mb-6">{plan.description}</p>
+
+                <div class="mb-6">
+                  <div class="monthly-price">
+                    <span class="text-5xl font-bold text-gray-900">
+                      ${plan.monthlyPrice}
+                    </span>
+                    <span class="text-gray-600">/mes</span>
+                  </div>
+                  <div class="yearly-price hidden">
+                    <span class="text-5xl font-bold text-gray-900">
+                      ${plan.yearlyPrice}
+                    </span>
+                    <span class="text-gray-600">/mes</span>
+                    <p class="text-sm text-green-600 mt-1">
+                      ${plan.yearlyPrice * 12}/año
+                    </p>
+                  </div>
+                </div>
+
+                <Button
+                  href="/#callback-form"
+                  variant={plan.isPopular ? "primary" : "outline"}
+                  size="lg"
+                  class="w-full"
+                >
+                  Solicitar Demostración
+                </Button>
+              </div>
+
+              <div class="space-y-3">
+                {plan.features.map((feature) => (
+                  <div class="flex items-start gap-3">
+                    <svg
+                      class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span class="text-gray-700 text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    ) : (
+      <EmptyContentState
+        title="Planes No Disponibles"
+        message="Los planes de precios no están disponibles en este momento. Por favor, contacta con nosotros para obtener información sobre nuestros planes."
+        icon="💰"
+      />
+    )}
+
+    <!-- Additional Info -->
+    <div class="mt-16 text-center">
+      <p class="text-gray-600 mb-4">
+        {enterpriseText || "¿Tienes múltiples sedes o más de 500 estudiantes?"}
+      </p>
+      <Button
+        href="/#callback-form"
+        variant="outline"
+        size="md"
+        class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-2"
+      >
+        {enterpriseCTAText || "Solicitar Plan Empresarial Personalizado"}
+      </Button>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupPricingToggle() {
+    const monthlyToggle = document.getElementById("monthly-toggle");
+    const yearlyToggle = document.getElementById("yearly-toggle");
+    const monthlyPrices = document.querySelectorAll(".monthly-price");
+    const yearlyPrices = document.querySelectorAll(".yearly-price");
+
+    monthlyToggle?.addEventListener("click", () => {
+      monthlyToggle.classList.add("bg-primary-600", "text-white");
+      monthlyToggle.classList.remove("text-gray-600");
+      yearlyToggle?.classList.remove("bg-primary-600", "text-white");
+      yearlyToggle?.classList.add("text-gray-600");
+
+      monthlyPrices.forEach((el) => el.classList.remove("hidden"));
+      yearlyPrices.forEach((el) => el.classList.add("hidden"));
+    });
+
+    yearlyToggle?.addEventListener("click", () => {
+      yearlyToggle.classList.add("bg-primary-600", "text-white");
+      yearlyToggle.classList.remove("text-gray-600");
+      monthlyToggle?.classList.remove("bg-primary-600", "text-white");
+      monthlyToggle?.classList.add("text-gray-600");
+
+      monthlyPrices.forEach((el) => el.classList.add("hidden"));
+      yearlyPrices.forEach((el) => el.classList.remove("hidden"));
+    });
+  }
+
+  document.addEventListener("astro:page-load", setupPricingToggle);
+</script>
