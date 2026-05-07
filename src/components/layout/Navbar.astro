@@ -1,53 +1,14 @@
 ---
-/**
- * Navbar - Componente de navegación principal
- *
- * Refactorizado para usar Settings dinámicos desde Strapi con fallback completo.
- * Mantiene toda la lógica JavaScript y estilos originales.
- */
-
-import CTAButton from "../ui/CTAButton.astro";
 import { getSettings } from "../../services/settings";
 import { getStrapiMedia } from "../../lib/api";
-import type { NavItem } from "../../types/Settings";
 
-// Obtener settings dinámicos desde Strapi
 const settings = await getSettings();
-
-// Fallback completo: usar configuración hardcodeada si settings es null
-const navItems: NavItem[] = settings?.navbar.items || [
-  { id: 1, label: "Inicio", href: "/" },
-  {
-    id: 2,
-    label: "Casos de Uso",
-    href: "#",
-    children: [
-      { id: 21, label: "Academia de Danzas", href: "/danzas/" },
-      { id: 22, label: "Artes Escénicas", href: "/artes-escenicas/" },
-      { id: 23, label: "Artes Marciales", href: "/artes-marciales/" },
-      { id: 24, label: "Artes Plásticas", href: "/artes-plasticas/" },
-      { id: 25, label: "Pre-escolar", href: "/pre-escolar/" },
-      { id: 26, label: "Academia Deportiva", href: "/deportiva/" },
-      { id: 27, label: "Academia de Música", href: "/musica/" },
-    ],
-  },
-  { id: 3, label: "Precios", href: "/#pricing" },
-  { id: 4, label: "Contacto", href: "/#contact" },
-];
-
-// Logo dinámico con fallback
 const logoUrl = settings?.navbar.logo
   ? getStrapiMedia(settings.navbar.logo.url)
   : "/AKDEMIApp-Logo.png";
-const logoAlt = settings?.navbar.logo?.alternativeText || "AkdemiApp Logo";
 
-// CTA Button dinámico con fallback
-const ctaButton = settings?.navbar.ctaButton || {
-  id: 1,
-  text: "Prueba Gratis 14 Días",
-  link: "/#contact",
-  variant: "primary" as const,
-};
+const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20vi%20AKDEMIApp%20y%20me%20interesa%20una%20demostraci%C3%B3n%20para%20mi%20academia";
+const LOGIN_URL = "https://app.akdemiapp.online/login";
 ---
 
 <nav
@@ -55,327 +16,250 @@ const ctaButton = settings?.navbar.ctaButton || {
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
   transition:persist
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16 md:h-20">
-      <!-- Logo -->
-      <a
-        href="/"
-        class="flex items-center space-x-3 transition-transform hover:scale-105"
-      >
-        <img src={logoUrl} alt={logoAlt} class="w-10 h-10 object-contain" />
-        <span class="text-xl font-bold text-gray-900">
-          AKDEMI<span class="text-brand">App</span>
-        </span>
-      </a>
+  <div class="bg-white/97 backdrop-blur-md border-b border-black/[0.07]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
 
-      <!-- Desktop Navigation -->
-      <div class="hidden xl:flex items-center space-x-8">
-        {
-          navItems.map((item) => (
-            <div class="relative group">
-              {item.children && item.children.length > 0 ? (
-                <>
-                  <button
-                    class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 flex items-center gap-1"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                  >
-                    {item.label}
-                    <svg
-                      class="w-4 h-4 transition-transform group-hover:rotate-180"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 9l-7 7-7-7"
-                      />
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2.5 shrink-0">
+          <img src={logoUrl} alt="AKDEMIApp" class="w-8 h-8 object-contain" />
+          <span class="text-[17px] font-bold text-[#101828] tracking-tight">
+            AKDEMI<span class="text-[#155D88]">App</span>
+          </span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-1">
+
+          <!-- Academias dropdown -->
+          <div class="relative group">
+            <button class="flex items-center gap-1 text-[14px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all duration-150">
+              Academias
+              <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+
+            <!-- Dropdown -->
+            <div class="absolute top-full left-0 mt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-1.5 transition-all duration-200 z-50">
+              <div class="bg-white rounded-xl border border-black/[0.08] shadow-xl py-2.5 px-2">
+
+                <!-- Artísticas -->
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2.5 pt-1.5 pb-1">Artísticas</p>
+                <a href="/danzas/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
                     </svg>
-                  </button>
-                  <div class="absolute top-full left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2">
-                    <div class="bg-white rounded-lg shadow-xl border border-gray-100 py-2">
-                      {item.children.map((subItem) => (
-                        <a
-                          href={subItem.href}
-                          class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                        >
-                          {subItem.label}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <a
-                  href={item.href}
-                  class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
-                >
-                  {item.label}
+                  </span>
+                  Baile y Danza
                 </a>
-              )}
-            </div>
-          ))
-        }
-      </div>
+                <a href="/musica/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                    </svg>
+                  </span>
+                  Música
+                </a>
+                <a href="/artes-escenicas/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  </span>
+                  Artes Escénicas
+                </a>
+                <a href="/artes-plasticas/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 19c-2 0-6-1-6-5 0-1.5.5-2.5 1.5-3.5L12 6l4.5 4.5c1 1 1.5 2 1.5 3.5 0 4-4 5-6 5z"/><path d="M12 19v3M9 22h6"/>
+                    </svg>
+                  </span>
+                  Artes Plásticas
+                </a>
 
-      <!-- CTA Button & Mobile Menu -->
-      <div class="flex items-center gap-4">
-        <div class="hidden sm:block">
-          <CTAButton
-            variant="navbar"
-            href={ctaButton.link}
-            label={ctaButton.text}
-          />
+                <div class="my-1.5 border-t border-gray-100 mx-1"></div>
+
+                <!-- Deportivas -->
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2.5 pt-1 pb-1">Deportivas</p>
+                <a href="/artes-marciales/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/>
+                    </svg>
+                  </span>
+                  Artes Marciales
+                </a>
+                <a href="/deportiva/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+                    </svg>
+                  </span>
+                  Deportes en General
+                </a>
+
+                <div class="my-1.5 border-t border-gray-100 mx-1"></div>
+
+                <!-- Estudios & Bienestar -->
+                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2.5 pt-1 pb-1">Estudios & Bienestar</p>
+                <a href="/pre-escolar/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                  </span>
+                  Formación e Idiomas
+                </a>
+                <a href="/bienestar/" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                  <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+                    <svg class="w-3.5 h-3.5 stroke-[#155D88]" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                  </span>
+                  Yoga y Pilates
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+          <a href="/#features" class="text-[14px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all duration-150">Funcionalidades</a>
+          <a href="/#pricing" class="text-[14px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all duration-150">Precios</a>
+          <a href="/#nosotros" class="text-[14px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all duration-150">Nosotros</a>
+          <div class="w-px h-4 bg-gray-200 mx-1"></div>
+          <a href="/#testimonios" class="text-[14px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all duration-150">Testimonios</a>
         </div>
 
-        <!-- Mobile menu button -->
+        <!-- Actions -->
+        <div class="hidden lg:flex items-center gap-2.5">
+          <a
+            href={LOGIN_URL}
+            class="text-[13px] font-medium text-gray-600 hover:text-[#155D88] hover:bg-gray-50 px-3.5 py-2 rounded-lg border border-gray-200 transition-all duration-150"
+          >
+            Iniciar sesión
+          </a>
+          <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-all duration-200 shadow-sm shadow-[#155D88]/30"
+          >
+            <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Agenda una demo
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
         <button
-          id="mobile-menu-button"
-          class="xl:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          aria-expanded="false"
+          id="mobile-menu-btn"
+          class="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-gray-50 border border-gray-200"
           aria-label="Abrir menú"
         >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              class="menu-icon"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"></path>
-            <path
-              class="close-icon hidden"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"></path>
+          <svg id="icon-open" class="w-5 h-5 stroke-gray-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+          <svg id="icon-close" class="w-5 h-5 stroke-gray-600 hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round">
+            <path d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
+
       </div>
     </div>
-  </div>
 
-  <!-- Mobile Menu Overlay -->
-  <div
-    id="mobile-menu-overlay"
-    class="fixed inset-0 bg-black/50 z-40 hidden xl:hidden transition-opacity duration-300"
-  >
-  </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100">
+      <div class="px-4 py-3 space-y-0.5">
 
-  <!-- Mobile Menu -->
-  <div
-    id="mobile-menu"
-    class="xl:hidden hidden bg-white border-t border-gray-100 shadow-lg transition-transform duration-300 relative z-50"
-  >
-    <div class="px-4 py-4 space-y-3">
-      {
-        navItems.map((item) => (
-          <div>
-            {item.children && item.children.length > 0 ? (
-              <>
-                <button
-                  class="mobile-dropdown-button w-full text-left text-gray-700 font-medium py-2 flex items-center justify-between"
-                  data-dropdown-id={item.id}
-                  aria-expanded="false"
-                  aria-controls={`mobile-dropdown-${item.id}`}
-                >
-                  {item.label}
-                  <svg
-                    class="w-4 h-4 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id={`mobile-dropdown-${item.id}`}
-                  class="hidden pl-4 space-y-2 mt-2"
-                >
-                  {item.children.map((subItem) => (
-                    <a
-                      href={subItem.href}
-                      class="mobile-nav-link block py-2 text-gray-600 hover:text-primary-600 transition-colors"
-                    >
-                      {subItem.label}
-                    </a>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <a
-                href={item.href}
-                class="mobile-nav-link block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            )}
-          </div>
-        ))
-      }
-      <div class="block w-full">
-        <CTAButton
-          variant="navbar"
-          class="w-full text-center"
-          href={ctaButton.link}
-          label={ctaButton.text}
-        />
+        <!-- Academias section -->
+        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-3 pt-2 pb-1">Academias</p>
+        {[
+          { label: "Baile y Danza", href: "/danzas/" },
+          { label: "Música", href: "/musica/" },
+          { label: "Artes Escénicas", href: "/artes-escenicas/" },
+          { label: "Artes Plásticas", href: "/artes-plasticas/" },
+          { label: "Artes Marciales", href: "/artes-marciales/" },
+          { label: "Deportes en General", href: "/deportiva/" },
+          { label: "Formación e Idiomas", href: "/pre-escolar/" },
+          { label: "Yoga y Pilates", href: "/bienestar/" },
+        ].map(item => (
+          <a href={item.href} class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>
+            {item.label}
+          </a>
+        ))}
+
+        <div class="border-t border-gray-100 my-2"></div>
+
+        <a href="/#features" class="block px-3 py-2.5 text-[14px] font-medium text-gray-700 rounded-lg hover:bg-gray-50">Funcionalidades</a>
+        <a href="/#pricing" class="block px-3 py-2.5 text-[14px] font-medium text-gray-700 rounded-lg hover:bg-gray-50">Precios</a>
+        <a href="/#nosotros" class="block px-3 py-2.5 text-[14px] font-medium text-gray-700 rounded-lg hover:bg-gray-50">Nosotros</a>
+        <a href="/#testimonios" class="block px-3 py-2.5 text-[14px] font-medium text-gray-700 rounded-lg hover:bg-gray-50">Testimonios</a>
+
+        <div class="border-t border-gray-100 my-2"></div>
+
+        <div class="flex flex-col gap-2.5 pt-1 pb-2">
+          <a href={LOGIN_URL} class="text-center py-2.5 text-[14px] font-medium text-gray-700 border border-gray-200 rounded-lg">
+            Iniciar sesión
+          </a>
+          <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 bg-[#155D88] text-white py-3 text-[14px] font-semibold rounded-lg">
+            <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Agenda una demo
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </nav>
 
 <script>
-  // Navbar scroll effect
-  function handleScroll() {
+  function initNavbar() {
     const navbar = document.getElementById("navbar");
-    if (!navbar) return;
-
-    if (window.scrollY > 10) {
-      navbar.classList.add("bg-white/90", "backdrop-blur-md", "shadow-md");
-    } else {
-      navbar.classList.remove("bg-white/90", "backdrop-blur-md", "shadow-md");
-    }
-  }
-
-  // Mobile menu state management
-  let mobileMenuOpen = false;
-
-  function toggleMobileMenu() {
-    const button = document.getElementById("mobile-menu-button");
+    const btn = document.getElementById("mobile-menu-btn");
     const menu = document.getElementById("mobile-menu");
-    const overlay = document.getElementById("mobile-menu-overlay");
-    const menuIcon = button?.querySelector(".menu-icon");
-    const closeIcon = button?.querySelector(".close-icon");
+    const iconOpen = document.getElementById("icon-open");
+    const iconClose = document.getElementById("icon-close");
 
-    if (!button || !menu || !overlay) return;
-
-    mobileMenuOpen = !mobileMenuOpen;
-
-    if (mobileMenuOpen) {
-      // Open menu
-      menu.classList.remove("hidden");
-      overlay.classList.remove("hidden");
-      menuIcon?.classList.add("hidden");
-      closeIcon?.classList.remove("hidden");
-      button.setAttribute("aria-expanded", "true");
-      button.setAttribute("aria-label", "Cerrar menú");
-      document.body.style.overflow = "hidden";
-    } else {
-      // Close menu
-      menu.classList.add("hidden");
-      overlay.classList.add("hidden");
-      menuIcon?.classList.remove("hidden");
-      closeIcon?.classList.add("hidden");
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-label", "Abrir menú");
-      document.body.style.overflow = "";
+    // Scroll effect
+    function onScroll() {
+      if (!navbar) return;
+      if (window.scrollY > 10) {
+        navbar.querySelector("div")?.classList.add("shadow-md");
+      } else {
+        navbar.querySelector("div")?.classList.remove("shadow-md");
+      }
     }
-  }
 
-  function closeMobileMenu() {
-    if (mobileMenuOpen) {
-      toggleMobileMenu();
-    }
-  }
-
-  // Mobile menu toggle
-  function setupMobileMenu() {
-    const button = document.getElementById("mobile-menu-button");
-    const overlay = document.getElementById("mobile-menu-overlay");
-
-    if (!button || !overlay) return;
-
-    // Remove old listeners by cloning and replacing elements
-    const newButton = button.cloneNode(true) as HTMLElement;
-    const newOverlay = overlay.cloneNode(true) as HTMLElement;
-    button.parentNode?.replaceChild(newButton, button);
-    overlay.parentNode?.replaceChild(newOverlay, overlay);
-
-    // Toggle menu on button click
-    newButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMobileMenu();
+    // Mobile toggle
+    let isOpen = false;
+    btn?.addEventListener("click", () => {
+      isOpen = !isOpen;
+      menu?.classList.toggle("hidden", !isOpen);
+      iconOpen?.classList.toggle("hidden", isOpen);
+      iconClose?.classList.toggle("hidden", !isOpen);
+      document.body.style.overflow = isOpen ? "hidden" : "";
     });
 
-    // Close menu when clicking overlay
-    newOverlay.addEventListener("click", () => {
-      closeMobileMenu();
-    });
-
-    // Close menu when clicking navigation links
-    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    // Close on nav link click
+    menu?.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
-        setTimeout(() => closeMobileMenu(), 100);
+        isOpen = false;
+        menu.classList.add("hidden");
+        iconOpen?.classList.remove("hidden");
+        iconClose?.classList.add("hidden");
+        document.body.style.overflow = "";
       });
     });
 
-    // Mobile dropdown toggles
-    document.querySelectorAll(".mobile-dropdown-button").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const button = e.currentTarget as HTMLElement;
-        const dropdownId = button.getAttribute("data-dropdown-id");
-        const dropdown = document.getElementById(
-          `mobile-dropdown-${dropdownId}`
-        );
-        const icon = button.querySelector("svg");
-        const isHidden = dropdown?.classList.contains("hidden");
-
-        // Close all other dropdowns
-        document.querySelectorAll("[id^='mobile-dropdown-']").forEach((dd) => {
-          if (dd.id !== `mobile-dropdown-${dropdownId}`) {
-            dd.classList.add("hidden");
-            const otherButton = document.querySelector(
-              `[data-dropdown-id="${dd.id.replace("mobile-dropdown-", "")}"]`
-            );
-            otherButton?.setAttribute("aria-expanded", "false");
-            otherButton?.querySelector("svg")?.classList.remove("rotate-180");
-          }
-        });
-
-        // Toggle current dropdown
-        dropdown?.classList.toggle("hidden");
-        icon?.classList.toggle("rotate-180");
-        button?.setAttribute("aria-expanded", isHidden ? "true" : "false");
-      });
-    });
+    window.addEventListener("scroll", onScroll);
+    onScroll();
   }
 
-  // Handle ESC key globally
-  function handleKeydown(e: KeyboardEvent) {
-    if (e.key === "Escape" && mobileMenuOpen) {
-      closeMobileMenu();
-    }
-  }
-
-  // Reset menu state before navigation
-  document.addEventListener("astro:before-preparation", () => {
-    closeMobileMenu();
-  });
-
-  // Initialize on page load
-  document.addEventListener("astro:page-load", () => {
-    handleScroll();
-    setupMobileMenu();
-    window.addEventListener("scroll", handleScroll);
-
-    // Remove old keydown listener and add new one
-    document.removeEventListener("keydown", handleKeydown);
-    document.addEventListener("keydown", handleKeydown);
-  });
+  document.addEventListener("astro:page-load", initNavbar);
 </script>
