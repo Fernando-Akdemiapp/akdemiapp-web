@@ -1,202 +1,399 @@
 ---
-import Card from "../ui/Card.astro";
-import Badge from "../ui/Badge.astro";
-import Button from "../ui/Button.astro";
-import EmptyContentState from "../ui/EmptyContentState.astro";
-import { getPricingPlans } from '@/services';
-import type { PricingSection as PricingSectionProps } from '@/types/Page';
-import type { Plan } from '@/types';
-
-type Props = PricingSectionProps;
-
-const {
-  sectionTitle,
-  sectionSubtitle,
-  sectionDescription,
-  badge: sectionBadge,
-  showToggle = true,
-  enterpriseText,
-  enterpriseCTAText,
-} = Astro.props;
-
-// Fetch plans from API
-const plans = await getPricingPlans();
-
-// Production logging for missing data
-if (import.meta.env.PROD && plans.length === 0) {
-  console.warn('⚠️ Pricing Section: No pricing plans available from API');
-}
+const LOGIN_URL = "https://app.akdemiapp.online/login";
+const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20plan%20Enterprise%20de%20AKDEMIApp%20para%20mi%20organizaci%C3%B3n";
 ---
 
-<section id="pricing" class="py-16 lg:py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-16">
-      {sectionBadge && <Badge variant="primary" class="mb-4">{sectionBadge}</Badge>}
-      <h2
-        class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
-      >
-        {sectionTitle}
-        <span
-          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
-        >
-          {sectionSubtitle}
+<section id="pricing" class="py-20 bg-[#f8faff]">
+  <div class="max-w-[1200px] mx-auto px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="mb-12">
+      <span class="inline-block bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+        Planes y Precios
+      </span>
+      <h2 class="text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight leading-[1.08] mb-4">
+        Elige el plan perfecto<br>
+        <span class="bg-gradient-to-r from-[#155D88] to-[#399ABE] bg-clip-text text-transparent">
+          para tu academia
         </span>
       </h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-        {sectionDescription}
+      <p class="text-[16px] text-gray-500 mb-5 max-w-2xl leading-relaxed">
+        Todos los planes inician con 14 días de prueba completa. Al terminar, activa el plan Gratuito automáticamente o continúa con tu plan elegido.
       </p>
-
-      <!-- Toggle -->
-      {showToggle && (
-        <div class="inline-flex items-center bg-white rounded-lg p-1 shadow-sm border border-gray-200">
-          <button
-            id="monthly-toggle"
-            class="px-6 py-2 rounded-md font-medium transition-all duration-200 bg-primary-600 text-white"
-          >
-            Mensual
-          </button>
-          <button
-            id="yearly-toggle"
-            class="px-6 py-2 rounded-md font-medium transition-all duration-200 text-gray-600"
-          >
-            Anual
-            <span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-              Ahorra 15%
-            </span>
-          </button>
-        </div>
-      )}
-    </div>
-
-    <!-- Pricing Cards -->
-    {plans.length > 0 ? (
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {
-          plans.map((plan, index) => (
-            <Card
-              class={`relative ${plan.isPopular ? "ring-2 ring-primary-600 shadow-xl scale-105" : ""}`}
-              padding="lg"
-            >
-              {plan.isPopular && (
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <Badge variant="accent" class="px-4 py-1 text-sm font-bold">
-                    MÁS POPULAR
-                  </Badge>
-                </div>
-              )}
-
-              <div class="text-center mb-6">
-                <span class="text-4xl mb-2 block">{plan.icon}</span>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">
-                  {plan.name}
-                </h3>
-                <p class="text-gray-600 text-sm mb-6">{plan.description}</p>
-
-                <div class="mb-6">
-                  <div class="monthly-price">
-                    <span class="text-5xl font-bold text-gray-900">
-                      ${plan.monthlyPrice}
-                    </span>
-                    <span class="text-gray-600">/mes</span>
-                  </div>
-                  <div class="yearly-price hidden">
-                    <span class="text-5xl font-bold text-gray-900">
-                      ${plan.yearlyPrice}
-                    </span>
-                    <span class="text-gray-600">/mes</span>
-                    <p class="text-sm text-green-600 mt-1">
-                      ${plan.yearlyPrice * 12}/año
-                    </p>
-                  </div>
-                </div>
-
-                <Button
-                  href="/#callback-form"
-                  variant={plan.isPopular ? "primary" : "outline"}
-                  size="lg"
-                  class="w-full"
-                >
-                  Solicitar Demostración
-                </Button>
-              </div>
-
-              <div class="space-y-3">
-                {plan.features.map((feature) => (
-                  <div class="flex items-start gap-3">
-                    <svg
-                      class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span class="text-gray-700 text-sm">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          ))
-        }
+      <div class="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] text-[#15803d] px-4 py-2 rounded-full text-[12px] font-semibold mb-10">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        14 días de prueba &nbsp;·&nbsp; Sin tarjeta de crédito &nbsp;·&nbsp; Cancela cuando quieras
       </div>
-    ) : (
-      <EmptyContentState
-        title="Planes No Disponibles"
-        message="Los planes de precios no están disponibles en este momento. Por favor, contacta con nosotros para obtener información sobre nuestros planes."
-        icon="💰"
-      />
-    )}
 
-    <!-- Additional Info -->
-    <div class="mt-16 text-center">
-      <p class="text-gray-600 mb-4">
-        {enterpriseText || "¿Tienes múltiples sedes o más de 500 estudiantes?"}
-      </p>
-      <Button
-        href="/#callback-form"
-        variant="outline"
-        size="md"
-        class="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-2"
-      >
-        {enterpriseCTAText || "Solicitar Plan Empresarial Personalizado"}
-      </Button>
+      <!-- Toggle mensual / anual -->
+      <div class="flex items-center gap-3">
+        <button id="btn-monthly" onclick="setPricingMonthly()"
+          class="px-5 py-2 rounded-lg border-[1.5px] text-[13px] font-semibold transition-all duration-150 bg-[#155D88] text-white border-[#155D88]">
+          Mensual
+        </button>
+        <button id="btn-yearly" onclick="setPricingYearly()"
+          class="px-5 py-2 rounded-lg border-[1.5px] text-[13px] font-semibold transition-all duration-150 bg-white text-gray-500 border-gray-200">
+          Anual
+          <span class="ml-1.5 bg-[#dcfce7] text-[#15803d] px-2 py-0.5 rounded-full text-[10px] font-bold">Ahorra 20%</span>
+        </button>
+      </div>
     </div>
+
+    <!-- Grid de planes -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- Gratuito -->
+      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
+        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Gratuito</p>
+        <p class="text-[12px] text-gray-400 leading-snug mb-4">Empieza gratis. 14 días de prueba completa.</p>
+        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">Gratis</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 pricing-monthly">Para siempre tras la prueba</p>
+        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">Gratis</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 pricing-yearly hidden">Para siempre tras la prueba</p>
+        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#f8faff] border-gray-200 mb-4">
+          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="13.5" cy="6.5" r="1.5"/>
+  <circle cx="17.5" cy="10.5" r="1.5"/>
+  <circle cx="8.5" cy="7.5" r="1.5"/>
+  <circle cx="6.5" cy="12.5" r="1.5"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg></span>
+          <div>
+            <p class="text-[12px] font-bold text-[#101828]">Marca AKDEMIApp</p>
+            <p class="text-[11px] text-gray-400 leading-snug">Logo y colores de AKDEMIApp en portales y app</p>
+          </div>
+        </div>
+        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-[#f8faff] hover:border-[#155D88] text-[#155D88] border border-gray-200">
+          Crear cuenta gratis
+        </a>
+        <div class="border-t border-gray-100 my-1 mb-3"></div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">30 alumnos activos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">1 profesor / instructor</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">5 clases activas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Portal del estudiante</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Portal de padres</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Cobros y pagos básicos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Reglamento digital</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">App móvil PWA</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Soporte por email</span>
+        </div>
+      </div>
+
+      <!-- Starter -->
+      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
+        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Starter</p>
+        <p class="text-[12px] text-gray-400 leading-snug mb-4">Perfecto para academias en crecimiento.</p>
+        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$39</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
+        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$32</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$390/año — ahorras $78</p>
+        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#f8faff] border-gray-200 mb-4">
+          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="13.5" cy="6.5" r="1.5"/>
+  <circle cx="17.5" cy="10.5" r="1.5"/>
+  <circle cx="8.5" cy="7.5" r="1.5"/>
+  <circle cx="6.5" cy="12.5" r="1.5"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg></span>
+          <div>
+            <p class="text-[12px] font-bold text-[#101828]">Marca AKDEMIApp</p>
+            <p class="text-[11px] text-gray-400 leading-snug">Logo y colores de AKDEMIApp en portales y app</p>
+          </div>
+        </div>
+        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]">
+          Comenzar ahora
+        </a>
+        <div class="border-t border-gray-100 my-1 mb-3"></div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">100 alumnos activos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">3 profesores / instructores</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">10 clases activas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Gratuito</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Portal del profesor</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Pantalla Lobby / Recepción</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Firma de reglamento digital</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">CRM básico de prospectos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Reportes financieros básicos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Soporte por email (48h)</span>
+        </div>
+      </div>
+
+      <!-- Profesional -->
+      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-[#155D88] shadow-[0_0_0_1px_#155D88,0_12px_40px_rgba(21,93,136,0.15)]">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#155D88] text-white text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap">⭐ Más Popular</span>
+        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Profesional</p>
+        <p class="text-[12px] text-gray-400 leading-snug mb-4">La solución completa con tu propia identidad.</p>
+        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$59</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
+        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$49</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$590/año — ahorras $118</p>
+        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#EFF8FF] border-[#B9E0FB] mb-4">
+          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="13.5" cy="6.5" r="1.5"/>
+  <circle cx="17.5" cy="10.5" r="1.5"/>
+  <circle cx="8.5" cy="7.5" r="1.5"/>
+  <circle cx="6.5" cy="12.5" r="1.5"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg></span>
+          <div>
+            <p class="text-[12px] font-bold text-[#155D88]">Branding propio</p>
+            <p class="text-[11px] text-gray-400 leading-snug">Tu logo, paleta de colores y botones en portales y app</p>
+          </div>
+        </div>
+        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-[#155D88] hover:bg-[#124e75] text-white">
+          Comenzar ahora
+        </a>
+        <div class="border-t border-gray-100 my-1 mb-3"></div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">250 alumnos activos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">15 profesores / instructores</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">30 clases activas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Starter</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Evaluaciones digitales con IA</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Nómina de profesores</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Email masivo</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Reservas de clases</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Módulo de Eventos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">AKDI Asistente IA básico</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Certificados automáticos</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Firmas digitales completas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Reportes financieros avanzados</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Soporte prioritario (24h)</span>
+        </div>
+      </div>
+
+      <!-- Business -->
+      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f0fdf4] text-[#15803d] border border-[#bbf7d0] text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap">✓ 14 días gratis</span>
+        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Business</p>
+        <p class="text-[12px] text-gray-400 leading-snug mb-4">Para academias que quieren escalar sin límites.</p>
+        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$89</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
+        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$74</span><span class="text-[13px] text-gray-400">/mes</span></div>
+        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$890/año — ahorras $178</p>
+        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#EFF8FF] border-[#B9E0FB] mb-4">
+          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="13.5" cy="6.5" r="1.5"/>
+  <circle cx="17.5" cy="10.5" r="1.5"/>
+  <circle cx="8.5" cy="7.5" r="1.5"/>
+  <circle cx="6.5" cy="12.5" r="1.5"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg></span>
+          <div>
+            <p class="text-[12px] font-bold text-[#155D88]">Branding propio</p>
+            <p class="text-[11px] text-gray-400 leading-snug">Tu logo, paleta de colores y nombre personalizado de AKDI</p>
+          </div>
+        </div>
+        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]">
+          Comenzar con 14 días gratis
+        </a>
+        <div class="border-t border-gray-100 my-1 mb-3"></div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Alumnos ilimitados</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">50 profesores / instructores</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Clases ilimitadas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Profesional</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">AKDI Asistente IA completo</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Academy Twin proactivo</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Tarjetas de cumpleaños automáticas</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Boletería digital QR</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Add-on WhatsApp Business API</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Reportes avanzados</span>
+        </div>
+        <div class="flex items-start gap-2 py-1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="text-[12px] text-gray-600 leading-snug">Soporte por WhatsApp (4h)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Enterprise -->
+    <div class="bg-gradient-to-br from-[#101828] to-[#1a2a3a] rounded-2xl p-9 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 mb-6">
+      <div>
+        <span class="inline-block bg-[#399ABE]/20 text-[#399ABE] text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-3">Enterprise</span>
+        <h3 class="text-[24px] font-extrabold text-white tracking-tight mb-2">Solución a medida para grandes organizaciones</h3>
+        <p class="text-[14px] text-[#8a9ab0] max-w-lg leading-relaxed mb-4">Todo incluido sin límites. Integraciones personalizadas, dominio propio, API completa, soporte dedicado y SLA garantizado.</p>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alumnos ilimitados</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Profesores ilimitados</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Clases ilimitadas</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Academy Twin proactivo</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> API Access completo</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Multi-sede</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Control biométrico</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Factura electrónica</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Soporte dedicado 1h</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Integraciones a medida</span>
+          <span class="flex items-center gap-1.5 text-[12px] text-[#a0b4c4]"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Vocabulario personalizado</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-[#399ABE]/15 border border-[#399ABE]/30 text-[#399ABE] px-3 py-1.5 rounded-lg text-[11px] font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="13.5" cy="6.5" r="1.5"/>
+  <circle cx="17.5" cy="10.5" r="1.5"/>
+  <circle cx="8.5" cy="7.5" r="1.5"/>
+  <circle cx="6.5" cy="12.5" r="1.5"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg>
+          Branding 100% personalizado — dominio propio + vocabulario personalizado
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 shrink-0">
+        <a href={WA_ENT} target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white px-6 py-3.5 rounded-xl text-[14px] font-bold whitespace-nowrap transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+</svg>
+          Solicitar cotización
+        </a>
+        <a href="/#features" class="flex items-center justify-center bg-white/[0.06] hover:bg-white/[0.1] text-white px-6 py-3 rounded-xl text-[13px] font-semibold border border-white/[0.12] whitespace-nowrap transition-colors">Ver todas las funcionalidades</a>
+      </div>
+    </div>
+
+    <p class="text-center text-[13px] text-gray-400">¿Tienes varias sedes? <strong class="text-gray-500">Consulta nuestros planes multi-academia — desde $42/sede/año</strong></p>
+
   </div>
 </section>
 
 <script>
-  function setupPricingToggle() {
-    const monthlyToggle = document.getElementById("monthly-toggle");
-    const yearlyToggle = document.getElementById("yearly-toggle");
-    const monthlyPrices = document.querySelectorAll(".monthly-price");
-    const yearlyPrices = document.querySelectorAll(".yearly-price");
-
-    monthlyToggle?.addEventListener("click", () => {
-      monthlyToggle.classList.add("bg-primary-600", "text-white");
-      monthlyToggle.classList.remove("text-gray-600");
-      yearlyToggle?.classList.remove("bg-primary-600", "text-white");
-      yearlyToggle?.classList.add("text-gray-600");
-
-      monthlyPrices.forEach((el) => el.classList.remove("hidden"));
-      yearlyPrices.forEach((el) => el.classList.add("hidden"));
-    });
-
-    yearlyToggle?.addEventListener("click", () => {
-      yearlyToggle.classList.add("bg-primary-600", "text-white");
-      yearlyToggle.classList.remove("text-gray-600");
-      monthlyToggle?.classList.remove("bg-primary-600", "text-white");
-      monthlyToggle?.classList.add("text-gray-600");
-
-      monthlyPrices.forEach((el) => el.classList.add("hidden"));
-      yearlyPrices.forEach((el) => el.classList.remove("hidden"));
-    });
+  function setPricingMonthly() {
+    document.querySelectorAll('.pricing-monthly').forEach(function(el) { el.classList.remove('hidden'); });
+    document.querySelectorAll('.pricing-yearly').forEach(function(el) { el.classList.add('hidden'); });
+    var bm = document.getElementById('btn-monthly');
+    var by = document.getElementById('btn-yearly');
+    if (bm) { bm.classList.add('bg-[#155D88]','text-white','border-[#155D88]'); bm.classList.remove('bg-white','text-gray-500','border-gray-200'); }
+    if (by) { by.classList.remove('bg-[#155D88]','text-white','border-[#155D88]'); by.classList.add('bg-white','text-gray-500','border-gray-200'); }
   }
-
-  document.addEventListener("astro:page-load", setupPricingToggle);
+  function setPricingYearly() {
+    document.querySelectorAll('.pricing-yearly').forEach(function(el) { el.classList.remove('hidden'); });
+    document.querySelectorAll('.pricing-monthly').forEach(function(el) { el.classList.add('hidden'); });
+    var bm = document.getElementById('btn-monthly');
+    var by = document.getElementById('btn-yearly');
+    if (by) { by.classList.add('bg-[#155D88]','text-white','border-[#155D88]'); by.classList.remove('bg-white','text-gray-500','border-gray-200'); }
+    if (bm) { bm.classList.remove('bg-[#155D88]','text-white','border-[#155D88]'); bm.classList.add('bg-white','text-gray-500','border-gray-200'); }
+  }
+  document.addEventListener('astro:page-load', function() {
+    setPricingMonthly();
+  });
 </script>
