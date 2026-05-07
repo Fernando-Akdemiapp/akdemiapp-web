@@ -1,164 +1,635 @@
 ---
-import Card from "../ui/Card.astro";
-import Badge from "../ui/Badge.astro";
-import Button from "../ui/Button.astro";
-import EmptyContentState from "../ui/EmptyContentState.astro";
-import { getFeatures } from "@/services";
-import type { FeaturesSection as FeaturesSectionProps } from "@/types/Page";
-import type { BenefitItem } from "@/types/Page";
-
-type Props = FeaturesSectionProps;
-
-const {
-  sectionTitle,
-  sectionSubtitle,
-  sectionDescription,
-  badge: sectionBadge,
-  features: providedFeatures,
-  showCTA = false,
-  ctaTitle,
-  ctaDescription,
-  ctaButtonText,
-  ctaButtonLink,
-} = Astro.props;
-
-// If features is an array of IDs (numbers), fetch from API
-// Otherwise, use the provided features directly
-let features: BenefitItem[] = [];
-
-if (Array.isArray(providedFeatures) && providedFeatures.length > 0) {
-  // Check if first element is a number (ID) or an object (BenefitItem)
-  if (typeof providedFeatures[0] === 'number') {
-    // Fetch features from API using IDs
-    const apiFeatures = await getFeatures();
-    features = apiFeatures.filter(f => providedFeatures.includes(f.id));
-  } else {
-    // Use provided features directly
-    features = providedFeatures as BenefitItem[];
-  }
-}
-
-// Log warning in production if no features
-if (import.meta.env.PROD && features.length === 0) {
-  console.warn('⚠️ Features Section: No features data available in production build');
-}
+const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20vi%20AKDEMIApp%20y%20me%20interesa%20una%20demostraci%C3%B3n%20para%20mi%20academia";
 ---
 
-<section id="features" class="py-16 lg:py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Section Header -->
-    <div class="text-center mb-16">
-      {sectionBadge && <Badge variant="primary" class="mb-4">{sectionBadge}</Badge>}
-      <h2
-        class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
-      >
-        {sectionTitle}
-        <span
-          class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
-        >
-          {sectionSubtitle}
+<section id="features" class="py-20 bg-[#f8faff]">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="mb-14">
+      <span class="inline-block bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+        Funcionalidades
+      </span>
+      <h2 class="text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight leading-[1.08] mb-4">
+        Todo lo que tu academia<br>
+        <span class="bg-gradient-to-r from-[#155D88] to-[#399ABE] bg-clip-text text-transparent">
+          necesita en un solo lugar
         </span>
       </h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        {sectionDescription}
+      <p class="text-lg text-gray-500 max-w-xl leading-relaxed">
+        Más de 30 funcionalidades diseñadas por directores de academia para resolver los problemas reales de cada día.
       </p>
     </div>
 
-    <!-- Features Grid or Empty State -->
-    {features.length > 0 ? (
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-          features.map((feature, index) => (
-            <Card
-              hover
-              class="group relative overflow-hidden"
-              style={`animation-delay: ${index * 100}ms`}
-            >
-              {feature.badge && (
-                <div class="absolute top-4 right-4">
-                  <Badge
-                    variant={
-                      feature.badge === "Popular"
-                        ? "accent"
-                        : feature.badge === "Seguro"
-                          ? "secondary"
-                          : "primary"
-                    }
-                  >
-                    {feature.badge}
-                  </Badge>
-                </div>
-              )}
+    <!-- 6 tarjetas principales -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="features-grid">
+      <button
+        type="button"
+        data-panel="gestion"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Gestión de Academia</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">Alumnos, asistencias, clases, evaluaciones y reglamento en un solo panel.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          5 funcionalidades
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+      <button
+        type="button"
+        data-panel="finanzas"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="1" y="4" width="22" height="22" rx="2"/>
+  <line x1="1" y1="10" x2="23" y2="10"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Finanzas</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">Cobros, POS, reportes financieros y facturación integrada.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          5 funcionalidades
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+      <button
+        type="button"
+        data-panel="captacion"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+  <polyline points="17 6 23 6 23 12"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Captación y CRM</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">Pipeline Kanban, formularios online, reservas y boletería.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          4 funcionalidades
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+      <button
+        type="button"
+        data-panel="comunicaciones"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Comunicaciones</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">WhatsApp masivo, email, notificaciones, cumpleaños y certificados.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          5 funcionalidades
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+      <button
+        type="button"
+        data-panel="portales"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+  <circle cx="9" cy="7" r="4"/>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Portales</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">Acceso personalizado para alumnos, padres y profesores.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          3 portales
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+      <button
+        type="button"
+        data-panel="tecnologia"
+        class="feature-card text-left bg-white border border-gray-200 rounded-2xl p-7 cursor-pointer transition-all duration-200 hover:border-[#155D88] hover:shadow-lg hover:-translate-y-1 relative overflow-hidden group"
+      >
+        <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#155D88] to-[#399ABE] opacity-0 group-hover:opacity-100 transition-opacity duration-200 panel-bar"></div>
+        <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mb-4 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="11" width="22" height="22" rx="2"/>
+  <circle cx="12" cy="5" r="2"/>
+  <path d="M12 7v4"/>
+  <line x1="8" y1="16" x2="8" y2="16"/>
+  <line x1="16" y1="16" x2="16" y2="16"/>
+</svg>
+        </div>
+        <h3 class="text-[16px] font-bold text-[#101828] mb-2 tracking-tight">Tecnología</h3>
+        <p class="text-[13px] text-gray-500 leading-relaxed mb-4">AKDI IA, PWA móvil, QR, inventario, tienda en línea y multi-academia.</p>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#155D88]">
+          6 funcionalidades
+          <svg class="w-3.5 h-3.5 arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></svg>
+        </span>
+      </button>
+    </div>
 
-              <div class="flex flex-col h-full">
-                {/* Icon */}
-                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span class="text-3xl">{feature.icon}</span>
-                </div>
-
-                {/* Content */}
-                <h3 class="text-xl font-bold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
-                <p class="text-gray-600 flex-grow">{feature.description}</p>
-
-                {/* Hover effect */}
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </div>
-            </Card>
-          ))
-        }
-      </div>
-    ) : (
-      <EmptyContentState
-        title="Funcionalidades No Disponibles"
-        message="Las funcionalidades de esta sección se cargarán pronto desde nuestro sistema de gestión de contenidos."
-        icon="⚙️"
-      />
-    )}
-
-    <!-- CTA Section -->
-    {showCTA && (
-      <div class="mt-16 text-center">
-        <div
-          class="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100"
-        >
-          <div class="text-left">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">
-              {ctaTitle || "Compruébalo tú mismo sin riesgo"}
-            </h3>
-            <p class="text-gray-600">
-              {ctaDescription || "Agenda una demostración personalizada de 30 minutos para conocer todas las funcionalidades."}
-            </p>
+    <!-- Panel: gestion -->
+    <div id="panel-gestion" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Gestión de Academia</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+  <circle cx="9" cy="7" r="4"/>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+</svg>
           </div>
-          <Button
-            href={ctaButtonLink || "/#callback-form"}
-            variant="primary"
-            size="md"
-            class="shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap"
-          >
-            {ctaButtonText || "Agendar Demostración"}
-          </Button>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Gestión de Alumnos</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Ficha completa, fotos, historial y documentos</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="16" height="16" rx="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  <path d="M9 16l2 2 4-4"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Control de Asistencias</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Manual, QR automático e integración biométrica</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="16" height="16" rx="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Agenda de Clases</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">General, por disciplina, clases de prueba y eventos</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="8" r="6"/>
+  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Evaluaciones</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Carga con IA, rangos, niveles y firmas digitales</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Reglamento Digital</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Firma electrónica integrada al portal del alumno</p>
+          </div>
         </div>
       </div>
-    )}
+    </div>
+
+    <!-- Panel: finanzas -->
+    <div id="panel-finanzas" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Finanzas</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="6 12 10 16 18 8"/>
+  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Cobros y Pagos</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Mensualidades, inscripciones, paquetes y eventos</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+  <polyline points="14 2 14 8 20 8"/>
+  <line x1="16" y1="13" x2="8" y2="13"/>
+  <line x1="16" y1="17" x2="8" y2="17"/>
+  <polyline points="10 9 9 9 8 9"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Facturación Electrónica</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Disponible en Panamá — Yappy y PaguéloFácil</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="1" y="4" width="16" height="16" rx="2"/>
+  <line x1="1" y1="10" x2="23" y2="10"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">POS y Tipos de Pago</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Punto de venta físico, configurable por academia</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="18" y1="20" x2="18" y2="10"/>
+  <line x1="12" y1="20" x2="12" y2="4"/>
+  <line x1="6" y1="20" x2="6" y2="14"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Reportes Financieros</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Ingresos, egresos, netos y cobros pendientes</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/>
+  <path d="M9 12l2 2 4-4"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Nómina de Profesores</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Recibos automáticos con firma digital</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: captacion -->
+    <div id="panel-captacion" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Captación y CRM</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+  <polyline points="17 6 23 6 23 12"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">CRM de Prospectos</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Pipeline Kanban con temperatura y seguimiento de leads</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Formularios Online</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Editables, compartibles por QR, link o WhatsApp</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="16" height="16" rx="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Reservas de Clases</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Portal de reservas directo para alumnos</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="16" height="16"/>
+  <rect x="14" y="3" width="16" height="16"/>
+  <rect x="3" y="14" width="16" height="16"/>
+  <rect x="5" y="5" width="16" height="16" fill="#155D88"/>
+  <rect x="16" y="5" width="16" height="16" fill="#155D88"/>
+  <rect x="5" y="16" width="16" height="16" fill="#155D88"/>
+  <line x1="14" y1="14" x2="14" y2="14"/>
+  <line x1="17" y1="14" x2="17" y2="14"/>
+  <line x1="20" y1="14" x2="20" y2="14"/>
+  <line x1="14" y1="17" x2="14" y2="17"/>
+  <line x1="17" y1="17" x2="20" y2="17"/>
+  <line x1="20" y1="20" x2="20" y2="20"/>
+  <line x1="14" y1="20" x2="17" y2="20"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Eventos y Boletería</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Gestión de eventos con tickets digitales QR</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: comunicaciones -->
+    <div id="panel-comunicaciones" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Comunicaciones</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#155D88">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">WhatsApp</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Plantillas editables y masivos — requiere cuenta Meta</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Email Masivo</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Campañas de re-marketing segmentadas por disciplina</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Notificaciones</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Cobros, clases, eventos y mensajes internos</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="20 12 20 22 4 22 4 12"/>
+  <rect x="2" y="7" width="16" height="16"/>
+  <line x1="12" y1="22" x2="12" y2="7"/>
+  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Tarjetas de Cumpleaños</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Generadas y enviadas automáticamente</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="8" r="6"/>
+  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Certificados</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Generados automáticamente al aprobar evaluaciones</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: portales -->
+    <div id="panel-portales" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Portales</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="5" y="2" width="16" height="16" rx="2"/>
+  <line x1="12" y1="18" x2="12.01" y2="18"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Portal del Alumno</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Horarios, reglamento, evaluaciones, pagos, saldo y tienda</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+  <circle cx="9" cy="7" r="4"/>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Portal del Padre</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Varios hijos, pagos, evaluaciones, reglamento y tienda</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+  <path d="M4 22h16"/>
+  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+  <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Portal del Profesor</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Asistencias, nómina, clases, alumnos y mensajería</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: tecnologia -->
+    <div id="panel-tecnologia" class="feature-panel hidden mt-4 bg-white border-2 border-[#155D88] rounded-2xl p-8 animate-fade-in">
+      <h3 class="text-xl font-extrabold text-[#101828] mb-6 tracking-tight">Tecnología</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="11" width="16" height="16" rx="2"/>
+  <circle cx="12" cy="5" r="2"/>
+  <path d="M12 7v4"/>
+  <line x1="8" y1="16" x2="8" y2="16"/>
+  <line x1="16" y1="16" x2="16" y2="16"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">AKDI — Agente IA</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Asistente nativo proactivo integrado en toda la plataforma</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="5" y="2" width="16" height="16" rx="2"/>
+  <line x1="12" y1="18" x2="12.01" y2="18"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">App Móvil PWA</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Se instala en cualquier dispositivo sin tienda de apps</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="16" height="16"/>
+  <rect x="14" y="3" width="16" height="16"/>
+  <rect x="3" y="14" width="16" height="16"/>
+  <rect x="5" y="5" width="16" height="16" fill="#155D88"/>
+  <rect x="16" y="5" width="16" height="16" fill="#155D88"/>
+  <rect x="5" y="16" width="16" height="16" fill="#155D88"/>
+  <line x1="14" y1="14" x2="14" y2="14"/>
+  <line x1="17" y1="14" x2="17" y2="14"/>
+  <line x1="20" y1="14" x2="20" y2="14"/>
+  <line x1="14" y1="17" x2="14" y2="17"/>
+  <line x1="17" y1="17" x2="20" y2="17"/>
+  <line x1="20" y1="20" x2="20" y2="20"/>
+  <line x1="14" y1="20" x2="17" y2="20"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Check-in QR</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Entrada sin papel, rápida y automatizada</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 3h18v18H3z"/>
+  <path d="M3 9h18M3 15h18M9 3v18"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Inventario</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Stock digital integrado con tienda en línea y POS</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="6 12 10 16 18 8"/>
+  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Tienda en Línea</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Nativa con carrito, integrada con inventario y POS</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-[#f8faff] border border-[#eef1f6]">
+          <div class="w-8 h-8 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+  <circle cx="12" cy="10" r="3"/>
+</svg>
+          </div>
+          <div>
+            <p class="text-[13px] font-bold text-[#101828] leading-tight">Multi-Academia</p>
+            <p class="text-[11px] text-gray-400 mt-0.5 leading-snug">Maneja varias sedes desde un solo panel de control</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-16 bg-gradient-to-br from-[#155D88] to-[#399ABE] rounded-2xl p-12 text-center text-white">
+      <h3 class="text-3xl font-extrabold mb-3 tracking-tight">¿Listo para transformar tu academia?</h3>
+      <p class="text-lg opacity-85 mb-8">Únete a más de 70 academias en Latinoamérica que ya gestionan con AKDEMIApp</p>
+      <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2.5 bg-white text-[#155D88] font-bold text-[15px] px-8 py-3.5 rounded-xl hover:bg-gray-50 transition-colors shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#155D88">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+</svg>
+        Agenda una demostración
+      </a>
+    </div>
+
   </div>
 </section>
 
 <style>
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .animate-fade-in {
+    animation: fadeInPanel 0.2s ease forwards;
+  }
+  @keyframes fadeInPanel {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .feature-card.active {
+    border-color: #155D88;
+    box-shadow: 0 8px 28px rgba(21,93,136,0.14);
+    transform: translateY(-4px);
+  }
+  .feature-card.active .panel-bar { opacity: 1; }
+  .feature-card.active .arrow-icon { transform: rotate(180deg); }
+</style>
+
+<script>
+  function initFeatures() {
+    var cards = document.querySelectorAll('.feature-card');
+    var panels = document.querySelectorAll('.feature-panel');
+    var current = null;
+
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        var id = card.getAttribute('data-panel');
+        var panel = document.getElementById('panel-' + id);
+
+        if (current === id) {
+          panel.classList.add('hidden');
+          card.classList.remove('active');
+          current = null;
+          return;
+        }
+
+        panels.forEach(function(p) { p.classList.add('hidden'); });
+        cards.forEach(function(c) { c.classList.remove('active'); });
+
+        panel.classList.remove('hidden');
+        card.classList.add('active');
+        current = id;
+
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
   }
 
-  .grid > * {
-    animation: fadeInUp 0.6s ease-out forwards;
-    opacity: 0;
-  }
-</style>
+  document.addEventListener('astro:page-load', initFeatures);
+</script>
