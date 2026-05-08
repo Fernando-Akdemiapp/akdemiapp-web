@@ -1,9 +1,6 @@
 ---
 /**
  * CTA Section - Dynamic Call-to-Action with optional stats
- *
- * Refactored to receive props from Page Builder (Strapi CMS)
- * Uses CTASection type from @/types/Page
  */
 import Button from "../ui/Button.astro";
 import CTAButton from "../ui/CTAButton.astro";
@@ -11,7 +8,6 @@ import EmptyContentState from "../ui/EmptyContentState.astro";
 import { getSiteStats } from "@/services/stats";
 import type { CTASection as CTASectionProps } from '@/types/Page';
 
-// Make props optional for backwards compatibility with old pages
 type Props = Partial<CTASectionProps>;
 
 const {
@@ -25,20 +21,17 @@ const {
   backgroundColor = 'gradient'
 } = Astro.props;
 
-// Fetch stats only if showStats is true
 const stats = showStats ? await getSiteStats() : null;
 
-// Production logging for missing stats
 if (import.meta.env.PROD && showStats && !stats) {
   console.warn('⚠️ CTA Section: Stats requested but not available from API');
 }
 
-// Determine background gradient based on prop
 const bgClass = backgroundColor === 'primary'
-  ? 'bg-gradient-to-br from-primary-600 to-primary-800'
+  ? 'bg-gradient-to-br from-[#0d3d5e] to-[#155D88]'
   : backgroundColor === 'secondary'
-  ? 'bg-gradient-to-br from-secondary-600 to-secondary-800'
-  : 'bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-700';
+  ? 'bg-gradient-to-br from-[#155D88] to-[#1a7aad]'
+  : 'bg-gradient-to-br from-[#0d3d5e] via-[#155D88] to-[#1a7aad]';
 ---
 
 <section id="contact" class={`py-16 lg:py-24 ${bgClass} relative overflow-hidden`}>
@@ -59,7 +52,7 @@ const bgClass = backgroundColor === 'primary'
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
         <a
           href={primaryButtonLink}
-          class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 hover:bg-gray-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 font-bold rounded-lg transition-all duration-200 text-lg"
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#155D88] hover:bg-gray-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 font-bold rounded-lg transition-all duration-200 text-lg"
         >
           {primaryButtonText}
         </a>
@@ -74,7 +67,6 @@ const bgClass = backgroundColor === 'primary'
         )}
       </div>
 
-      <!-- Trust Badges (conditionally rendered) -->
       {showStats && stats && (
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center pt-12 border-t border-white/20">
           <div class="text-center">
