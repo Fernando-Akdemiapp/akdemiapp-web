@@ -7,13 +7,10 @@ import EmptyContentState from "../components/ui/EmptyContentState.astro";
 import FAQ from "../components/sections/FAQ.astro";
 import { getPageBySlug } from "../services/pages";
 import type { Page } from "../types";
-
 const homePage: Page | null = await getPageBySlug('home');
-
 if (import.meta.env.PROD && !homePage) {
   console.warn('⚠️ Home Page: No "home" page found in Strapi CMS');
 }
-
 const pageTitle = homePage?.seo?.metaTitle || "AKDEMIApp - Software de Gestión para Academias";
 const pageDescription = homePage?.seo?.metaDescription || "El primer CRM AI-Native para academias latinoamericanas. Gestiona alumnos, cobros, clases y comunicaciones desde un solo lugar.";
 const pageKeywords = homePage?.seo?.keywords;
@@ -21,7 +18,6 @@ const pageRobots = homePage?.seo?.metaRobots;
 const canonicalURL = homePage?.seo?.canonicalURL;
 const structuredData = homePage?.seo?.structuredData;
 ---
-
 <Layout
   title={pageTitle}
   description={pageDescription}
@@ -39,7 +35,6 @@ const structuredData = homePage?.seo?.structuredData;
         />
       </div>
     )}
-    <!-- FAQ: sección estática, no depende de Strapi -->
     <FAQ />
   </main>
   <Footer />
@@ -48,3 +43,23 @@ const structuredData = homePage?.seo?.structuredData;
 {structuredData && (
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 )}
+
+<!-- Interceptar botones WA del hero → abrir modal CRM -->
+<script is:inline>
+  function interceptHeroButtons() {
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
+      // Solo los que mencionan "demo" en el texto o en el href
+      var text = link.textContent || '';
+      var href = link.getAttribute('href') || '';
+      if (text.toLowerCase().includes('demo') || href.includes('demostraci')) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (window.openLeadModal) window.openLeadModal();
+        });
+      }
+    });
+  }
+  // Ejecutar en carga y en cada transición de página Astro
+  document.addEventListener('astro:page-load', interceptHeroButtons);
+  document.addEventListener('DOMContentLoaded', interceptHeroButtons);
+</script>
