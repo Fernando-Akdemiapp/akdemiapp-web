@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   output: 'static',
   site: 'https://akdemiapp.com',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]
