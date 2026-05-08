@@ -1,65 +1,56 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/layout/Navbar.astro";
-import Footer from "../components/layout/Footer.astro";
-import DynamicPageRenderer from "../components/DynamicPageRenderer.astro";
-import EmptyContentState from "../components/ui/EmptyContentState.astro";
-import FAQ from "../components/sections/FAQ.astro";
-import { getPageBySlug } from "../services/pages";
-import type { Page } from "../types";
-const homePage: Page | null = await getPageBySlug('home');
-if (import.meta.env.PROD && !homePage) {
-  console.warn('⚠️ Home Page: No "home" page found in Strapi CMS');
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
 }
-const pageTitle = homePage?.seo?.metaTitle || "AKDEMIApp - Software de Gestión para Academias";
-const pageDescription = homePage?.seo?.metaDescription || "El primer CRM AI-Native para academias latinoamericanas. Gestiona alumnos, cobros, clases y comunicaciones desde un solo lugar.";
-const pageKeywords = homePage?.seo?.keywords;
-const pageRobots = homePage?.seo?.metaRobots;
-const canonicalURL = homePage?.seo?.canonicalURL;
-const structuredData = homePage?.seo?.structuredData;
+
+const {
+  title = "AkdemiApp - Software de Gestión para Academias y Escuelas",
+  description = "Optimiza, organiza y simplifica la gestión de tu academia con AkdemiApp. Software integral para control de alumnos, profesores, pagos, horarios y más.",
+  ogImage = "/og-image.jpg",
+  canonical = Astro.url.pathname,
+} = Astro.props;
+
+const fullTitle = title.includes("AkdemiApp") ? title : `${title} | AkdemiApp`;
+const canonicalURL = new URL(canonical, Astro.site);
 ---
-<Layout
-  title={pageTitle}
-  description={pageDescription}
->
-  <Navbar />
-  <main>
-    {homePage ? (
-      <DynamicPageRenderer sections={homePage.sections} />
-    ) : (
-      <div class="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50">
-        <EmptyContentState
-          title="Página no disponible"
-          message="Estamos teniendo algunos problemas, trabajamos para solucionarlos."
-          icon="🏠"
-        />
-      </div>
-    )}
-    <FAQ />
-  </main>
-  <Footer />
-</Layout>
 
-{structuredData && (
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-)}
+<!doctype html>
+<html lang="es" transition:animate="fade">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, Astro.site)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <ClientRouter />
+  </head>
+  <body class="antialiased bg-white text-gray-900">
+    <slot />
+  </body>
+</html>
 
-<!-- Interceptar botones WA del hero → abrir modal CRM -->
-<script is:inline>
-  function interceptHeroButtons() {
-    document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
-      // Solo los que mencionan "demo" en el texto o en el href
-      var text = link.textContent || '';
-      var href = link.getAttribute('href') || '';
-      if (text.toLowerCase().includes('demo') || href.includes('demostraci')) {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (window.openLeadModal) window.openLeadModal();
-        });
-      }
-    });
-  }
-  // Ejecutar en carga y en cada transición de página Astro
-  document.addEventListener('astro:page-load', interceptHeroButtons);
-  document.addEventListener('DOMContentLoaded', interceptHeroButtons);
-</script>
+<style is:global>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-height: 100vh; }
+</style>
