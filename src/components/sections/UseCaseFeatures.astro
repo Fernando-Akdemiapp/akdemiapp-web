@@ -20,7 +20,7 @@ const {
 const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20AKDEMIApp%20para%20mi%20academia";
 
 function cleanEmoji(str: string): string {
-  return str.replace(/[\u200B-\u200D\uFEFF\uFE0F\u20E3]/g, '').trim();
+  return str.replace(/[\u200B\u200C\uFEFF\uFE0F\u20E3]/g, '').trim();
 }
 
 const ICONS: Record<string, string> = {
