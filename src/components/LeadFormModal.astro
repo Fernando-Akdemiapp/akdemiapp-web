@@ -529,5 +529,10 @@ function openWA(){window.open('https://wa.me/50765726078?text='+encodeURICompone
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
 window.openLeadModal = openModal;
-document.addEventListener('astro:page-load', () => { window.openLeadModal = openModal; });
+document.addEventListener('astro:page-load', () => {
+  window.openLeadModal = openModal;
+  document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
+});
 </script>
