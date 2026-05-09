@@ -528,5 +528,6 @@ function ovClick(e){if(e.target===document.getElementById('overlay'))closeModal(
 function openWA(){window.open('https://wa.me/50765726078?text='+encodeURIComponent('Hola, acabo de llenar el formulario de AKDEMIApp.'),'_blank');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
-window.openLeadModal=openModal;
+window.openLeadModal = openModal;
+document.addEventListener('astro:page-load', () => { window.openLeadModal = openModal; });
 </script>
