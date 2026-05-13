@@ -149,80 +149,31 @@ const features: Feature[] = [
         <div class="max-w-6xl mx-auto">
           <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
 
-            <!-- Screenshot (with optional phone mockup) -->
+            <!-- Screenshot(s) -->
             <div class="w-full lg:w-1/2 shrink-0">
               {feature.mobileImage ? (
-                <>
-                  {/* Desktop: laptop + phone overlapping composition */}
-                  <div class="hidden lg:block relative pb-12 pr-6">
-                    <div class="rounded-xl overflow-hidden shadow-xl border border-black/[0.07] bg-gray-100">
-                      <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-200/70 border-b border-black/[0.06]">
-                        <span class="w-3 h-3 rounded-full bg-red-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-400"></span>
-                      </div>
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        class="w-full h-auto object-cover block"
-                        loading="lazy"
-                      />
-                    </div>
-                    {/* Phone mockup overlapping bottom-right */}
-                    <div class="absolute bottom-0 right-0 z-10 rotate-2 drop-shadow-2xl">
-                      <div class="relative rounded-2xl border-4 border-gray-800 shadow-2xl bg-white p-1 overflow-hidden w-28" style="max-height: 280px;">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-gray-800 rounded-b-xl z-10"></div>
-                        <img
-                          src={feature.mobileImage}
-                          alt={`${feature.title} — vista móvil`}
-                          class="rounded-xl w-full object-cover block"
-                          style="max-height: 268px;"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
+                <div class="flex flex-col sm:flex-row gap-6 items-start">
+                  <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200 flex-1">
+                    <img
+                      src={feature.image}
+                      alt={feature.title}
+                      class="w-full h-auto block"
+                      loading="lazy"
+                    />
                   </div>
-
-                  {/* Mobile: laptop then phone stacked */}
-                  <div class="lg:hidden flex flex-col gap-5">
-                    <div class="rounded-xl overflow-hidden shadow-xl border border-black/[0.07] bg-gray-100">
-                      <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-200/70 border-b border-black/[0.06]">
-                        <span class="w-3 h-3 rounded-full bg-red-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-400"></span>
-                      </div>
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        class="w-full h-auto object-cover block"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="flex justify-center">
-                      <div class="relative rounded-2xl border-4 border-gray-800 shadow-xl bg-white p-1 overflow-hidden w-32" style="max-height: 280px;">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-gray-800 rounded-b-xl z-10"></div>
-                        <img
-                          src={feature.mobileImage}
-                          alt={`${feature.title} — vista móvil`}
-                          class="rounded-xl w-full object-cover block"
-                          style="max-height: 268px;"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </>
+                  <img
+                    src={feature.mobileImage}
+                    alt={`${feature.title} — vista móvil`}
+                    class="rounded-2xl shadow-lg border border-gray-200 max-h-[400px] w-auto"
+                    loading="lazy"
+                  />
+                </div>
               ) : (
-                <div class="rounded-xl overflow-hidden shadow-xl border border-black/[0.07] bg-gray-100">
-                  <div class="flex items-center gap-1.5 px-4 py-3 bg-gray-200/70 border-b border-black/[0.06]">
-                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
-                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
-                  </div>
+                <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200">
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    class="w-full h-auto object-cover block"
+                    class="w-full h-auto block"
                     loading="lazy"
                   />
                 </div>
