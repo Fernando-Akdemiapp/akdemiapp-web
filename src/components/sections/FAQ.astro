@@ -1,5 +1,56 @@
 ---
 const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20AKDEMIApp";
+
+const tabs = [
+  {
+    id: 'empezando',
+    label: 'Empezando',
+    faqs: [
+      { q: '¿Cuánto tiempo toma configurar mi academia?', a: 'Menos de 10 minutos. El wizard te guía paso a paso para registrar tu academia, agregar clases y empezar a inscribir alumnos.' },
+      { q: '¿Necesito instalar algo?', a: 'No. AKDEMIApp funciona 100% en la nube desde cualquier navegador. También puedes instalarla como app en tu celular sin ir a App Store ni Google Play.' },
+      { q: '¿Necesito conocimientos técnicos para usarlo?', a: 'No. El sistema está diseñado para directores de academia, no para programadores. Todo es visual, intuitivo y con asistente de IA que te guía.' },
+      { q: '¿Puedo migrar mis datos desde Excel o AppSheet?', a: 'Sí. Puedes importar tus estudiantes, profesores y clases desde archivos Excel o CSV. También ofrecemos migración asistida desde AppSheet.' },
+      { q: '¿Funciona en el celular?', a: 'Sí. AKDEMIApp es una Progressive Web App (PWA). Se instala en cualquier celular o tablet como una app nativa, funciona rápido y hasta sin conexión.' },
+    ],
+  },
+  {
+    id: 'funcionalidades',
+    label: 'Funcionalidades',
+    faqs: [
+      { q: '¿Funciona para cualquier tipo de academia?', a: 'Sí. Danza, artes marciales, música, fútbol, yoga, arte, teatro, idiomas, baloncesto, béisbol y más. Cada academia se configura con las herramientas específicas para su disciplina.' },
+      { q: '¿Los padres y alumnos pueden acceder al sistema?', a: 'Sí. Cada plan incluye portales dedicados para alumnos y padres donde ven horarios, pagos, asistencia y calificaciones desde su celular.' },
+      { q: '¿Puedo crear mi propio sitio web con AKDEMIApp?', a: 'Sí. El plan Business incluye un creador de sitio web profesional con tienda online, formulario de inscripción y reserva de clases. También disponible como add-on en cualquier plan.' },
+      { q: '¿Cómo funciona la asistencia QR?', a: 'Generas un código QR por clase. El alumno lo escanea al llegar y la asistencia se registra automáticamente. Disponible desde el plan Profesional o como add-on.' },
+      { q: '¿Puedo vender uniformes o productos desde el sistema?', a: 'Sí. El módulo de Inventario con Tienda Online te permite vender productos físicos. Los alumnos compran desde el portal o desde tu sitio web.' },
+      { q: '¿Puedo organizar torneos y competencias?', a: 'Sí. Crea categorías por edad, peso o nivel, inscribe participantes, registra resultados y genera tabla de posiciones con medallas automáticas.' },
+      { q: '¿El sistema envía recordatorios automáticos?', a: 'Sí. Envía recordatorios de clases, cobros pendientes, cumpleaños y más por email. Próximamente también por WhatsApp.' },
+    ],
+  },
+  {
+    id: 'precios',
+    label: 'Precios',
+    faqs: [
+      { q: '¿Qué pasa después de los 14 días de prueba?', a: 'Tu academia pasa automáticamente al plan Gratuito con hasta 30 estudiantes. No pierdes ningún dato. Puedes seguir usando el sistema gratis o elegir un plan de pago cuando quieras.' },
+      { q: '¿Qué incluye el plan gratuito?', a: 'Hasta 30 estudiantes, 1 profesor, 5 clases, cobros, calendario y app instalable. Ideal para academias pequeñas. Sin tarjeta de crédito, gratis para siempre.' },
+      { q: '¿Hay contratos o permanencia mínima?', a: 'No. Sin contratos, sin tarjeta de crédito para empezar, cancelas cuando quieras. Sin letras pequeñas.' },
+      { q: '¿Puedo cambiar de plan en cualquier momento?', a: 'Sí. Puedes subir o bajar de plan cuando lo necesites. El cambio se aplica de inmediato y se ajusta tu facturación.' },
+      { q: '¿Puedo agregar funciones extra sin cambiar de plan?', a: 'Sí. Todos los módulos están disponibles como add-ons individuales. Pagas solo por lo que necesitas sin cambiar de plan.' },
+      { q: '¿Qué métodos de pago aceptan para la suscripción?', a: 'Yappy, tarjeta de crédito/débito, transferencia bancaria y próximamente más opciones para toda Latinoamérica.' },
+      { q: '¿Ofrecen descuento por pago anual?', a: 'Sí. Ahorra hasta un 20% pagando anual en cualquier plan.' },
+    ],
+  },
+  {
+    id: 'soporte',
+    label: 'Soporte',
+    faqs: [
+      { q: '¿Mis datos están seguros?', a: 'Sí. Usamos encriptación SSL, servidores en la nube con respaldos automáticos y cumplimos con estándares internacionales de seguridad. Tus datos son tuyos, siempre.' },
+      { q: '¿En qué países está disponible?', a: 'En toda Latinoamérica y el Caribe. Panamá, Colombia, México, Costa Rica, Puerto Rico, República Dominicana y más. El sistema funciona en español.' },
+      { q: '¿Ofrecen soporte en español?', a: 'Sí. Todo el sistema, la documentación y el soporte están 100% en español. Nuestro equipo habla tu idioma.' },
+      { q: '¿Cómo puedo contactar al equipo de soporte?', a: 'Por WhatsApp, email o directamente desde el sistema con AKDI, nuestro asistente de IA que responde 24/7.' },
+      { q: '¿Puedo manejar varias sedes o sucursales?', a: 'Sí. El plan Enterprise soporta multi-sede con gestión centralizada, reportes consolidados y permisos por ubicación.' },
+    ],
+  },
+];
 ---
 
 <section id="faq" class="py-20 bg-white">
@@ -12,173 +63,58 @@ const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%
     <h2 class="text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight leading-[1.08] mb-4">
       Preguntas y <span class="bg-gradient-to-r from-[#155D88] to-[#399ABE] bg-clip-text text-transparent">respuestas</span>
     </h2>
-    <p class="text-[17px] text-gray-500 leading-relaxed mb-12">
+    <p class="text-[17px] text-gray-500 leading-relaxed mb-10">
       Todo lo que necesitas saber antes de empezar. ¿No encuentras tu respuesta? Escríbenos por WhatsApp.
     </p>
 
-    <!-- FAQ List -->
-    <div class="divide-y divide-gray-100 border-t border-gray-100" id="faq-list">
-      <div class="faq-item" id="faq-0">
+    <!-- Tabs -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
+      {tabs.map((tab, i) => (
         <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(0)"
-          aria-expanded="false"
+          class="faq-tab px-4 py-2.5 rounded-xl text-[14px] font-semibold border transition-all duration-150 cursor-pointer"
+          data-tab={tab.id}
+          onclick={`faqSwitchTab('${tab.id}')`}
+          style={i === 0 ? 'background:#399ABE;color:#fff;border-color:#399ABE;' : 'background:#fff;color:#1a1a2e;border-color:#e2e8f0;'}
         >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Qué pasa después de los 14 días de prueba?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          {tab.label}
         </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Al terminar el período de prueba, tu cuenta pasa automáticamente al plan Gratuito con hasta 30 alumnos activos. No se te cobra nada y no necesitas ingresar tarjeta de crédito. Si quieres continuar con más funcionalidades, puedes activar el plan que mejor se adapte a tu academia desde el panel de Mi Plan.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-1">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(1)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Necesito instalar algo?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">No. AKDEMIApp es 100% web — funciona desde cualquier navegador en tu computadora, tablet o celular. Además incluye una App Móvil PWA que tus alumnos y profesores pueden instalar en su celular directamente desde el navegador, sin pasar por la App Store ni Google Play.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-2">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(2)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Funciona para cualquier tipo de academia?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Sí. AKDEMIApp está diseñado para más de 25 tipos de academias: danza, ballet, artes marciales, yoga, pilates, música, artes plásticas, artes escénicas, idiomas, pre-escolar, deportes en general y más. Cada tipo de academia tiene campos y funcionalidades especializadas para su disciplina.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-3">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(3)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Mis datos están seguros?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Completamente. Todos los datos se almacenan en servidores cifrados con respaldo automático diario. Nunca compartimos ni vendemos la información de tu academia o tus alumnos a terceros. Cumplimos con las normativas de protección de datos aplicables en Latinoamérica.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-4">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(4)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Puedo cambiar de plan en cualquier momento?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Sí, puedes subir o bajar de plan cuando quieras desde el panel de Mi Plan. Al subir de plan, el cambio es inmediato. Al bajar, el cambio aplica al inicio del siguiente ciclo de facturación. No hay penalidades ni contratos de permanencia.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-5">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(5)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Necesito conocimientos técnicos para usarlo?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">No. AKDEMIApp fue diseñado pensando en directores de academia que no son programadores. La configuración inicial toma menos de 10 minutos con nuestro asistente de onboarding. Además, AKDI — nuestro asistente IA — te guía en tiempo real cuando tienes dudas sobre cómo usar cualquier funcionalidad.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-6">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(6)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿En qué países está disponible?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">AKDEMIApp está disponible en toda Latinoamérica. Actualmente tenemos academias activas en Panamá, México, Colombia, Costa Rica, Guatemala, República Dominicana y más. La facturación electrónica integrada con Yappy y PaguéloFácil está disponible únicamente en Panamá; en otros países puedes usar métodos de pago propios de tu academia.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-7">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(7)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Qué métodos de pago aceptan para la suscripción?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Aceptamos tarjetas de crédito y débito Visa y Mastercard para academias en cualquier país. Para academias en Panamá también aceptamos Yappy. Los precios están en dólares americanos (USD). Las suscripciones se renuevan automáticamente cada mes o cada año, según el plan que hayas elegido.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-8">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(8)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Ofrecen soporte en español?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Sí, todo nuestro soporte es en español. Dependiendo de tu plan, el soporte está disponible por email (plan Gratuito y Starter), soporte prioritario en 24h (plan Profesional) o por WhatsApp con respuesta en 4h (plan Business). El plan Enterprise incluye soporte dedicado con tiempo de respuesta garantizado en 1h.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" id="faq-9">
-        <button
-          class="w-full flex items-center justify-between gap-4 py-5 text-left group"
-          onclick="toggleFaq(9)"
-          aria-expanded="false"
-        >
-          <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">¿Puedo migrar mis datos desde Excel o AppSheet?</span>
-          <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
-            <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-body overflow-hidden max-h-0 transition-all duration-300">
-          <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">Sí. AKDEMIApp incluye herramientas de importación masiva de alumnos, profesores y clases desde archivos Excel o CSV. Si vienes de AppSheet u otro sistema, nuestro equipo te acompaña en la migración sin costo adicional durante el período de onboarding.</p>
-        </div>
-      </div>
-
+      ))}
     </div>
+
+    <!-- Tab panels -->
+    {tabs.map((tab, ti) => (
+      <div
+        id={`faq-panel-${tab.id}`}
+        class="faq-panel divide-y divide-gray-100 border-t border-gray-100"
+        style={ti !== 0 ? 'display:none' : ''}
+      >
+        {tab.faqs.map((faq, fi) => {
+          const itemId = `faq-${tab.id}-${fi}`;
+          return (
+            <div class="faq-item" id={itemId}>
+              <button
+                class="w-full flex items-center justify-between gap-4 py-5 text-left group"
+                onclick={`faqToggle('${itemId}')`}
+                aria-expanded="false"
+              >
+                <span class="text-[16px] font-semibold text-[#101828] leading-snug group-hover:text-[#155D88] transition-colors duration-150 faq-q">
+                  {faq.q}
+                </span>
+                <span class="w-6 h-6 rounded-full border-[1.5px] border-gray-200 flex items-center justify-center shrink-0 faq-icon transition-all duration-200">
+                  <svg class="w-3 h-3 faq-plus transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-body overflow-hidden transition-all duration-300" style="max-height:0">
+                <p class="text-[15px] text-gray-500 leading-[1.8] pb-5">{faq.a}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ))}
 
     <!-- CTA -->
     <div class="mt-12 bg-[#EFF8FF] border border-[#B9E0FB] rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
@@ -189,8 +125,8 @@ const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%
       <a href={WA_FAQ} target="_blank" rel="noopener noreferrer"
          class="flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white px-5 py-3 rounded-xl text-[13px] font-bold whitespace-nowrap transition-colors shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
-  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-</svg>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
         Escribir por WhatsApp
       </a>
     </div>
@@ -199,8 +135,35 @@ const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%
 </section>
 
 <script is:inline>
-  function toggleFaq(index) {
-    var item = document.getElementById('faq-' + index);
+  function faqSwitchTab(tabId) {
+    document.querySelectorAll('.faq-tab').forEach(function(btn) {
+      var active = btn.getAttribute('data-tab') === tabId;
+      btn.style.background = active ? '#399ABE' : '#fff';
+      btn.style.color = active ? '#fff' : '#1a1a2e';
+      btn.style.borderColor = active ? '#399ABE' : '#e2e8f0';
+    });
+
+    document.querySelectorAll('.faq-panel').forEach(function(panel) {
+      var isTarget = panel.id === 'faq-panel-' + tabId;
+      panel.style.display = isTarget ? '' : 'none';
+      if (isTarget) {
+        panel.querySelectorAll('.faq-item').forEach(function(item) {
+          item.classList.remove('faq-open');
+          item.querySelector('.faq-body').style.maxHeight = '0';
+          var icon = item.querySelector('.faq-icon');
+          icon.style.background = '';
+          icon.style.borderColor = '';
+          item.querySelector('.faq-plus').style.stroke = '#555';
+          item.querySelector('.faq-plus').style.transform = '';
+          item.querySelector('.faq-q').style.color = '';
+          item.querySelector('button').setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+
+  function faqToggle(itemId) {
+    var item = document.getElementById(itemId);
     var body = item.querySelector('.faq-body');
     var icon = item.querySelector('.faq-icon');
     var plus = item.querySelector('.faq-plus');
@@ -208,19 +171,19 @@ const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%
     var btn = item.querySelector('button');
     var isOpen = item.classList.contains('faq-open');
 
-    // Close all
-    document.querySelectorAll('.faq-item').forEach(function(el) {
+    var panel = item.closest('.faq-panel');
+    panel.querySelectorAll('.faq-item').forEach(function(el) {
       el.classList.remove('faq-open');
       el.querySelector('.faq-body').style.maxHeight = '0';
-      el.querySelector('.faq-icon').style.background = '';
-      el.querySelector('.faq-icon').style.borderColor = '';
+      var ic = el.querySelector('.faq-icon');
+      ic.style.background = '';
+      ic.style.borderColor = '';
       el.querySelector('.faq-plus').style.stroke = '#555';
       el.querySelector('.faq-plus').style.transform = '';
       el.querySelector('.faq-q').style.color = '';
       el.querySelector('button').setAttribute('aria-expanded', 'false');
     });
 
-    // Open clicked if it was closed
     if (!isOpen) {
       item.classList.add('faq-open');
       body.style.maxHeight = body.scrollHeight + 'px';
@@ -234,7 +197,6 @@ const WA_FAQ = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20pregunta%
   }
 
   document.addEventListener('astro:page-load', function() {
-    // Reset all on page load
     document.querySelectorAll('.faq-body').forEach(function(el) {
       el.style.maxHeight = '0';
     });
