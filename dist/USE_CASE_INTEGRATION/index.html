@@ -1,0 +1,404 @@
+<!DOCTYPE html><meta charset="utf-8"><h1 id="use-case-benefits---dynamic-integration-guide">Use Case Benefits - Dynamic Integration Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>This guide documents the integration of dynamic use case benefits from Strapi CMS into the academy landing pages. The <code>danzas.astro</code> page has been updated as a proof of concept, demonstrating how to fetch and display academy-specific benefits dynamically.</p>
+<h2 id="what-was-implemented">What Was Implemented</h2>
+<h3 id="1-type-definition-srctypesusecasebenefitts">1. Type Definition (<code>src/types/UseCaseBenefit.ts</code>)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> StrapiUseCaseBenefit</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">  id</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  documentId</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  icon</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  title</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  description</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  academyType</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> 'danzas'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'artes-escenicas'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'artes-marciales'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'artes-plasticas'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'deportiva'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'musica'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'pre-escolar'</span><span style="color:#F97583"> |</span><span style="color:#9ECBFF"> 'general'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  order</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  isActive</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> boolean</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  createdAt</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  updatedAt</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  publishedAt</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UseCaseBenefit</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">  id</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  icon</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  title</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  description</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  academyType</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> string</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  order</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> number</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">  isActive</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> boolean</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="2-service-layer-srcservicesusecasebenefitsts">2. Service Layer (<code>src/services/useCaseBenefits.ts</code>)</h3>
+<p>The service provides two main functions:</p>
+<ul>
+<li><strong><code>getUseCaseBenefits(academyType?: string)</code></strong>: Fetches benefits filtered by academy type</li>
+<li><strong><code>getUseCaseBenefitsByTypes(academyTypes: string[])</code></strong>: Fetches benefits for multiple academy types (useful for “general” benefits)</li>
+</ul>
+<p>Both functions:</p>
+<ul>
+<li>Filter by <code>isActive: true</code></li>
+<li>Sort by <code>order</code> field (ascending)</li>
+<li>Return an empty array on error (graceful degradation)</li>
+<li>Transform Strapi response to clean <code>UseCaseBenefit</code> interface</li>
+</ul>
+<h3 id="3-updated-exports">3. Updated Exports</h3>
+<p>Added exports to:</p>
+<ul>
+<li><code>src/types/index.ts</code>: <code>export type { UseCaseBenefit, StrapiUseCaseBenefit } from './UseCaseBenefit';</code></li>
+<li><code>src/services/index.ts</code>: <code>export { getUseCaseBenefits, getUseCaseBenefitsByTypes } from './useCaseBenefits';</code></li>
+</ul>
+<h2 id="how-danzasastro-was-modified">How danzas.astro Was Modified</h2>
+<h3 id="before">Before:</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Layout </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "../layouts/Layout.astro"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6A737D">// ... other imports</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> benefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#E1E4E8">    icon: </span><span style="color:#9ECBFF">"💃"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    title: </span><span style="color:#9ECBFF">"Gestión de Coreografías"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: </span><span style="color:#9ECBFF">"Organiza y planifica coreografías..."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#6A737D">  // ... 3 more hardcoded benefits</span></span>
+<span class="line"><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span></code></pre>
+<h3 id="after">After:</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Layout </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "../layouts/Layout.astro"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6A737D">// ... other imports</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { getUseCaseBenefits } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "../services"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fetch benefits for danzas academy type from Strapi</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> apiBenefits</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getUseCaseBenefits</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'danzas'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fallback to hardcoded benefits if API returns no data</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hardcodedBenefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#E1E4E8">    icon: </span><span style="color:#9ECBFF">"💃"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    title: </span><span style="color:#9ECBFF">"Gestión de Coreografías"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: </span><span style="color:#9ECBFF">"Organiza y planifica coreografías..."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#6A737D">  // ... 3 more hardcoded benefits</span></span>
+<span class="line"><span style="color:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use API benefits if available, otherwise fallback to hardcoded</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> benefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> apiBenefits.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> ></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> apiBenefits </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> hardcodedBenefits;</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span></code></pre>
+<h3 id="key-changes">Key Changes:</h3>
+<ol>
+<li><strong>Import service</strong>: <code>import { getUseCaseBenefits } from "../services";</code></li>
+<li><strong>Fetch from API</strong>: <code>const apiBenefits = await getUseCaseBenefits('danzas');</code></li>
+<li><strong>Maintain fallback</strong>: Original hardcoded benefits preserved as <code>hardcodedBenefits</code></li>
+<li><strong>Conditional logic</strong>: Use API data if available, otherwise use hardcoded</li>
+<li><strong>No HTML changes</strong>: The rest of the page remains identical</li>
+</ol>
+<h2 id="how-to-replicate-on-other-pages">How to Replicate on Other Pages</h2>
+<p>To integrate dynamic benefits on the remaining 6 pages, follow these steps:</p>
+<h3 id="step-1-identify-academy-type">Step 1: Identify Academy Type</h3>
+<p>Map each page to its academy type:</p>
+<ul>
+<li><code>artes-escenicas.astro</code> → <code>'artes-escenicas'</code></li>
+<li><code>artes-marciales.astro</code> → <code>'artes-marciales'</code></li>
+<li><code>artes-plasticas.astro</code> → <code>'artes-plasticas'</code></li>
+<li><code>deportiva.astro</code> → <code>'deportiva'</code></li>
+<li><code>musica.astro</code> → <code>'musica'</code></li>
+<li><code>pre-escolar.astro</code> → <code>'pre-escolar'</code></li>
+</ul>
+<h3 id="step-2-modify-each-page">Step 2: Modify Each Page</h3>
+<p>For each page (e.g., <code>artes-escenicas.astro</code>):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#6A737D">// Existing imports...</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { getUseCaseBenefits } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "../services"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fetch benefits for this academy type</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> apiBenefits</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getUseCaseBenefits</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'artes-escenicas'</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">// Change academy type</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Move existing benefits array to hardcodedBenefits</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hardcodedBenefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#6A737D">  // ... existing benefits</span></span>
+<span class="line"><span style="color:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use API benefits if available, otherwise fallback</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> benefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> apiBenefits.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> ></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> apiBenefits </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> hardcodedBenefits;</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">&#x3C;!-- Rest of the page remains unchanged --></span></span></code></pre>
+<h3 id="step-3-test-each-page">Step 3: Test Each Page</h3>
+<ol>
+<li>Start the dev server: <code>npm run dev</code></li>
+<li>Visit each page: <code>http://localhost:4321/[academy-type]</code></li>
+<li>Verify benefits display correctly</li>
+<li>Check browser console for any errors</li>
+</ol>
+<h2 id="strapi-configuration">Strapi Configuration</h2>
+<h3 id="content-type-use-case-benefits">Content Type: <code>use-case-benefits</code></h3>
+<p>To enable dynamic benefits in Strapi, create a new content type with the following schema:</p>
+<h4 id="collection-type-name">Collection Type Name</h4>
+<ul>
+<li>Display name: <code>Use Case Benefit</code></li>
+<li>API ID: <code>use-case-benefit</code></li>
+<li>Plural: <code>use-case-benefits</code></li>
+</ul>
+<h4 id="fields">Fields</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field Name</th><th>Type</th><th>Options</th><th>Description</th></tr></thead><tbody><tr><td><code>icon</code></td><td>Text (Short text)</td><td>Required</td><td>Emoji or icon representation (e.g., ”💃”, ”🎨“)</td></tr><tr><td><code>title</code></td><td>Text (Short text)</td><td>Required</td><td>Benefit title (e.g., “Gestión de Coreografías”)</td></tr><tr><td><code>description</code></td><td>Text (Long text)</td><td>Required</td><td>Detailed benefit description</td></tr><tr><td><code>academyType</code></td><td>Enumeration</td><td>Required</td><td>Values: <code>danzas</code>, <code>artes-escenicas</code>, <code>artes-marciales</code>, <code>artes-plasticas</code>, <code>deportiva</code>, <code>musica</code>, <code>pre-escolar</code>, <code>general</code></td></tr><tr><td><code>order</code></td><td>Number (integer)</td><td>Required, Default: 0</td><td>Display order (lower numbers appear first)</td></tr><tr><td><code>isActive</code></td><td>Boolean</td><td>Required, Default: true</td><td>Whether this benefit is active and should be displayed</td></tr></tbody></table>
+<h4 id="advanced-settings">Advanced Settings</h4>
+<p><strong>Permissions (Public role):</strong></p>
+<ul>
+<li>Enable <code>find</code> and <code>findOne</code> operations for public access</li>
+<li>No authentication required for GET requests</li>
+</ul>
+<p><strong>API Configuration:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "defaultSort"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"order:asc"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "defaultLimit"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "maxLimit"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">100</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="sample-data">Sample Data</h3>
+<p>Here’s example data for <code>danzas</code> academy type:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">[</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#79B8FF">    "icon"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"💃"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Gestión de Coreografías"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "description"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Organiza y planifica coreografías, ensayos y presentaciones de forma eficiente."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "academyType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"danzas"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "order"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "isActive"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#79B8FF">    "icon"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"👗"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Control de Vestuario"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "description"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Administra inventario de vestuario y accesorios para cada presentación."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "academyType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"danzas"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "order"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "isActive"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#79B8FF">    "icon"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"🎭"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Calendario de Shows"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "description"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Programa presentaciones, ensayos y eventos especiales con facilidad."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "academyType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"danzas"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "order"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "isActive"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#79B8FF">    "icon"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"📊"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Seguimiento de Progreso"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "description"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Evalúa el desarrollo técnico de cada bailarín y comparte reportes con padres."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "academyType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"danzas"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "order"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    "isActive"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span></code></pre>
+<h3 id="creating-content-in-strapi">Creating Content in Strapi</h3>
+<ol>
+<li>Navigate to <code>http://localhost:1337/admin</code></li>
+<li>Go to <strong>Content Manager</strong> → <strong>Use Case Benefits</strong></li>
+<li>Click <strong>Create new entry</strong></li>
+<li>Fill in all required fields:
+<ul>
+<li>Icon: Use emojis (e.g., 💃, 🎨, 🥋)</li>
+<li>Title: Clear, concise benefit name</li>
+<li>Description: 1-2 sentences explaining the benefit</li>
+<li>Academy Type: Select from dropdown</li>
+<li>Order: Integer for sorting (1, 2, 3, 4…)</li>
+<li>Is Active: Toggle on</li>
+</ul>
+</li>
+<li>Click <strong>Save</strong> and <strong>Publish</strong></li>
+<li>Repeat for all academy types</li>
+</ol>
+<h3 id="api-endpoints">API Endpoints</h3>
+<p>Once configured, Strapi will expose:</p>
+<ul>
+<li><strong>Get all benefits</strong>: <code>GET /api/use-case-benefits</code></li>
+<li><strong>Get filtered benefits</strong>: <code>GET /api/use-case-benefits?filters[academyType][$eq]=danzas&#x26;filters[isActive][$eq]=true&#x26;sort=order:asc</code></li>
+<li><strong>Get single benefit</strong>: <code>GET /api/use-case-benefits/:id</code></li>
+</ul>
+<p>Example response:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "data"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#79B8FF">      "id"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "documentId"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"abc123"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "icon"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"💃"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "title"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Gestión de Coreografías"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "description"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Organiza y planifica coreografías..."</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "academyType"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"danzas"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "order"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "isActive"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "createdAt"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2025-01-15T10:00:00.000Z"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "updatedAt"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2025-01-15T10:00:00.000Z"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "publishedAt"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2025-01-15T10:00:00.000Z"</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#79B8FF">  "meta"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    "pagination"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      "page"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "pageSize"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "pageCount"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      "total"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="benefits-of-this-approach">Benefits of This Approach</h2>
+<h3 id="1-graceful-degradation">1. Graceful Degradation</h3>
+<ul>
+<li>If Strapi is unavailable, pages show hardcoded benefits</li>
+<li>No broken pages or error states</li>
+<li>Seamless user experience</li>
+</ul>
+<h3 id="2-dynamic-content-management">2. Dynamic Content Management</h3>
+<ul>
+<li>Non-technical users can update benefits via Strapi admin</li>
+<li>No code deployments needed for content changes</li>
+<li>A/B testing benefits by toggling <code>isActive</code></li>
+</ul>
+<h3 id="3-academy-specific-customization">3. Academy-Specific Customization</h3>
+<ul>
+<li>Each academy type can have unique benefits</li>
+<li>Shared benefits using <code>academyType: 'general'</code></li>
+<li>Easy to reorder benefits using the <code>order</code> field</li>
+</ul>
+<h3 id="4-type-safety">4. Type Safety</h3>
+<ul>
+<li>Full TypeScript support</li>
+<li>IDE autocomplete for benefit fields</li>
+<li>Compile-time error checking</li>
+</ul>
+<h3 id="5-consistent-architecture">5. Consistent Architecture</h3>
+<ul>
+<li>Follows existing patterns (features, testimonials, etc.)</li>
+<li>Centralized service layer</li>
+<li>Clean separation of concerns</li>
+</ul>
+<h2 id="advanced-use-cases">Advanced Use Cases</h2>
+<h3 id="including-general-benefits">Including General Benefits</h3>
+<p>To show both academy-specific AND general benefits:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { getUseCaseBenefitsByTypes } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "../services"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fetch benefits for both danzas and general</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> apiBenefits</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getUseCaseBenefitsByTypes</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">'danzas'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'general'</span><span style="color:#E1E4E8">]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fallback logic...</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> benefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> apiBenefits.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> ></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> apiBenefits </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> hardcodedBenefits;</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span></code></pre>
+<h3 id="limiting-number-of-benefits">Limiting Number of Benefits</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> apiBenefits</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getUseCaseBenefits</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'danzas'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> benefits</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> apiBenefits.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> ></span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">  ?</span><span style="color:#E1E4E8"> apiBenefits.</span><span style="color:#B392F0">slice</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// Show only first 4</span></span>
+<span class="line"><span style="color:#F97583">  :</span><span style="color:#E1E4E8"> hardcodedBenefits;</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span></code></pre>
+<h3 id="combining-api-and-hardcoded">Combining API and Hardcoded</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="astro"><code><span class="line"><span style="color:#6A737D">---</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> apiBenefits</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getUseCaseBenefits</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'danzas'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Always show at least 4 benefits, pad with hardcoded if needed</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> benefits </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">apiBenefits];</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (benefits.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> &#x3C;</span><span style="color:#79B8FF"> 4</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> remaining</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> hardcodedBenefits.</span><span style="color:#B392F0">slice</span><span style="color:#E1E4E8">(benefits.</span><span style="color:#79B8FF">length</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  benefits </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">benefits, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">remaining];</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">---</span></span></code></pre>
+<h2 id="testing-checklist">Testing Checklist</h2>
+<p>Before deploying to production:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Strapi content type created with correct schema</li>
+<li class="task-list-item"><input type="checkbox" disabled> Sample data created for all academy types</li>
+<li class="task-list-item"><input type="checkbox" disabled> Permissions configured for public read access</li>
+<li class="task-list-item"><input type="checkbox" disabled> All 7 pages updated (danzas + 6 others)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Dev server tested: benefits load from Strapi</li>
+<li class="task-list-item"><input type="checkbox" disabled> Fallback tested: benefits show when Strapi unavailable</li>
+<li class="task-list-item"><input type="checkbox" disabled> Production build succeeds: <code>npm run build</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Preview build tested: <code>npm run preview</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> SEO unchanged: structured data intact</li>
+<li class="task-list-item"><input type="checkbox" disabled> Accessibility maintained: ARIA labels, semantic HTML</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="benefits-not-showing">Benefits Not Showing</h3>
+<ol>
+<li>Check browser console for API errors</li>
+<li>Verify Strapi is running: <code>http://localhost:1337/admin</code></li>
+<li>Test API endpoint directly: <code>http://localhost:1337/api/use-case-benefits?filters[academyType][$eq]=danzas</code></li>
+<li>Check <code>isActive</code> is <code>true</code> in Strapi</li>
+<li>Verify content is <strong>published</strong> (not just saved)</li>
+</ol>
+<h3 id="empty-array-returned">Empty Array Returned</h3>
+<ul>
+<li>Check <code>filters[academyType][$eq]=</code> matches exactly (case-sensitive)</li>
+<li>Ensure at least one entry exists for that academy type</li>
+<li>Verify public permissions are enabled in Strapi</li>
+</ul>
+<h3 id="build-errors">Build Errors</h3>
+<ul>
+<li>Run <code>npm run build</code> and check for TypeScript errors</li>
+<li>Ensure all imports are correct</li>
+<li>Verify <code>src/services/index.ts</code> exports are present</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul>
+<li><strong>CMS Preview</strong>: Add draft/preview mode for content editors</li>
+<li><strong>Analytics</strong>: Track which benefits drive the most conversions</li>
+<li><strong>Multilingual</strong>: Add i18n support for Spanish/English benefits</li>
+<li><strong>Rich Content</strong>: Support Markdown or HTML in descriptions</li>
+<li><strong>Images</strong>: Replace emoji icons with uploaded images</li>
+<li><strong>A/B Testing</strong>: Randomize benefit order to optimize engagement</li>
+</ul>
+<h2 id="questions-or-issues">Questions or Issues?</h2>
+<p>If you encounter any problems implementing this on other pages:</p>
+<ol>
+<li>Check this documentation first</li>
+<li>Review the <code>danzas.astro</code> implementation</li>
+<li>Verify Strapi content type matches the schema exactly</li>
+<li>Test API endpoints manually using Postman or browser</li>
+</ol>
+<hr>
+<p><strong>Last Updated</strong>: 2025-01-15
+<strong>Status</strong>: Proof of concept implemented on <code>danzas.astro</code>
+<strong>Remaining Work</strong>: Replicate on 6 other academy pages</p>
