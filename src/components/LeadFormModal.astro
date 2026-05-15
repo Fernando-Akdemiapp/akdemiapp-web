@@ -531,7 +531,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
 window.openLeadModal = openModal;
 document.addEventListener('astro:page-load', () => {
   window.openLeadModal = openModal;
-  document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+  document.querySelectorAll('a[href*="wa.me"]:not([data-wa-direct])').forEach(el => {
     el.addEventListener('click', e => { e.preventDefault(); openModal(); });
   });
   document.querySelectorAll('a[href*="wa.me"]').forEach(el => {

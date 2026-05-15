@@ -50,21 +50,19 @@ const bgClass = backgroundColor === 'primary'
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <a
-          href={primaryButtonLink}
-          class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#155D88] hover:bg-gray-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 font-bold rounded-lg transition-all duration-200 text-lg"
+        <button
+          onclick="window.openLeadModal && window.openLeadModal()"
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#155D88] hover:bg-gray-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 font-bold rounded-lg transition-all duration-200 text-lg cursor-pointer border-0"
         >
-          {primaryButtonText}
-        </a>
+          Agenda tu demostración
+        </button>
 
-        {secondaryButtonText && (
-          <a
-            href={secondaryButtonLink}
-            class="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-bold rounded-lg border-2 border-white hover:bg-white/10 transition-all duration-200 text-lg"
-          >
-            {secondaryButtonText}
-          </a>
-        )}
+        <a
+          href="/registro/academia"
+          class="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-bold rounded-lg border-2 border-white hover:bg-white/10 transition-all duration-200 text-lg"
+        >
+          Crea tu academia gratis
+        </a>
       </div>
 
       {showStats && stats && (
