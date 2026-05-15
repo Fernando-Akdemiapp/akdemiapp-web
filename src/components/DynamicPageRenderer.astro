@@ -27,9 +27,10 @@ import WebsitePromoSection from '@/components/sections/WebsitePromoSection.astro
 
 interface Props {
   sections: Section[];
+  slug?: string;
 }
 
-const { sections } = Astro.props;
+const { sections, slug = '' } = Astro.props;
 
 console.log('[DynamicPageRenderer] Received sections:', sections?.length || 0);
 console.log('[DynamicPageRenderer] Sections types:', sections?.map(s => s.__component).join(', '));
@@ -122,7 +123,7 @@ console.log('[DynamicPageRenderer] Valid sections:', validSections.length);
     // The spread operator passes all section properties as props
     return (
       <>
-        {isPricing && <WebsitePromoSection />}
+        {isPricing && <WebsitePromoSection slug={slug} />}
         <Component {...section} key={`section-${section.id || index}`} />
       </>
     );

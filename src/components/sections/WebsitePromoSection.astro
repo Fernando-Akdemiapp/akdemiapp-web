@@ -1,5 +1,95 @@
 ---
+interface Props {
+  slug?: string;
+}
+
+const { slug = '' } = Astro.props;
+
 const SITIO_URL = "https://app.akdemiapp.online/sitio/allonge";
+
+interface ColContent {
+  title: string;
+  description: string;
+}
+
+interface SectionContent {
+  col1: ColContent;
+  col2: ColContent;
+  col3: ColContent;
+  col4: ColContent;
+}
+
+const contentMap: Record<string, SectionContent> = {
+  'academia-danzas': {
+    col1: { title: 'Horarios Actualizados', description: 'Ballet, Jazz, Contemporáneo: tus horarios reales siempre visibles. Sin preguntas por WhatsApp.' },
+    col2: { title: 'Galería de Recitales', description: 'Fotos y videos de presentaciones. Los padres comparten y atraen más alumnos.' },
+    col3: { title: 'Inscripción Online 24/7', description: 'Los padres inscriben desde el celular a cualquier hora. Despiertas con alumnos nuevos.' },
+    col4: { title: 'Tienda Online', description: 'Vende uniformes, zapatillas y vestuario de recitales directamente desde tu sitio web.' },
+  },
+  'academia-artes-marciales': {
+    col1: { title: 'Programas por Cinturón', description: 'Muestra tus programas de Karate, Taekwondo o Jiu-Jitsu organizados por nivel y grado.' },
+    col2: { title: 'Calendario de Exámenes', description: 'Fechas de cambio de cinturón y torneos visibles para alumnos y padres.' },
+    col3: { title: 'Inscripción Online 24/7', description: 'Los interesados se inscriben solos sin que tengas que contestar WhatsApp a las 10pm.' },
+    col4: { title: 'Tienda Online', description: 'Vende uniformes, guantes, protecciones y equipo de entrenamiento desde tu sitio.' },
+  },
+  'academia-futbol': {
+    col1: { title: 'Categorías y Horarios', description: 'Sub-10, Sub-12, Sub-15: cada categoría con su horario, cancha y entrenador visible.' },
+    col2: { title: 'Torneos y Resultados', description: 'Calendario de partidos, tabla de posiciones y goleadores. Los padres siguen todo online.' },
+    col3: { title: 'Inscripción por Categoría', description: 'Los padres inscriben a sus hijos en la categoría correcta desde el celular.' },
+    col4: { title: 'Tienda Online', description: 'Vende uniformes, balones, canilleras y kits de entrenamiento desde tu sitio.' },
+  },
+  'academia-musica': {
+    col1: { title: 'Clases por Instrumento', description: 'Piano, guitarra, canto, violín: cada instrumento con horarios y profesor asignado.' },
+    col2: { title: 'Recitales y Audiciones', description: 'Programa de recitales, repertorio y calendario de presentaciones para padres y alumnos.' },
+    col3: { title: 'Inscripción Online 24/7', description: 'Los interesados eligen instrumento y horario desde el celular a cualquier hora.' },
+    col4: { title: 'Tienda Online', description: 'Vende accesorios, cuerdas, partituras y material didáctico desde tu sitio.' },
+  },
+  'academia-yoga': {
+    col1: { title: 'Clases y Horarios', description: 'Yoga, Pilates, Meditación: horarios actualizados por modalidad y nivel.' },
+    col2: { title: 'Retiros y Talleres', description: 'Publica tus eventos especiales con inscripción directa y pago online.' },
+    col3: { title: 'Reserva de Clases', description: 'Tus alumnos reservan su lugar en cada clase desde el celular.' },
+    col4: { title: 'Tienda Online', description: 'Vende mats, bloques, ropa deportiva y accesorios de bienestar.' },
+  },
+  'academia-arte': {
+    col1: { title: 'Talleres y Técnicas', description: 'Pintura, escultura, dibujo: muestra tus talleres organizados por técnica y nivel.' },
+    col2: { title: 'Galería de Obras', description: 'Exhibe los trabajos de tus alumnos. Los padres comparten con orgullo.' },
+    col3: { title: 'Inscripción Online 24/7', description: 'Los interesados se inscriben y eligen su taller desde cualquier dispositivo.' },
+    col4: { title: 'Tienda Online', description: 'Vende materiales, lienzos, pinturas y kits de arte desde tu sitio.' },
+  },
+  'academia-teatro': {
+    col1: { title: 'Temporadas y Obras', description: 'Publica tu calendario de obras, ensayos y audiciones.' },
+    col2: { title: 'Venta de Boletos', description: 'Los asistentes compran entradas online con asiento asignado.' },
+    col3: { title: 'Casting Online', description: 'Los aspirantes se postulan directamente desde tu sitio web.' },
+    col4: { title: 'Tienda Online', description: 'Vende merchandising, libretos y recuerdos de tus producciones.' },
+  },
+  'academia-idiomas': {
+    col1: { title: 'Niveles y Certificaciones', description: 'A1 a C2: muestra tus programas con fechas de exámenes de certificación.' },
+    col2: { title: 'Clases Grupales e Individuales', description: 'Horarios por nivel e idioma siempre actualizados.' },
+    col3: { title: 'Inscripción y Nivelación', description: 'Los interesados se registran y agendan su examen de nivelación online.' },
+    col4: { title: 'Tienda Online', description: 'Vende libros de texto, material didáctico y guías de estudio.' },
+  },
+  'academia-baloncesto': {
+    col1: { title: 'Categorías y Horarios', description: 'Sub-12, Sub-15, Adulto: cada categoría con cancha, horario y entrenador.' },
+    col2: { title: 'Torneos y Standings', description: 'Calendario de partidos, tabla de posiciones y estadísticas por jugador.' },
+    col3: { title: 'Inscripción por Categoría', description: 'Los padres inscriben en la categoría correcta desde el celular.' },
+    col4: { title: 'Tienda Online', description: 'Vende uniformes, balones, zapatillas y equipo deportivo.' },
+  },
+  'academia-beisbol': {
+    col1: { title: 'Categorías y Horarios', description: 'Sub-10, Sub-12, Sub-16: cada categoría con su campo, horario y coach.' },
+    col2: { title: 'Temporadas y Estadísticas', description: 'Calendario de juegos, standings y estadísticas individuales por jugador.' },
+    col3: { title: 'Inscripción por Categoría', description: 'Los padres inscriben a sus hijos desde el celular sin hacer fila.' },
+    col4: { title: 'Tienda Online', description: 'Vende uniformes, guantes, bates y equipo de béisbol.' },
+  },
+};
+
+const defaultContent: SectionContent = {
+  col1: { title: 'Sitio Web Profesional', description: 'Tu academia con presencia online profesional. Dominio personalizado, diseño moderno y optimizado para móviles.' },
+  col2: { title: 'Personalización Total', description: 'Tus colores, tu logo, tus fotos. El sitio refleja la identidad de tu academia automáticamente.' },
+  col3: { title: 'Captación de Alumnos 24/7', description: 'Formulario de contacto integrado. Los interesados te encuentran y se registran aunque estés dando clases.' },
+  col4: { title: 'Tienda Online', description: 'Vende productos y artículos de tu academia directamente desde tu sitio web.' },
+};
+
+const content = contentMap[slug] ?? defaultContent;
 ---
 
 <section class="py-20 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f1624]">
@@ -14,54 +104,64 @@ const SITIO_URL = "https://app.akdemiapp.online/sitio/allonge";
         </span>
       </h2>
       <p class="text-[16px] text-[#8a9ab0] max-w-xl mx-auto leading-relaxed">
-        Incluido en el plan Business o disponible como add-on en cualquier plan.
+        Incluido en el plan Business o disponible como add-on en cualquier plan. Tienda Online disponible para todos los planes.
       </p>
     </div>
 
-    <!-- 3 columnas -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+    <!-- 4 columnas -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
 
-      <!-- Sitio Web Profesional -->
+      <!-- Col 1: Calendar -->
       <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
         <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M2 12h20"/>
-            <path d="M12 2a14.5 14.5 0 0 1 4 10 14.5 14.5 0 0 1-4 10 14.5 14.5 0 0 1-4-10 14.5 14.5 0 0 1 4-10z"/>
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">Sitio Web Profesional</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">Tu academia con presencia online profesional. Dominio personalizado, diseño moderno y optimizado para móviles.</p>
+        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col1.title}</h3>
+        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col1.description}</p>
       </div>
 
-      <!-- Personalización Total -->
+      <!-- Col 2: Camera / Gallery -->
       <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
         <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="13.5" cy="6.5" r="1.5"/>
-            <circle cx="17.5" cy="10.5" r="1.5"/>
-            <circle cx="8.5" cy="7.5" r="1.5"/>
-            <circle cx="6.5" cy="12.5" r="1.5"/>
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">Personalización Total</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">Tus colores, tu logo, tus fotos. El sitio refleja la identidad de tu academia automáticamente.</p>
+        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col2.title}</h3>
+        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col2.description}</p>
       </div>
 
-      <!-- Captación de Alumnos 24/7 -->
+      <!-- Col 3: User Plus -->
       <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
         <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-            <polyline points="10 9 9 9 8 9"/>
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="8.5" cy="7" r="4"/>
+            <line x1="20" y1="8" x2="20" y2="14"/>
+            <line x1="23" y1="11" x2="17" y2="11"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">Captación de Alumnos 24/7</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">Formulario de contacto integrado. Los interesados te encuentran y se registran aunque estés dando clases.</p>
+        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col3.title}</h3>
+        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col3.description}</p>
+      </div>
+
+      <!-- Col 4: Shopping Bag -->
+      <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
+        <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col4.title}</h3>
+        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col4.description}</p>
       </div>
 
     </div>
