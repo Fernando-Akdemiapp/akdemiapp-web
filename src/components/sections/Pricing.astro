@@ -1,6 +1,148 @@
 ---
 const LOGIN_URL = "https://app.akdemiapp.online/login";
 const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20plan%20Enterprise%20de%20AKDEMIApp%20para%20mi%20organizaci%C3%B3n";
+
+interface PlanTopBadge { text: string; classes: string; }
+
+interface Plan {
+  id: string; level: number;
+  name: string; desc: string;
+  monthlyPrice: string; monthlyUnit: string;
+  yearlyPrice: string; yearlyUnit: string;
+  monthlyNote: string; yearlyNote: string;
+  cardExtra: string;
+  popularBadge: string | null;
+  topBadge: PlanTopBadge | null;
+  brandingBg: string; brandingBorder: string;
+  brandingIconStroke: string; brandingTitleColor: string;
+  brandingTitle: string; brandingDesc: string;
+  ctaText: string; ctaExtra: string;
+  highlights: string[];
+}
+
+interface Category {
+  name: string;
+  features: Array<{ name: string; minPlan: number }>;
+}
+
+const categories: Category[] = [
+  { name: 'Gestión', features: [
+    { name: 'Gestión de Estudiantes', minPlan: 0 },
+    { name: 'Gestión de Clases', minPlan: 0 },
+    { name: 'Gestión de Profesores', minPlan: 1 },
+    { name: 'Roles y Permisos', minPlan: 1 },
+    { name: 'Calendario', minPlan: 0 },
+    { name: 'Búsqueda Global', minPlan: 1 },
+  ]},
+  { name: 'Portales', features: [
+    { name: 'Portal del Alumno', minPlan: 0 },
+    { name: 'Portal del Padre', minPlan: 0 },
+    { name: 'Portal del Profesor', minPlan: 1 },
+    { name: 'Pantalla Lobby TV', minPlan: 1 },
+  ]},
+  { name: 'Finanzas', features: [
+    { name: 'Cobros y Facturación', minPlan: 0 },
+    { name: 'Pagos por Aprobación', minPlan: 1 },
+    { name: 'Gestión de Gastos', minPlan: 2 },
+    { name: 'Nómina con Firma Digital', minPlan: 2 },
+    { name: 'Reportes PDF', minPlan: 1 },
+    { name: 'Reportes CSV/PDF/Excel', minPlan: 2 },
+    { name: 'Escaneo IA de Facturas', minPlan: 3 },
+  ]},
+  { name: 'Comunicación', features: [
+    { name: 'Comunicaciones por Email', minPlan: 1 },
+    { name: 'Email Masivo', minPlan: 2 },
+    { name: 'Formulario Público', minPlan: 1 },
+    { name: 'Compartir por WhatsApp', minPlan: 2 },
+  ]},
+  { name: 'Operaciones', features: [
+    { name: 'Asistencia Manual', minPlan: 0 },
+    { name: 'Asistencia QR', minPlan: 2 },
+    { name: 'Asistencia Biométrica', minPlan: 3 },
+    { name: 'Reservas de Clases', minPlan: 2 },
+    { name: 'Módulo de Eventos', minPlan: 2 },
+    { name: 'Competencias y Torneos', minPlan: 2 },
+    { name: 'Certificados Digitales', minPlan: 2 },
+    { name: 'Cumpleaños en Dashboard', minPlan: 1 },
+    { name: 'Tarjetas Cumpleaños Auto', minPlan: 3 },
+  ]},
+  { name: 'Comercio', features: [
+    { name: 'Inventario', minPlan: 2 },
+    { name: 'Punto de Venta (POS)', minPlan: 3 },
+    { name: 'Tienda Online', minPlan: 2 },
+    { name: 'Proveedores y Compras', minPlan: 3 },
+    { name: 'Boletería Digital QR', minPlan: 3 },
+    { name: 'Venues y Mapa de Asientos', minPlan: 3 },
+  ]},
+  { name: 'IA y Personalización', features: [
+    { name: 'Evaluaciones con IA', minPlan: 2 },
+    { name: 'AKDI Asistente IA', minPlan: 2 },
+    { name: 'Academy Twin', minPlan: 3 },
+    { name: 'Branding Personalizado', minPlan: 2 },
+    { name: 'Sitio Web Profesional', minPlan: 3 },
+    { name: 'CRM de Prospectos', minPlan: 2 },
+  ]},
+];
+
+const plans: Plan[] = [
+  {
+    id: 'gratuito', level: 0,
+    name: 'Gratuito', desc: 'Empieza gratis. 14 días de prueba completa.',
+    monthlyPrice: 'Gratis', monthlyUnit: '',
+    yearlyPrice: 'Gratis', yearlyUnit: '',
+    monthlyNote: 'Para siempre tras la prueba', yearlyNote: 'Para siempre tras la prueba',
+    cardExtra: 'border-gray-200',
+    popularBadge: null, topBadge: null,
+    brandingBg: 'bg-[#f8faff]', brandingBorder: 'border-gray-200',
+    brandingIconStroke: '#9ca3af', brandingTitleColor: 'text-[#101828]',
+    brandingTitle: 'Marca AKDEMIApp', brandingDesc: 'Logo y colores de AKDEMIApp en portales y app',
+    ctaText: 'Crear cuenta gratis', ctaExtra: 'bg-[#f8faff] hover:border-[#155D88] text-[#155D88] border border-gray-200',
+    highlights: ['Hasta 30 estudiantes', '1 profesor, 5 clases', 'Cobros y facturación', 'Calendario', 'App instalable (PWA)'],
+  },
+  {
+    id: 'starter', level: 1,
+    name: 'Starter', desc: 'Perfecto para academias en crecimiento.',
+    monthlyPrice: '$39', monthlyUnit: '/mes',
+    yearlyPrice: '$32', yearlyUnit: '/mes',
+    monthlyNote: ' ', yearlyNote: '$390/año — ahorras $78',
+    cardExtra: 'border-gray-200',
+    popularBadge: null, topBadge: null,
+    brandingBg: 'bg-[#f8faff]', brandingBorder: 'border-gray-200',
+    brandingIconStroke: '#9ca3af', brandingTitleColor: 'text-[#101828]',
+    brandingTitle: 'Marca AKDEMIApp', brandingDesc: 'Logo y colores de AKDEMIApp en portales y app',
+    ctaText: 'Comenzar ahora', ctaExtra: 'bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]',
+    highlights: ['100 estudiantes, 3 profesores, 10 clases', 'Portal del Alumno y Padre', 'Pagos por Aprobación', 'Formulario de Inscripción Online', 'Asistencia Manual', 'Comunicaciones por Email'],
+  },
+  {
+    id: 'profesional', level: 2,
+    name: 'Profesional', desc: 'La solución completa con tu propia identidad.',
+    monthlyPrice: '$59', monthlyUnit: '/mes',
+    yearlyPrice: '$49', yearlyUnit: '/mes',
+    monthlyNote: ' ', yearlyNote: '$590/año — ahorras $118',
+    cardExtra: 'border-[#155D88] shadow-[0_0_0_1px_#155D88,0_12px_40px_rgba(21,93,136,0.15)]',
+    popularBadge: '⭐ Más Popular', topBadge: null,
+    brandingBg: 'bg-[#EFF8FF]', brandingBorder: 'border-[#B9E0FB]',
+    brandingIconStroke: '#155D88', brandingTitleColor: 'text-[#155D88]',
+    brandingTitle: 'Branding propio', brandingDesc: 'Tu logo, paleta de colores y botones en portales y app',
+    ctaText: 'Comenzar ahora', ctaExtra: 'bg-[#155D88] hover:bg-[#124e75] text-white',
+    highlights: ['250 estudiantes, 15 profesores', 'Asistencia Manual + QR', 'Evaluaciones con IA', 'CRM de Prospectos', 'Inventario + Tienda Online', 'Competencias y Torneos'],
+  },
+  {
+    id: 'business', level: 3,
+    name: 'Business', desc: 'Para academias que quieren escalar sin límites.',
+    monthlyPrice: '$89', monthlyUnit: '/mes',
+    yearlyPrice: '$74', yearlyUnit: '/mes',
+    monthlyNote: ' ', yearlyNote: '$890/año — ahorras $178',
+    cardExtra: 'border-gray-200',
+    popularBadge: null,
+    topBadge: { text: '✓ 14 días gratis', classes: 'absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f0fdf4] text-[#15803d] border border-[#bbf7d0] text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap' },
+    brandingBg: 'bg-[#EFF8FF]', brandingBorder: 'border-[#B9E0FB]',
+    brandingIconStroke: '#155D88', brandingTitleColor: 'text-[#155D88]',
+    brandingTitle: 'Branding propio', brandingDesc: 'Tu logo, paleta de colores y nombre personalizado de AKDI',
+    ctaText: 'Comenzar con 14 días gratis', ctaExtra: 'bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]',
+    highlights: ['Estudiantes ilimitados, 50 profesores', 'Sitio Web Profesional incluido', 'Punto de Venta (POS)', 'AKDI Asistente IA Completo', 'Asistencia QR + Biométrica', 'Venues y Mapa de Asientos'],
+  },
+];
 ---
 
 <section id="pricing" class="py-20 bg-[#f8faff]">
@@ -41,304 +183,105 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
 
     <!-- Grid de planes -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <!-- Gratuito -->
-      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
-        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Gratuito</p>
-        <p class="text-[12px] text-gray-400 leading-snug mb-4">Empieza gratis. 14 días de prueba completa.</p>
-        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">Gratis</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 pricing-monthly">Para siempre tras la prueba</p>
-        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">Gratis</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 pricing-yearly hidden">Para siempre tras la prueba</p>
-        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#f8faff] border-gray-200 mb-4">
-          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="13.5" cy="6.5" r="1.5"/>
-  <circle cx="17.5" cy="10.5" r="1.5"/>
-  <circle cx="8.5" cy="7.5" r="1.5"/>
-  <circle cx="6.5" cy="12.5" r="1.5"/>
-  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-</svg></span>
-          <div>
-            <p class="text-[12px] font-bold text-[#101828]">Marca AKDEMIApp</p>
-            <p class="text-[11px] text-gray-400 leading-snug">Logo y colores de AKDEMIApp en portales y app</p>
-          </div>
-        </div>
-        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-[#f8faff] hover:border-[#155D88] text-[#155D88] border border-gray-200">
-          Crear cuenta gratis
-        </a>
-        <div class="border-t border-gray-100 my-1 mb-3"></div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">30 alumnos activos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">1 profesor / instructor</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">5 clases activas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Portal del estudiante</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Portal de padres</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Cobros y pagos básicos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Reglamento digital</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">App móvil PWA</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Soporte por email</span>
-        </div>
-      </div>
+      {plans.map((plan) => (
+        <div class={`bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 flex flex-col ${plan.cardExtra}`}>
 
-      <!-- Starter -->
-      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
-        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Starter</p>
-        <p class="text-[12px] text-gray-400 leading-snug mb-4">Perfecto para academias en crecimiento.</p>
-        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$39</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
-        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$32</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$390/año — ahorras $78</p>
-        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#f8faff] border-gray-200 mb-4">
-          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="13.5" cy="6.5" r="1.5"/>
-  <circle cx="17.5" cy="10.5" r="1.5"/>
-  <circle cx="8.5" cy="7.5" r="1.5"/>
-  <circle cx="6.5" cy="12.5" r="1.5"/>
-  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-</svg></span>
-          <div>
-            <p class="text-[12px] font-bold text-[#101828]">Marca AKDEMIApp</p>
-            <p class="text-[11px] text-gray-400 leading-snug">Logo y colores de AKDEMIApp en portales y app</p>
-          </div>
-        </div>
-        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]">
-          Comenzar ahora
-        </a>
-        <div class="border-t border-gray-100 my-1 mb-3"></div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">100 alumnos activos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">3 profesores / instructores</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">10 clases activas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Gratuito</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Portal del profesor</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Pantalla Lobby / Recepción</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Firma de reglamento digital</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">CRM básico de prospectos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Reportes financieros básicos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Soporte por email (48h)</span>
-        </div>
-      </div>
+          {plan.popularBadge && (
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#155D88] text-white text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap">{plan.popularBadge}</span>
+          )}
+          {plan.topBadge && (
+            <span class={plan.topBadge.classes}>{plan.topBadge.text}</span>
+          )}
 
-      <!-- Profesional -->
-      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-[#155D88] shadow-[0_0_0_1px_#155D88,0_12px_40px_rgba(21,93,136,0.15)]">
-        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#155D88] text-white text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap">⭐ Más Popular</span>
-        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Profesional</p>
-        <p class="text-[12px] text-gray-400 leading-snug mb-4">La solución completa con tu propia identidad.</p>
-        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$59</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
-        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$49</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$590/año — ahorras $118</p>
-        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#EFF8FF] border-[#B9E0FB] mb-4">
-          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="13.5" cy="6.5" r="1.5"/>
-  <circle cx="17.5" cy="10.5" r="1.5"/>
-  <circle cx="8.5" cy="7.5" r="1.5"/>
-  <circle cx="6.5" cy="12.5" r="1.5"/>
-  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-</svg></span>
-          <div>
-            <p class="text-[12px] font-bold text-[#155D88]">Branding propio</p>
-            <p class="text-[11px] text-gray-400 leading-snug">Tu logo, paleta de colores y botones en portales y app</p>
-          </div>
-        </div>
-        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-[#155D88] hover:bg-[#124e75] text-white">
-          Comenzar ahora
-        </a>
-        <div class="border-t border-gray-100 my-1 mb-3"></div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">250 alumnos activos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">15 profesores / instructores</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">30 clases activas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Starter</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Evaluaciones digitales con IA</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Nómina de profesores</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Email masivo</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Reservas de clases</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Módulo de Eventos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">AKDI Asistente IA básico</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Certificados automáticos</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Firmas digitales completas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Reportes financieros avanzados</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Soporte prioritario (24h)</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Sitio Web disponible como add-on</span>
-        </div>
-      </div>
+          <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">{plan.name}</p>
+          <p class="text-[12px] text-gray-400 leading-snug mb-4">{plan.desc}</p>
 
-      <!-- Business -->
-      <div class="bg-white border-[1.5px] rounded-2xl p-7 relative transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 border-gray-200">
-        <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#f0fdf4] text-[#15803d] border border-[#bbf7d0] text-[11px] font-bold px-4 py-1 rounded-full whitespace-nowrap">✓ 14 días gratis</span>
-        <p class="text-[20px] font-extrabold text-[#101828] tracking-tight mb-1">Business</p>
-        <p class="text-[12px] text-gray-400 leading-snug mb-4">Para academias que quieren escalar sin límites.</p>
-        <div class="pricing-monthly"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$89</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">&nbsp;</p>
-        <div class="pricing-yearly hidden"><span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">$74</span><span class="text-[13px] text-gray-400">/mes</span></div>
-        <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">$890/año — ahorras $178</p>
-        <div class="flex items-start gap-2 p-3 rounded-xl border bg-[#EFF8FF] border-[#B9E0FB] mb-4">
-          <span class="mt-0.5 shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="13.5" cy="6.5" r="1.5"/>
-  <circle cx="17.5" cy="10.5" r="1.5"/>
-  <circle cx="8.5" cy="7.5" r="1.5"/>
-  <circle cx="6.5" cy="12.5" r="1.5"/>
-  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-</svg></span>
-          <div>
-            <p class="text-[12px] font-bold text-[#155D88]">Branding propio</p>
-            <p class="text-[11px] text-gray-400 leading-snug">Tu logo, paleta de colores y nombre personalizado de AKDI</p>
+          <div class="pricing-monthly">
+            <span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">{plan.monthlyPrice}</span>
+            {plan.monthlyUnit && <span class="text-[13px] text-gray-400">{plan.monthlyUnit}</span>}
           </div>
-        </div>
-        <a href={LOGIN_URL} class="block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 bg-white hover:bg-[#EFF8FF] text-[#155D88] border-[1.5px] border-[#155D88]">
-          Comenzar con 14 días gratis
-        </a>
-        <div class="border-t border-gray-100 my-1 mb-3"></div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Alumnos ilimitados</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">50 profesores / instructores</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Clases ilimitadas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Todo lo del plan Profesional</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Sitio Web Profesional</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Tienda Online integrada</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">AKDI Asistente IA completo</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Academy Twin proactivo</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Tarjetas de cumpleaños automáticas</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Boletería digital QR</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Add-on WhatsApp Business API</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Reportes avanzados</span>
-        </div>
-        <div class="flex items-start gap-2 py-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="text-[12px] text-gray-600 leading-snug">Soporte por WhatsApp (4h)</span>
-        </div>
-      </div>
+          <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-monthly">{plan.monthlyNote}</p>
+          <div class="pricing-yearly hidden">
+            <span class="text-[40px] font-extrabold text-[#101828] tracking-tight leading-none">{plan.yearlyPrice}</span>
+            {plan.yearlyUnit && <span class="text-[13px] text-gray-400">{plan.yearlyUnit}</span>}
+          </div>
+          <p class="text-[11px] text-gray-400 mb-4 min-h-[16px] pricing-yearly hidden">{plan.yearlyNote}</p>
 
+          <!-- Branding badge -->
+          <div class={`flex items-start gap-2 p-3 rounded-xl border ${plan.brandingBg} ${plan.brandingBorder} mb-4`}>
+            <span class="mt-0.5 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={plan.brandingIconStroke} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/>
+                <circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+              </svg>
+            </span>
+            <div>
+              <p class={`text-[12px] font-bold ${plan.brandingTitleColor}`}>{plan.brandingTitle}</p>
+              <p class="text-[11px] text-gray-400 leading-snug">{plan.brandingDesc}</p>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <a href={LOGIN_URL} class={`block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 ${plan.ctaExtra}`}>
+            {plan.ctaText}
+          </a>
+
+          <div class="border-t border-gray-100 my-1 mb-3"></div>
+
+          <!-- Highlight features -->
+          {plan.highlights.map((h) => (
+            <div class="flex items-start gap-2 py-1">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-px"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="text-[12px] text-gray-600 leading-snug">{h}</span>
+            </div>
+          ))}
+
+          <!-- Toggle button -->
+          <button
+            id={`toggle-btn-${plan.id}`}
+            onclick={`togglePlanFeatures('${plan.id}')`}
+            class="mt-3 w-full text-left text-[12px] font-semibold text-[#155D88] hover:text-[#124e75] py-1.5 transition-colors cursor-pointer"
+          >
+            Ver todas las funcionalidades ▼
+          </button>
+
+          <!-- Expandable full feature list -->
+          <div
+            id={`expand-${plan.id}`}
+            data-open="false"
+            style="max-height:0;overflow:hidden;transition:max-height 0.4s ease,opacity 0.3s ease;opacity:0;"
+          >
+            <div class="pt-3 border-t border-gray-100 mt-1">
+              {categories.map((cat) => (
+                <div class="mb-3">
+                  <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{cat.name}</p>
+                  {cat.features.map((feat) => {
+                    const included = plan.level >= feat.minPlan;
+                    return (
+                      <div class="flex items-center gap-2 py-[3px]">
+                        {included ? (
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                        ) : (
+                          <span class="shrink-0 inline-flex items-center justify-center w-[13px] text-gray-300 text-[12px] font-bold leading-none">—</span>
+                        )}
+                        <span class={`text-[11px] leading-snug ${included ? 'text-gray-600' : 'text-gray-300'}`}>{feat.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              <button
+                onclick={`togglePlanFeatures('${plan.id}')`}
+                class="mt-1 w-full text-left text-[12px] font-semibold text-[#155D88] hover:text-[#124e75] py-1.5 transition-colors cursor-pointer"
+              >
+                ▲ Ocultar
+              </button>
+            </div>
+          </div>
+
+        </div>
+      ))}
     </div>
 
     <!-- Enterprise -->
@@ -362,12 +305,10 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
         </div>
         <div class="inline-flex items-center gap-1.5 bg-[#399ABE]/15 border border-[#399ABE]/30 text-[#399ABE] px-3 py-1.5 rounded-lg text-[11px] font-bold">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="13.5" cy="6.5" r="1.5"/>
-  <circle cx="17.5" cy="10.5" r="1.5"/>
-  <circle cx="8.5" cy="7.5" r="1.5"/>
-  <circle cx="6.5" cy="12.5" r="1.5"/>
-  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
-</svg>
+            <circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/>
+            <circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
           Branding 100% personalizado — dominio propio + vocabulario personalizado
         </div>
       </div>
@@ -375,8 +316,8 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
         <a href={WA_ENT} target="_blank" rel="noopener noreferrer"
            class="flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white px-6 py-3.5 rounded-xl text-[14px] font-bold whitespace-nowrap transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
-  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-</svg>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
           Solicitar cotización
         </a>
         <a href="/#features" class="flex items-center justify-center bg-white/[0.06] hover:bg-white/[0.1] text-white px-6 py-3 rounded-xl text-[13px] font-semibold border border-white/[0.12] whitespace-nowrap transition-colors">Ver todas las funcionalidades</a>
@@ -389,6 +330,24 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
 </section>
 
 <script is:inline>
+  function togglePlanFeatures(planId) {
+    var panel = document.getElementById('expand-' + planId);
+    var btn = document.getElementById('toggle-btn-' + planId);
+    if (!panel || !btn) return;
+    var isOpen = panel.dataset.open === 'true';
+    if (isOpen) {
+      panel.style.maxHeight = '0px';
+      panel.style.opacity = '0';
+      panel.dataset.open = 'false';
+      btn.textContent = 'Ver todas las funcionalidades ▼';
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      panel.style.opacity = '1';
+      panel.dataset.open = 'true';
+      btn.textContent = '▲ Ocultar';
+    }
+  }
+
   function setPricingMonthly() {
     document.querySelectorAll('.pricing-monthly').forEach(function(el) { el.classList.remove('hidden'); });
     document.querySelectorAll('.pricing-yearly').forEach(function(el) { el.classList.add('hidden'); });
@@ -397,6 +356,7 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
     if (bm) { bm.classList.add('bg-[#155D88]','text-white','border-[#155D88]'); bm.classList.remove('bg-white','text-gray-500','border-gray-200'); }
     if (by) { by.classList.remove('bg-[#155D88]','text-white','border-[#155D88]'); by.classList.add('bg-white','text-gray-500','border-gray-200'); }
   }
+
   function setPricingYearly() {
     document.querySelectorAll('.pricing-yearly').forEach(function(el) { el.classList.remove('hidden'); });
     document.querySelectorAll('.pricing-monthly').forEach(function(el) { el.classList.add('hidden'); });
@@ -405,7 +365,14 @@ const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20pl
     if (by) { by.classList.add('bg-[#155D88]','text-white','border-[#155D88]'); by.classList.remove('bg-white','text-gray-500','border-gray-200'); }
     if (bm) { bm.classList.remove('bg-[#155D88]','text-white','border-[#155D88]'); bm.classList.add('bg-white','text-gray-500','border-gray-200'); }
   }
+
   document.addEventListener('astro:page-load', function() {
     setPricingMonthly();
+    ['gratuito','starter','profesional','business'].forEach(function(id) {
+      var panel = document.getElementById('expand-' + id);
+      var btn = document.getElementById('toggle-btn-' + id);
+      if (panel) { panel.style.maxHeight = '0px'; panel.style.opacity = '0'; panel.dataset.open = 'false'; }
+      if (btn) { btn.textContent = 'Ver todas las funcionalidades ▼'; }
+    });
   });
 </script>
