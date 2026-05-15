@@ -92,76 +92,87 @@ const defaultContent: SectionContent = {
 const content = contentMap[slug] ?? defaultContent;
 ---
 
-<section class="py-20 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f1624]">
+<section class="py-20 bg-gradient-to-b from-white to-[#f0f4f8]">
   <div class="max-w-6xl mx-auto px-6 lg:px-8">
 
     <!-- Header -->
-    <div class="text-center mb-14">
-      <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight mb-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-[#1a1a2e] tracking-tight leading-tight mb-4">
         Tu Academia también merece su propia
-        <span class="block bg-gradient-to-r from-[#399ABE] to-[#B9E0FB] bg-clip-text text-transparent mt-1">
+        <span class="block bg-gradient-to-r from-[#399ABE] to-[#1a6f8e] bg-clip-text text-transparent mt-1">
           Página Web
         </span>
       </h2>
-      <p class="text-[16px] text-[#8a9ab0] max-w-xl mx-auto leading-relaxed">
+      <p class="text-[16px] text-[#475569] max-w-xl mx-auto leading-relaxed">
         Incluido en el plan Business o disponible como add-on en cualquier plan. Tienda Online disponible para todos los planes.
       </p>
     </div>
 
+    <!-- Laptop mockup -->
+    <div class="flex justify-center mb-12">
+      <img
+        src="/images/mockup-laptop-web.png"
+        alt="Vista previa del sitio web de tu academia"
+        class="w-full max-w-[700px] rounded-xl"
+        style="box-shadow: 0 20px 60px rgba(26,26,46,0.12), 0 4px 16px rgba(26,26,46,0.08);"
+        loading="lazy"
+      />
+    </div>
+
     <!-- 4 columnas -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
 
       <!-- Col 1: Calendar -->
-      <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
-        <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <div class="bg-white border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#399ABE]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+        <div class="w-12 h-12 bg-[#399ABE]/10 border border-[#399ABE]/20 rounded-xl flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
             <line x1="16" y1="2" x2="16" y2="6"/>
             <line x1="8" y1="2" x2="8" y2="6"/>
             <line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col1.title}</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col1.description}</p>
+        <h3 class="text-[16px] font-bold text-[#1a1a2e] tracking-tight mb-2">{content.col1.title}</h3>
+        <p class="text-[13px] text-[#475569] leading-relaxed">{content.col1.description}</p>
       </div>
 
       <!-- Col 2: Camera / Gallery -->
-      <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
-        <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <div class="bg-white border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#399ABE]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+        <div class="w-12 h-12 bg-[#399ABE]/10 border border-[#399ABE]/20 rounded-xl flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
             <circle cx="12" cy="13" r="4"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col2.title}</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col2.description}</p>
+        <h3 class="text-[16px] font-bold text-[#1a1a2e] tracking-tight mb-2">{content.col2.title}</h3>
+        <p class="text-[13px] text-[#475569] leading-relaxed">{content.col2.description}</p>
       </div>
 
       <!-- Col 3: User Plus -->
-      <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
-        <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <div class="bg-white border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#399ABE]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+        <div class="w-12 h-12 bg-[#399ABE]/10 border border-[#399ABE]/20 rounded-xl flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="8.5" cy="7" r="4"/>
             <line x1="20" y1="8" x2="20" y2="14"/>
             <line x1="23" y1="11" x2="17" y2="11"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col3.title}</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col3.description}</p>
+        <h3 class="text-[16px] font-bold text-[#1a1a2e] tracking-tight mb-2">{content.col3.title}</h3>
+        <p class="text-[13px] text-[#475569] leading-relaxed">{content.col3.description}</p>
       </div>
 
       <!-- Col 4: Shopping Bag -->
-      <div class="bg-white/[0.06] border border-white/[0.1] rounded-2xl p-7 hover:bg-white/[0.09] hover:border-[#399ABE]/40 hover:-translate-y-1 transition-all duration-200">
-        <div class="w-14 h-14 bg-[#399ABE]/20 border border-[#399ABE]/30 rounded-xl flex items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <div class="bg-white border border-[#e2e8f0] rounded-2xl p-6 hover:border-[#399ABE]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+        <div class="w-12 h-12 bg-[#399ABE]/10 border border-[#399ABE]/20 rounded-xl flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
         </div>
-        <h3 class="text-[17px] font-bold text-white tracking-tight mb-2">{content.col4.title}</h3>
-        <p class="text-[13px] text-[#8a9ab0] leading-relaxed">{content.col4.description}</p>
+        <h3 class="text-[16px] font-bold text-[#1a1a2e] tracking-tight mb-2">{content.col4.title}</h3>
+        <p class="text-[13px] text-[#475569] leading-relaxed">{content.col4.description}</p>
       </div>
 
     </div>
@@ -172,7 +183,7 @@ const content = contentMap[slug] ?? defaultContent;
         href={SITIO_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2d85a8] text-white font-bold text-[15px] px-8 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5"
+        class="inline-flex items-center gap-2.5 bg-[#E85D3A] hover:bg-[#d04f2e] text-white font-bold text-[15px] px-8 py-3.5 rounded-xl shadow-lg shadow-[#E85D3A]/25 transition-all duration-200 hover:-translate-y-0.5"
       >
         Ver ejemplo de Sitio Web
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
