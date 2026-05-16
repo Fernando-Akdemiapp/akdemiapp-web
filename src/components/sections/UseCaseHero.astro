@@ -5,13 +5,12 @@ import type { UseCaseHeroSection as UseCaseHeroSectionProps } from "@/types/Page
 type Props = UseCaseHeroSectionProps;
 
 const {
-  title = "Tu academia, sin caos.",
-  subtitle,
-  description = "Gestiona alumnos, clases, cobros y comunicaciones desde un solo lugar. Con inteligencia artificial que trabaja para ti.",
-  badge,
   image,
   imageAlt,
 } = Astro.props;
+
+const title = "Tu academia, sin caos.";
+const description = "Gestiona alumnos, clases, cobros y comunicaciones desde un solo lugar. Con inteligencia artificial que trabaja para ti.";
 
 const imageUrl = image ? getStrapiMedia(image.url) : null;
 const finalImageAlt = imageAlt || image?.alternativeText || "Academia";
@@ -31,19 +30,8 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
 
       <!-- Contenido -->
       <div>
-        {badge && (
-          <span class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
-            {badge}
-          </span>
-        )}
-
         <h1 class="text-4xl sm:text-5xl lg:text-[3.2rem] font-extrabold text-[#101828] leading-[1.08] tracking-tight mb-5">
           {title}
-          {subtitle && (
-            <span class="block bg-gradient-to-r from-[#155D88] to-[#399ABE] bg-clip-text text-transparent mt-1">
-              {subtitle}
-            </span>
-          )}
         </h1>
 
         {description && (
