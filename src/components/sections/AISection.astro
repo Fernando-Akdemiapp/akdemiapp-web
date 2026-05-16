@@ -30,8 +30,9 @@
     <!-- Bento Row 1: 60% + 40% -->
     <div class="ai-row-1">
 
-      <!-- Card 1: AKDI (large) -->
-      <div class="ai-card ai-card-large">
+      <!-- Card 1: AKDI (large, dominant) -->
+      <div class="ai-card ai-card-large ai-card-akdi">
+        <span class="ai-watermark">3s</span>
         <div class="ai-icon-wrap">
           <!-- Chat bubble with sparkle inside -->
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -46,14 +47,14 @@
         <p class="ai-card-desc">
           Pregúntale cualquier cosa sobre tu academia. ¿Cuántos alumnos tengo? ¿Quién no ha pagado? AKDI responde al instante con datos reales. Como tener un gerente que nunca duerme.
         </p>
-        <div class="ai-stat">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Responde en menos de 3 segundos
+        <div class="ai-big-stat">
+          <span class="ai-big-num">3s</span>
+          <span class="ai-big-label">tiempo de respuesta</span>
         </div>
       </div>
 
       <!-- Card 2: Escaneo IA -->
-      <div class="ai-card ai-card-small">
+      <div class="ai-card ai-card-small ai-card-escaneo">
         <div class="ai-icon-wrap">
           <!-- Document with scan beam and corner brackets -->
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -61,7 +62,7 @@
             <line x1="17" y1="14" x2="31" y2="14"/>
             <line x1="17" y1="20" x2="31" y2="20"/>
             <line x1="17" y1="26" x2="24" y2="26"/>
-            <line x1="5" y1="31" x2="43" y2="31" stroke-width="2" stroke-dasharray="0"/>
+            <line x1="5" y1="31" x2="43" y2="31" stroke-width="2"/>
             <path d="M5 27v-5h5" stroke-width="1.5"/>
             <path d="M43 27v-5h-5" stroke-width="1.5"/>
             <path d="M5 35v5h5" stroke-width="1.5"/>
@@ -72,9 +73,9 @@
         <p class="ai-card-desc">
           Fotografía cualquier factura. La IA extrae monto, proveedor y categoría. Tu gasto queda registrado en segundos.
         </p>
-        <div class="ai-stat">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          0 entrada manual
+        <div class="ai-big-stat">
+          <span class="ai-big-num">0</span>
+          <span class="ai-big-label">entrada manual</span>
         </div>
       </div>
 
@@ -84,7 +85,7 @@
     <div class="ai-row-2">
 
       <!-- Card 3: Salud Financiera -->
-      <div class="ai-card">
+      <div class="ai-card ai-card-salud">
         <div class="ai-icon-wrap">
           <!-- Heart with ECG pulse line -->
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -96,14 +97,14 @@
         <p class="ai-card-desc">
           ¿Tu academia gana o pierde? La IA analiza ingresos, gastos y cobros pendientes. Te dice qué hacer para mejorar.
         </p>
-        <div class="ai-stat">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          Tu asesor financiero 24/7
+        <div class="ai-big-stat">
+          <span class="ai-big-num">24/7</span>
+          <span class="ai-big-label">asesor financiero</span>
         </div>
       </div>
 
       <!-- Card 4: Evaluaciones Digitales -->
-      <div class="ai-card">
+      <div class="ai-card ai-card-evaluaciones">
         <div class="ai-icon-wrap">
           <!-- Document with folded corner and checkmark badge -->
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -119,14 +120,14 @@
         <p class="ai-card-desc">
           Sube tu formato en PDF. La IA lo transforma en digital. El profesor evalúa, firma y se publica en los portales de padres y alumnos.
         </p>
-        <div class="ai-stat">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          De PDF a digital en 1 clic
+        <div class="ai-big-stat">
+          <span class="ai-big-num">1 clic</span>
+          <span class="ai-big-label">de PDF a digital</span>
         </div>
       </div>
 
       <!-- Card 5: Centinela -->
-      <div class="ai-card ai-card-upcoming">
+      <div class="ai-card ai-card-centinela">
         <div class="ai-icon-wrap">
           <!-- Shield with eye and radar arcs -->
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -144,9 +145,9 @@
         <p class="ai-card-desc">
           Vigila tu academia 24/7. Detecta alumnos en riesgo de deserción por faltas, pagos atrasados o bajo rendimiento. Te sugiere un mensaje de WhatsApp personalizado para retenerlos.
         </p>
-        <div class="ai-stat">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Retención automática de alumnos
+        <div class="ai-big-stat">
+          <span class="ai-big-num">87%</span>
+          <span class="ai-big-label">retención de alumnos</span>
         </div>
       </div>
 
@@ -164,6 +165,13 @@
     </div>
 
   </div>
+
+  <!-- Bottom separator strip -->
+  <div class="ai-separator">
+    <span class="ai-sep-sparkle">✦</span>
+    <div class="ai-sep-line"></div>
+  </div>
+
 </section>
 
 <style>
@@ -185,6 +193,7 @@
     z-index: 1;
   }
 
+  /* ── Grid layout ── */
   .ai-row-1 {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -198,7 +207,10 @@
     gap: 1rem;
   }
 
+  /* ── Base card ── */
   .ai-card {
+    position: relative;
+    overflow: hidden;
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -207,19 +219,80 @@
     padding: 32px;
     display: flex;
     flex-direction: column;
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-top-color 0.3s ease, border-right-color 0.3s ease, border-bottom-color 0.3s ease;
+  }
+
+  /* ── Hover: lift + border pulse animation ── */
+  @keyframes ai-border-pulse {
+    0%, 100% {
+      border-top-color: rgba(57, 154, 190, 0.4);
+      border-right-color: rgba(57, 154, 190, 0.4);
+      border-bottom-color: rgba(57, 154, 190, 0.4);
+    }
+    50% {
+      border-top-color: rgba(57, 154, 190, 0.7);
+      border-right-color: rgba(57, 154, 190, 0.7);
+      border-bottom-color: rgba(57, 154, 190, 0.7);
+    }
   }
 
   .ai-card:hover {
-    border-color: rgba(57, 154, 190, 0.5);
     transform: translateY(-4px);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), 0 0 32px rgba(57, 154, 190, 0.07);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), 0 0 32px rgba(57, 154, 190, 0.08);
+    animation: ai-border-pulse 1.8s ease-in-out infinite;
   }
 
-  .ai-card-upcoming {
+  /* ── Icon scale on card hover ── */
+  .ai-icon-wrap svg {
+    transition: transform 0.3s ease;
+  }
+
+  .ai-card:hover .ai-icon-wrap svg {
+    transform: scale(1.1);
+  }
+
+  /* ── Per-card left border accents ── */
+  .ai-card-akdi {
+    border-left: 3px solid #399ABE;
+    border-top-color: rgba(57, 154, 190, 0.45);
+    border-right-color: rgba(26, 111, 142, 0.35);
+    border-bottom-color: rgba(26, 111, 142, 0.25);
+    box-shadow: 0 0 40px rgba(57, 154, 190, 0.1);
+  }
+
+  .ai-card-escaneo {
+    border-left: 3px solid #22c55e;
+  }
+
+  .ai-card-salud {
+    border-left: 3px solid #f59e0b;
+  }
+
+  .ai-card-evaluaciones {
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .ai-card-centinela {
+    border-left: 3px solid #6366f1;
     opacity: 0.85;
   }
 
+  /* ── AKDI watermark number ── */
+  .ai-watermark {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #399ABE;
+    opacity: 0.15;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+  }
+
+  /* ── Icon wrapper ── */
   .ai-icon-wrap {
     width: 64px;
     height: 64px;
@@ -233,6 +306,7 @@
     flex-shrink: 0;
   }
 
+  /* ── Card text elements ── */
   .ai-card-header-row {
     display: flex;
     align-items: center;
@@ -277,21 +351,29 @@
     margin: 0 0 20px;
   }
 
-  .ai-stat {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #399ABE;
-    background: rgba(57, 154, 190, 0.1);
-    border: 1px solid rgba(57, 154, 190, 0.2);
-    border-radius: 50px;
-    padding: 5px 12px;
-    align-self: flex-start;
+  /* ── Big stat display (replaces pill) ── */
+  .ai-big-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     margin-top: auto;
   }
 
+  .ai-big-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #399ABE;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .ai-big-label {
+    font-size: 0.8rem;
+    color: #8899aa;
+    font-weight: 500;
+  }
+
+  /* ── Attribution ── */
   .ai-attribution {
     display: inline-flex;
     align-items: center;
@@ -301,6 +383,32 @@
     letter-spacing: 0.02em;
   }
 
+  /* ── Bottom separator strip ── */
+  .ai-separator {
+    position: relative;
+    z-index: 10;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+    gap: 10px;
+  }
+
+  .ai-sep-sparkle {
+    font-size: 0.85rem;
+    color: #399ABE;
+    line-height: 1;
+  }
+
+  .ai-sep-line {
+    width: 200px;
+    height: 1px;
+    background: rgba(57, 154, 190, 0.3);
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 768px) {
     .ai-row-1,
     .ai-row-2 {
@@ -309,6 +417,10 @@
 
     .ai-card {
       padding: 24px;
+    }
+
+    .ai-watermark {
+      font-size: 2.2rem;
     }
   }
 </style>
