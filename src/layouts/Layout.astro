@@ -50,6 +50,36 @@ const canonicalURL = new URL(canonical, Astro.site);
     <slot />
     <LeadFormModal />
 
+    <!-- WhatsApp chat bubble -->
+    <div
+      id="wa-bubble"
+      style="display:none; position:fixed; bottom:92px; right:24px; z-index:51; width:280px; max-width:calc(100vw - 48px); background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.14); padding:16px; opacity:0; transform:translateY(12px); transition:opacity 0.35s ease, transform 0.35s ease;"
+      aria-live="polite"
+    >
+      <!-- Arrow pointing down -->
+      <div style="position:absolute; bottom:-8px; right:20px; width:16px; height:8px; overflow:hidden;">
+        <div style="width:14px; height:14px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.1); transform:rotate(45deg); margin:-7px auto 0;"></div>
+      </div>
+      <!-- Dismiss button -->
+      <button
+        id="wa-bubble-close"
+        aria-label="Cerrar"
+        style="position:absolute; top:8px; right:10px; background:none; border:none; cursor:pointer; color:#94a3b8; font-size:16px; line-height:1; padding:4px 6px;"
+      >✕</button>
+      <!-- Content -->
+      <p style="font-size:0.875rem; color:#374151; line-height:1.55; margin:0 18px 0 0;">
+        👋 ¡Hola! ¿Tienes una academia? Te cuento cómo funciona AKDEMIApp en 2 minutos.
+      </p>
+      <a
+        href="https://wa.me/50765726078?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20AKDEMIApp"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:block; width:100%; margin-top:12px; background:#22c55e; color:#fff; font-size:0.875rem; font-weight:600; text-align:center; padding:8px 16px; border-radius:8px; text-decoration:none; box-sizing:border-box;"
+      >
+        Escribir por WhatsApp
+      </a>
+    </div>
+
     <!-- WhatsApp floating button -->
     <a
       href="https://wa.me/5076572078?text=Hola%2C%20vi%20la%20página%20de%20AKDEMIApp%20y%20me%20interesa%20saber%20más%20sobre%20el%20sistema%20para%20mi%20academia.%20%C2%BFPodrían%20darme%20más%20información%3F"
@@ -86,6 +116,48 @@ const canonicalURL = new URL(canonical, Astro.site);
 
     <script is:inline>
       (function () {
+        // ── WhatsApp proactive bubble ──────────────────────────────────────
+        var waBubbleDismissed = false;
+
+        function initBubble() {
+          var bubble = document.getElementById('wa-bubble');
+          var closeBtn = document.getElementById('wa-bubble-close');
+          if (!bubble || !closeBtn) return;
+
+          function showBubble() {
+            if (waBubbleDismissed) return;
+            bubble.style.display = 'block';
+            // Reduce width on small screens
+            bubble.style.width = window.innerWidth < 480 ? '250px' : '280px';
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                bubble.style.opacity = '1';
+                bubble.style.transform = 'translateY(0)';
+              });
+            });
+          }
+
+          function hideBubble() {
+            waBubbleDismissed = true;
+            bubble.style.opacity = '0';
+            bubble.style.transform = 'translateY(12px)';
+            setTimeout(function () { bubble.style.display = 'none'; }, 350);
+          }
+
+          closeBtn.addEventListener('click', hideBubble);
+
+          // Also hide bubble when the WA link inside it is clicked
+          var bubbleLink = bubble.querySelector('a');
+          if (bubbleLink) bubbleLink.addEventListener('click', hideBubble);
+
+          setTimeout(showBubble, 15000);
+        }
+
+        initBubble();
+        // Re-init on Astro view transitions
+        document.addEventListener('astro:page-load', initBubble);
+
+        // ── Sticky mobile CTA ──────────────────────────────────────────────
         var cta = document.getElementById('sticky-mobile-cta');
         var waBtn = document.getElementById('wa-float');
 
@@ -94,7 +166,13 @@ const canonicalURL = new URL(canonical, Astro.site);
 
         function updateWaPosition(ctaVisible) {
           if (!waBtn) return;
-          waBtn.style.bottom = (ctaVisible && isMobile()) ? '80px' : '24px';
+          var bottomPx = (ctaVisible && isMobile()) ? '80px' : '24px';
+          waBtn.style.bottom = bottomPx;
+          var bubble = document.getElementById('wa-bubble');
+          if (bubble) {
+            var waBottom = (ctaVisible && isMobile()) ? 80 : 24;
+            bubble.style.bottom = (waBottom + 68) + 'px';
+          }
         }
 
         function checkScroll() {
