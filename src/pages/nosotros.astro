@@ -3,13 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/layout/Navbar.astro";
 import Footer from "../components/layout/Footer.astro";
 
-const REGISTRO_URL = "https://app.akdemiapp.online/registro/academia";
-const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20AKDEMIApp";
+const FERNANDO_WA = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%20saber%20m%C3%A1s%20sobre%20AKDEMIApp";
 ---
 
 <Layout
   title="Nosotros — AKDEMIApp"
-  description="Conoce la historia detrás de AKDEMIApp: una familia panameña que construyó el software que necesitaba para su propia academia."
+  description="AKDEMIApp no nació en una oficina de tecnología. Nació en una academia de ballet, de la mano de un padre, su hija bailarina y su hijo programador."
 >
   <Navbar />
 
@@ -21,22 +20,11 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
       <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
 
       <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
-        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          Familia. Código. Propósito.
-        </div>
-
         <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
-          Construido en familia,<br class="hidden sm:block" /> para tu academia.
+          Construido en familia, para tu academia
         </h1>
-
         <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto">
-          AKDEMIApp nació en Panamá, en la academia de nuestra propia familia. Lo que ves hoy es el resultado de años de trabajo, frustraciones y una misión clara: darle a cada director de academia las herramientas que merecen.
+          AKDEMIApp no nació en una oficina de tecnología. Nació en una academia de ballet, de la mano de un padre, su hija bailarina y su hijo programador.
         </p>
       </div>
     </section>
@@ -45,15 +33,14 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
     <section class="bg-white py-20">
       <div class="max-w-3xl mx-auto px-6 space-y-6 text-gray-600 text-[1.05rem] leading-[1.85]">
         <h2 class="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-6">Cómo empezó todo</h2>
-
         <p>
-          En 2018, Fernando Sánchez —nuestro padre— abrió una academia de taekwondo en Ciudad de Panamá. Como la mayoría de los directores, empezó con cuadernos, hojas de Excel y grupos de WhatsApp para manejar alumnos, pagos y horarios. Era caótico, pero era lo que había.
+          Mi hija Valeria fundó Allongé Studio, una academia de ballet en Panamá. Como padre, vi de cerca lo que significa gestionar una academia: listas de alumnos en Excel, cobros por WhatsApp, horarios en papel, y noches enteras revisando quién pagó y quién no.
         </p>
         <p>
-          Fernando Jr., estudiante de ingeniería en ese momento, veía el problema de cerca. Después de meses viendo a su padre luchar con datos duplicados, cobros olvidados y comunicaciones perdidas, decidió construir algo mejor. La primera versión de AKDEMIApp era un sistema sencillo hecho para una sola academia: la nuestra.
+          Busqué una herramienta que resolviera todo eso. No encontré ninguna que se adaptara a la realidad de una academia latinoamericana — ni en idioma, ni en métodos de pago, ni en la forma de operar.
         </p>
         <p>
-          Lo que empezó como un proyecto familiar se convirtió en algo más grande cuando otros directores del mismo gremio preguntaron: "¿Puedo usar ese sistema también?" Ahí entendimos que el problema no era solo nuestro.
+          Así que hicimos una. Le pedí a mi hijo Fernando, desarrollador de software, que me ayudara a construirla. Lo que empezó como una solución interna para Allongé Studio se convirtió en AKDEMIApp.
         </p>
       </div>
     </section>
@@ -61,16 +48,15 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
     <!-- ── 3. MARKET DISCOVERY ── -->
     <section class="bg-gray-50 py-20">
       <div class="max-w-3xl mx-auto px-6 space-y-6 text-gray-600 text-[1.05rem] leading-[1.85]">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-6">El problema era mayor de lo que creíamos</h2>
-
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-6">El mercado era más grande de lo que pensábamos</h2>
         <p>
-          Hablamos con más de 60 directores de academia en Panamá, Costa Rica, Colombia y México. Todos compartían la misma historia: herramientas genéricas que no entienden el modelo de negocio de una academia, software caro pensado para gimnasios o escuelas formales, o nada más que grupos de WhatsApp y Excel.
+          Cuando empecé a ofrecer AKDEMIApp a otras academias, algo cambió. Cada videollamada con un dueño de academia me revelaba problemas que no había visto desde Allongé. La academia de artes marciales necesitaba control de rangos y cinturones. La de música necesitaba gestionar instrumentos prestados. La de fútbol necesitaba manejar torneos y canchas.
         </p>
         <p>
-          Las academias de artes marciales, danza, música, idiomas y deportes tienen una dinámica única: alumnos que entran y salen por temporadas, profesores que cobran por clase, padres que necesitan información en tiempo real y directores que deben hacer todo esto solos o con un equipo mínimo.
+          Más de 600 conversaciones después — la mayoría por videollamada, otras visitando academias en Panamá y Centroamérica — cada funcionalidad de AKDEMIApp existe porque un dueño de academia la pidió, la explicó, y la validó con nosotros.
         </p>
         <p>
-          Esa investigación definió cada módulo de AKDEMIApp. No construimos características porque se ven bien en una demo. Las construimos porque un director real, con una academia real, las necesitaba ayer.
+          No construimos features desde un escritorio. Los descubrimos escuchando a quienes viven la academia todos los días.
         </p>
       </div>
     </section>
@@ -79,8 +65,8 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
     <section class="bg-white py-20">
       <div class="max-w-5xl mx-auto px-6">
         <div class="text-center mb-14">
-          <p class="text-xs font-bold tracking-[0.15em] uppercase text-[#399ABE] mb-3">El equipo</p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828]">Las personas detrás de la plataforma</h2>
+          <p class="text-xs font-bold tracking-[0.15em] uppercase text-[#399ABE] mb-3">La familia</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828]">La familia detrás de AKDEMIApp</h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -94,9 +80,9 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
               </svg>
             </div>
             <h3 class="text-lg font-bold text-[#101828] mb-1">Fernando Sánchez</h3>
-            <p class="text-sm text-[#399ABE] font-semibold mb-4">Director & Co-fundador</p>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">Fundador</p>
             <p class="text-sm text-gray-500 leading-relaxed">
-              Maestro de taekwondo con más de 20 años de experiencia. Fundó la academia familiar en 2018 y es quien valida cada nueva funcionalidad desde la perspectiva de un director real.
+              La visión, la estrategia comercial y el contacto directo con cada academia. 6 años entendiendo el mercado, diseñando el producto y escuchando a los dueños.
             </p>
           </div>
 
@@ -109,9 +95,9 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
               </svg>
             </div>
             <h3 class="text-lg font-bold text-[#101828] mb-1">Fernando Jr.</h3>
-            <p class="text-sm text-[#399ABE] font-semibold mb-4">CTO & Co-fundador</p>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">Desarrollador Principal</p>
             <p class="text-sm text-gray-500 leading-relaxed">
-              Ingeniero de software y arquitecto de la plataforma. Construyó la primera versión de AKDEMIApp para resolver el caos administrativo de la academia de su padre y no paró desde entonces.
+              El que hizo tangible la idea. Cada pantalla, cada módulo, cada línea de código de AKDEMIApp fue construida por él. El orgullo de un padre es ver a su hijo convertir una idea en un producto que transforma negocios reales.
             </p>
           </div>
 
@@ -123,9 +109,9 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
               </svg>
             </div>
             <h3 class="text-lg font-bold text-[#101828] mb-1">Valeria Sánchez</h3>
-            <p class="text-sm text-[#399ABE] font-semibold mb-4">Directora de Éxito del Cliente</p>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">Directora — Allongé Studio</p>
             <p class="text-sm text-gray-500 leading-relaxed">
-              Asegura que cada academia que se une a AKDEMIApp tenga una adopción exitosa. Es la voz de los directores dentro del equipo y quien convierte el feedback en mejoras reales.
+              La inspiración de todo esto. Su academia fue el laboratorio donde nació AKDEMIApp y sigue siendo nuestra cliente piloto. Cada mejora se prueba primero en Allongé.
             </p>
           </div>
 
@@ -138,11 +124,8 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
       <div class="max-w-3xl mx-auto px-6 text-center">
         <p class="text-xs font-bold tracking-[0.15em] uppercase text-[#399ABE] mb-6">Nuestra misión</p>
         <blockquote class="text-2xl sm:text-3xl lg:text-[2.1rem] font-extrabold text-white leading-[1.25] tracking-[-0.02em]">
-          "Que cada director de academia en Latinoamérica pueda enfocarse en enseñar, no en administrar."
+          "Que ningún dueño de academia en Latinoamérica tenga que gestionar su negocio con hojas de cálculo y grupos de WhatsApp. Que cada academia — desde un estudio de 15 alumnos hasta una organización con múltiples sedes — tenga acceso a tecnología con inteligencia artificial, a un precio justo y en su idioma."
         </blockquote>
-        <p class="mt-8 text-gray-400 text-base leading-relaxed max-w-2xl mx-auto">
-          Creemos que el éxito de una academia no depende de cuántos formularios llena su director, sino de cuánto tiempo pasa con sus alumnos. AKDEMIApp existe para que la tecnología haga el trabajo pesado.
-        </p>
       </div>
     </section>
 
@@ -178,18 +161,27 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
       </div>
     </section>
 
-    <!-- ── 7. CTA ── -->
+    <!-- ── 7. PROCESOPTIMO ── -->
+    <section class="bg-white py-14">
+      <div class="max-w-2xl mx-auto px-6 text-center">
+        <p class="text-gray-400 text-sm leading-relaxed">
+          AKDEMIApp es desarrollado por ProcesOptimo, empresa de software en Panamá especializada en aplicaciones verticales para negocios latinoamericanos.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 8. CTA ── -->
     <section class="bg-[#101828] py-24">
       <div class="max-w-2xl mx-auto px-6 text-center">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
-          ¿Tienes una academia?<br />Hablemos.
+          ¿Quieres saber si AKDEMIApp funciona para tu tipo de academia?
         </h2>
         <p class="text-gray-400 text-base mb-10 leading-relaxed">
-          Fernando responde personalmente cada consulta. Cuéntanos sobre tu academia y te mostramos cómo AKDEMIApp puede ayudarte.
+          Escríbeme directamente — yo te atiendo.
         </p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
           <a
-            href={DEMO_LINK}
+            href={FERNANDO_WA}
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
@@ -200,12 +192,13 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
             Hablar con Fernando
           </a>
           <a
-            href={REGISTRO_URL}
+            href="/registro"
             class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
           >
             Empieza gratis
           </a>
         </div>
+        <p class="text-gray-500 text-xs">Sin tarjeta de crédito · Configuración en 10 minutos</p>
       </div>
     </section>
 
