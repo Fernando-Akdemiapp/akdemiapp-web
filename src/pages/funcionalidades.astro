@@ -3,6 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/layout/Navbar.astro";
 import Footer from "../components/layout/Footer.astro";
 
+interface MiniBlock {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 interface Feature {
   id: string;
   title: string;
@@ -11,6 +17,8 @@ interface Feature {
   image: string;
   imageLeft: boolean;
   mobileImage?: string;
+  imagePlaceholder?: boolean;
+  miniBlocks?: MiniBlock[];
 }
 
 const features: Feature[] = [
@@ -23,7 +31,7 @@ const features: Feature[] = [
       "Vista cards y lista",
       "Filtros por estado y nivel",
       "Importar y exportar CSV",
-      "Ficha 360° con historial completo",
+      "Ficha 360°: contacto, pagos, asistencia, evaluaciones y emergencia",
     ],
     image: "/features/alumnos-cards.png",
     imageLeft: true,
@@ -41,6 +49,66 @@ const features: Feature[] = [
     ],
     image: "/features/crm-kanban.png",
     imageLeft: false,
+  },
+  {
+    id: "comunicaciones",
+    title: "Comunicaciones",
+    description:
+      "Mantén informados a padres, alumnos y profesores. Envía recordatorios de cobro, avisos de clase y felicitaciones de cumpleaños desde un solo lugar.",
+    benefits: [
+      "WhatsApp masivo con plantillas",
+      "Email con branding de tu academia",
+      "Recordatorios automáticos de pago",
+      "Notificaciones de cumpleaños y certificados",
+    ],
+    image: "",
+    imageLeft: false,
+    imagePlaceholder: true,
+  },
+  {
+    id: "asistencia",
+    title: "Asistencia y Control",
+    description:
+      "Registra la asistencia de cada clase de forma manual o con código QR. Historial completo por alumno y reportes de asistencia por período.",
+    benefits: [
+      "Asistencia manual con un clic",
+      "Escaneo QR por alumno",
+      "Historial de asistencia por estudiante",
+      "Reportes por clase y período",
+    ],
+    image: "",
+    imageLeft: true,
+    imagePlaceholder: true,
+  },
+  {
+    id: "reportes",
+    title: "Reportes y Exportaciones",
+    description:
+      "Toda la información de tu academia lista para descargar. Genera reportes financieros, de asistencia y de alumnos en el formato que necesites.",
+    benefits: [
+      "Exportar a CSV, PDF y Excel",
+      "Reporte de ingresos, egresos y pendientes",
+      "Reportes de asistencia por período",
+      "Filtros por fecha, estado y disciplina",
+    ],
+    image: "",
+    imageLeft: false,
+    imagePlaceholder: true,
+  },
+  {
+    id: "nomina",
+    title: "Nómina de Profesores",
+    description:
+      "Calcula pagos a profesores por clase, hora o período. Genera recibos PDF automáticos con firma digital que el profesor puede descargar.",
+    benefits: [
+      "Pago por clase, hora o monto fijo",
+      "Recibos PDF con firma digital",
+      "Historial de pagos por profesor",
+      "Integrado con el calendario de clases",
+    ],
+    image: "",
+    imageLeft: true,
+    imagePlaceholder: true,
   },
   {
     id: "cobros",
@@ -71,29 +139,15 @@ const features: Feature[] = [
     imageLeft: false,
   },
   {
-    id: "alumno-detalle",
-    title: "Ficha 360° del Estudiante",
-    description:
-      "Toda la información de cada alumno en un solo lugar: contacto, datos fiscales, emergencia, tipo de pago, evaluaciones y asistencia.",
-    benefits: [
-      "Datos de contacto y emergencia",
-      "Progreso de perfil",
-      "Acceso rápido a cobros y asistencia",
-      "Historial académico",
-    ],
-    image: "/features/alumno-detalle.png",
-    imageLeft: true,
-  },
-  {
     id: "portal",
-    title: "Portal del Alumno",
+    title: "Portales Personalizados",
     description:
-      "Cada estudiante tiene su propio portal donde ve sus clases, pagos, evaluaciones, certificados, reglamento y código QR personal.",
-    benefits: [
-      "Acceso con credenciales propias",
-      "Clases y horarios",
-      "Pagos y recibos",
-      "QR personal y certificados",
+      "Cada usuario accede a su propio portal con la información que le corresponde. Tres portales independientes con credenciales propias y branding de tu academia.",
+    benefits: [],
+    miniBlocks: [
+      { icon: "student", title: "Portal del Alumno", description: "Clases, horarios, pagos, recibos, QR personal y certificados" },
+      { icon: "parents", title: "Portal del Padre", description: "Ve las clases, pagos y progreso de sus hijos. Recibe notificaciones y puede pagar en línea" },
+      { icon: "teacher", title: "Portal del Profesor", description: "Sus clases asignadas, lista de alumnos, asistencia y evaluaciones pendientes" },
     ],
     image: "/features/portal-alumno.png",
     imageLeft: false,
@@ -119,7 +173,7 @@ const features: Feature[] = [
 
 <Layout
   title="Funcionalidades — Software de Gestión para Academias"
-  description="Más de 28 herramientas para gestionar alumnos, cobros, agenda, CRM, portales y más. Diseñado para academias de danza, artes marciales, música y deportes."
+  description="Más de 35 herramientas para gestionar alumnos, cobros, agenda, CRM, portales y más. Diseñado para academias de danza, artes marciales, música y deportes."
 >
   <Navbar />
 
@@ -134,7 +188,7 @@ const features: Feature[] = [
           Todo lo que necesitas para gestionar tu academia
         </h1>
         <p class="text-[17px] text-gray-500 leading-relaxed">
-          Más de 28 herramientas diseñadas para academias de danza, artes marciales, música, deportes y bienestar en Latinoamérica.
+          Más de 35 herramientas diseñadas para academias de danza, artes marciales, música, deportes y bienestar en Latinoamérica.
         </p>
       </div>
     </section>
@@ -151,7 +205,11 @@ const features: Feature[] = [
 
             <!-- Screenshot(s) -->
             <div class="w-full lg:w-1/2 shrink-0">
-              {feature.mobileImage ? (
+              {feature.imagePlaceholder ? (
+                <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
+                  <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
+                </div>
+              ) : feature.mobileImage ? (
                 <div class="flex flex-col sm:flex-row gap-6 items-start">
                   <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200 flex-1">
                     <img
@@ -188,18 +246,46 @@ const features: Feature[] = [
               <p class="text-[16px] text-gray-500 leading-relaxed mb-8">
                 {feature.description}
               </p>
-              <ul class="space-y-3">
-                {feature.benefits.map((benefit) => (
-                  <li class="flex items-center gap-3">
-                    <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"/>
-                      </svg>
-                    </span>
-                    <span class="text-[15px] text-gray-700 font-medium">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
+              {feature.miniBlocks ? (
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {feature.miniBlocks.map((block) => (
+                    <div class="bg-[#F8FAFC] rounded-xl p-4 border border-gray-100">
+                      <div class="w-8 h-8 rounded-lg bg-[#EFF8FF] flex items-center justify-center mb-3">
+                        {block.icon === 'student' && (
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                          </svg>
+                        )}
+                        {block.icon === 'parents' && (
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                          </svg>
+                        )}
+                        {block.icon === 'teacher' && (
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                          </svg>
+                        )}
+                      </div>
+                      <p class="font-semibold text-[#101828] text-[14px] mb-1.5">{block.title}</p>
+                      <p class="text-[13px] text-gray-500 leading-relaxed">{block.description}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ul class="space-y-3">
+                  {feature.benefits.map((benefit) => (
+                    <li class="flex items-center gap-3">
+                      <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </span>
+                      <span class="text-[15px] text-gray-700 font-medium">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
           </div>
@@ -207,24 +293,78 @@ const features: Feature[] = [
       </section>
     ))}
 
+    <!-- AI BLOCK -->
+    <section class="bg-slate-900 text-white py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-14">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#399ABE] bg-[#399ABE]/10 border border-[#399ABE]/30 px-3 py-1 rounded-full mb-5">
+            Inteligencia Artificial
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight mb-4">
+            Tu academia con superpoderes
+          </h2>
+          <p class="text-[17px] text-slate-400 max-w-2xl mx-auto">
+            La única plataforma para academias con IA integrada en cada módulo
+          </p>
+        </div>
+
+        <!-- Cards grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+          <!-- AKDI -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/60 p-6 hover:border-[#399ABE]/50 transition-colors">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#399ABE] mb-3">AKDI</p>
+            <p class="text-[14px] text-slate-300 leading-relaxed">Tu asistente IA. Pregúntale cualquier cosa sobre tu academia y responde con datos reales en 3 segundos.</p>
+          </div>
+          <!-- Escaneo Inteligente -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/60 p-6 hover:border-[#399ABE]/50 transition-colors">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#399ABE] mb-3">Escaneo Inteligente</p>
+            <p class="text-[14px] text-slate-300 leading-relaxed">Fotografía cualquier factura. La IA extrae monto, proveedor y categoría automáticamente.</p>
+          </div>
+          <!-- Salud Financiera -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/60 p-6 hover:border-[#399ABE]/50 transition-colors">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#399ABE] mb-3">Salud Financiera</p>
+            <p class="text-[14px] text-slate-300 leading-relaxed">La IA analiza ingresos, gastos y cobros pendientes. Te dice qué hacer para mejorar.</p>
+          </div>
+          <!-- Evaluaciones Digitales -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/60 p-6 hover:border-[#399ABE]/50 transition-colors">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#399ABE] mb-3">Evaluaciones Digitales</p>
+            <p class="text-[14px] text-slate-300 leading-relaxed">Sube tu formato en PDF. La IA lo transforma en digital. El profesor evalúa, firma y publica.</p>
+          </div>
+          <!-- Centinela -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-800/60 p-6 hover:border-[#399ABE]/50 transition-colors">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-[#399ABE] mb-3">Centinela</p>
+            <p class="text-[14px] text-slate-300 leading-relaxed">Monitoreo 24/7. Detecta alumnos en riesgo de deserción y te sugiere acciones de retención por WhatsApp.</p>
+          </div>
+        </div>
+
+        <!-- Footer note -->
+        <p class="text-center text-[12px] text-slate-500">Potenciado por Anthropic Claude AI</p>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="bg-[#155D88] py-20 px-6">
       <div class="max-w-2xl mx-auto text-center">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight mb-6">
           ¿Listo para transformar tu academia?
         </h2>
-        <button
-          onclick="window.openLeadModal && window.openLeadModal()"
-          class="inline-flex items-center gap-2 bg-white text-[#155D88] text-[15px] font-bold px-7 py-3.5 rounded-xl shadow-lg hover:bg-[#EFF8FF] transition-all duration-200 cursor-pointer border-0"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
-          </svg>
-          Agenda una demo
-        </button>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="https://app.akdemiapp.online/registro/academia"
+            class="inline-flex items-center justify-center bg-white text-[#155D88] text-[15px] font-bold px-7 py-3.5 rounded-xl shadow-lg hover:bg-[#EFF8FF] transition-all duration-200 w-full sm:w-auto"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href="https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20AKDEMIApp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center bg-transparent text-white text-[15px] font-bold px-7 py-3.5 rounded-xl border-2 border-white/60 hover:border-white hover:bg-white/10 transition-all duration-200 w-full sm:w-auto"
+          >
+            Agenda una demo
+          </a>
+        </div>
         <p class="mt-4 text-[13px] text-white/60">
           Sin tarjeta de crédito · Configuración en 10 minutos
         </p>
