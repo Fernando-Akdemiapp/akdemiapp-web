@@ -1,0 +1,281 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+
+const REGISTRO_URL = "/registro";
+const DEMO_WA = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20academia%20de%20artes%20marciales%20y%20quiero%20saber%20m%C3%A1s";
+
+interface Feature {
+  id: string;
+  title: string;
+  description: string;
+  benefits: string[];
+  imageLeft: boolean;
+}
+
+const features: Feature[] = [
+  {
+    id: "alumnos-rangos",
+    title: "Alumnos y rangos",
+    description: "Ficha de cada alumno con su cinturón actual, historial de exámenes, disciplinas y progreso. Vista completa del camino marcial.",
+    benefits: [
+      "Cinturón actual y próximo grado visible",
+      "Historial de exámenes aprobados por alumno",
+      "Disciplinas inscritas por nivel",
+      "Vista completa del progreso marcial",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "examenes",
+    title: "Exámenes de grado digitales",
+    description: "Sube tu formato de evaluación. El sensei evalúa digitalmente, firma y el alumno recibe su resultado en el portal.",
+    benefits: [
+      "Sube tu propio formato de evaluación",
+      "Firma digital del sensei o instructor",
+      "Resultado disponible en el portal del alumno",
+      "Historial de exámenes por período",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "cobros",
+    title: "Cobros por mensualidad y examen",
+    description: "Mensualidades, inscripciones a torneos y matrículas de examen. Recordatorios automáticos por WhatsApp.",
+    benefits: [
+      "Cobro diferenciado: mensualidad, examen, torneo",
+      "Recordatorios automáticos de vencimiento",
+      "Panel de morosos en tiempo real",
+      "Recibos digitales al instante",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "calendario",
+    title: "Calendario de clases y torneos",
+    description: "Horarios por disciplina y nivel con colores. Agrega torneos y eventos especiales al calendario.",
+    benefits: [
+      "Color distinto por disciplina y nivel",
+      "Torneos y eventos en el mismo calendario",
+      "Vista semanal y mensual",
+      "Detección automática de conflictos de horario",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "portal",
+    title: "Portal para alumnos y padres",
+    description: "Los padres ven el progreso de sus hijos, próximos exámenes y pagos. Los alumnos adultos gestionan su propio perfil.",
+    benefits: [
+      "Progreso marcial y próximo examen visible",
+      "Pagos pendientes y recibos descargables",
+      "Notificaciones de cambios y avisos",
+      "Perfil autogestionado para alumnos adultos",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "torneos",
+    title: "Competencias y torneos",
+    description: "Organiza torneos internos con brackets. Registra resultados y compártelos con los participantes.",
+    benefits: [
+      "Brackets automáticos por categoría y peso",
+      "Registro de resultados en tiempo real",
+      "Resultados compartidos en el portal",
+      "Historial de torneos y medallistas",
+    ],
+    imageLeft: true,
+  },
+];
+---
+
+<Layout
+  title="Software para Academias de Artes Marciales | AKDEMIApp"
+  description="Gestiona tu academia de karate, taekwondo o jiu-jitsu con AKDEMIApp. Control de alumnos, rangos, exámenes de grado, cobros y comunicación con padres. 14 días gratis."
+>
+  <Navbar />
+
+  <main>
+
+    <!-- ── 1. HERO ── -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-20 pb-20">
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold px-3.5 py-1.5 rounded-full mb-7 tracking-widest uppercase">
+          Artes Marciales
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
+          Tu dojo, tu academia, tu control total
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+          Gestiona alumnos, cinturones, exámenes de grado, cobros y comunicación con padres desde un solo lugar. Karate, taekwondo, jiu-jitsu, judo y más.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Agenda una demo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. PAIN POINTS ── -->
+    <section class="bg-white py-20 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-12 tracking-tight">
+          ¿Te suena familiar?
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <!-- Clock -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Llevar el registro de cinturones y exámenes de grado en cuadernos o archivos sueltos
+            </p>
+          </div>
+
+          <!-- MessageCircle -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Padres preguntando cuándo es el próximo examen y si su hijo está listo
+            </p>
+          </div>
+
+          <!-- DollarSign -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Cobrar mensualidades y matrículas de examen sin un sistema claro
+            </p>
+          </div>
+
+          <!-- Award -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Organizar torneos internos y no tener un sistema para brackets ni resultados
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. FEATURES ── -->
+    <section class="py-6 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-4 tracking-tight">
+          Todo lo que tu academia marcial necesita
+        </h2>
+      </div>
+    </section>
+
+    {features.map((feature, index) => (
+      <section
+        id={feature.id}
+        class={`py-20 px-6 ${index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"}`}
+      >
+        <div class="max-w-6xl mx-auto">
+          <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
+
+            <!-- Screenshot placeholder -->
+            <div class="w-full lg:w-1/2 shrink-0">
+              <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
+                <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
+              </div>
+            </div>
+
+            <!-- Text -->
+            <div class="w-full lg:w-1/2">
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-4">
+                {feature.title}
+              </h2>
+              <p class="text-[16px] text-gray-500 leading-relaxed mb-8">
+                {feature.description}
+              </p>
+              <ul class="space-y-3">
+                {feature.benefits.map((benefit) => (
+                  <li class="flex items-center gap-3">
+                    <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </span>
+                    <span class="text-[15px] text-gray-700 font-medium">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- ── 4. CTA ── -->
+    <section class="bg-[#101828] py-24 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-10 tracking-tight">
+          ¿Listo para llevar tu academia marcial al siguiente nivel?
+        </h2>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+        <p class="text-gray-500 text-xs">14 días gratis · Sin tarjeta de crédito</p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

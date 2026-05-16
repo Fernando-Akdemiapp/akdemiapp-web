@@ -38,7 +38,7 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
             <div class="absolute top-full left-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-1.5 transition-all duration-200 z-50">
               <div class="bg-white rounded-xl border border-black/[0.08] shadow-xl py-2.5 px-2">
                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2.5 pt-1.5 pb-1">Artísticas</p>
-                <a href="/academia-danzas" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                <a href="/academias/danza" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
                   <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <path d="M9 18V5l12-2v13"/>
   <circle cx="6" cy="18" r="3"/>
@@ -74,7 +74,7 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
                 </a>
                 <div class="my-1.5 border-t border-gray-100 mx-1"></div>
                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-2.5 pt-1 pb-1">Deportivas</p>
-                <a href="/academia-artes-marciales" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                <a href="/academias/artes-marciales" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
                   <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="12" cy="4" r="2"/>
   <path d="M12 6v5l-3 3"/>
@@ -86,7 +86,7 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
 </svg></span>
                   Artes Marciales
                 </a>
-                <a href="/academia-futbol" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                <a href="/academias/futbol" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
                   <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
   <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
@@ -97,7 +97,7 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
 </svg></span>
                   Fútbol
                 </a>
-                <a href="/academia-baloncesto" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
+                <a href="/academias/basketball" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
                   <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="12" cy="12" r="10"/>
   <path d="M12 2v20"/>
@@ -105,7 +105,7 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
   <path d="M5.45 5.11C8.11 8.88 8.11 15.12 5.45 18.89"/>
   <path d="M18.55 5.11C15.89 8.88 15.89 15.12 18.55 18.89"/>
 </svg></span>
-                  Baloncesto
+                  Basketball
                 </a>
                 <a href="/academia-beisbol" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] text-gray-700 text-[13px] font-medium transition-colors">
                   <span class="w-7 h-7 bg-[#EFF8FF] rounded-lg flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -314,13 +314,13 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
     <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100">
       <div class="px-4 py-3 space-y-0.5">
         <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-3 pt-2 pb-1">Academias</p>
-        <a href="/academia-danzas" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Baile y Danza</a>
+        <a href="/academias/danza" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Baile y Danza</a>
         <a href="/academia-musica" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Música</a>
         <a href="/academia-arte" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Artes Plásticas</a>
         <a href="/academia-artes-escenicas" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Artes Escénicas</a>
-        <a href="/academia-artes-marciales" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Artes Marciales</a>
-        <a href="/academia-futbol" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Fútbol</a>
-        <a href="/academia-baloncesto" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Baloncesto</a>
+        <a href="/academias/artes-marciales" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Artes Marciales</a>
+        <a href="/academias/futbol" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Fútbol</a>
+        <a href="/academias/basketball" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Basketball</a>
         <a href="/academia-beisbol" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Béisbol</a>
         <a href="/academia-yoga" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Yoga y Pilates</a>
         <a href="/academia-idiomas" class="flex items-center gap-2 px-3 py-2 text-[14px] text-gray-600 font-medium rounded-lg hover:bg-[#EFF8FF] hover:text-[#155D88] transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-[#399ABE]"></span>Formación e Idiomas</a>

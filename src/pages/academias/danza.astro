@@ -1,0 +1,282 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+
+const REGISTRO_URL = "/registro";
+const DEMO_WA = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20academia%20de%20danza%20y%20quiero%20saber%20m%C3%A1s";
+
+interface Feature {
+  id: string;
+  title: string;
+  description: string;
+  benefits: string[];
+  imageLeft: boolean;
+}
+
+const features: Feature[] = [
+  {
+    id: "horarios",
+    title: "Horarios por disciplina",
+    description: "Ballet clásico, jazz, contemporáneo, hip-hop — cada clase con su color en el calendario. Vista semanal y mensual.",
+    benefits: [
+      "Cada disciplina con su propio color",
+      "Vista semanal y mensual del calendario",
+      "Conflictos de horario detectados automáticamente",
+      "Clases especiales de recital y temporada",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "bailarines",
+    title: "Control de bailarines",
+    description: "Ficha 360° de cada alumno: nivel, disciplinas inscritas, pagos, asistencia, evaluaciones y contacto de emergencia.",
+    benefits: [
+      "Nivel y disciplinas inscritas por alumno",
+      "Historial de pagos y asistencia integrado",
+      "Evaluaciones artísticas vinculadas a la ficha",
+      "Contacto de emergencia siempre disponible",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "cobros",
+    title: "Cobros sin perseguir",
+    description: "Mensualidades, inscripciones y paquetes. Recordatorios automáticos por WhatsApp cuando se acerca el vencimiento.",
+    benefits: [
+      "Recordatorios automáticos de vencimiento",
+      "Registro de mensualidades, inscripciones y paquetes",
+      "Panel de morosos en tiempo real",
+      "Recibos digitales al instante",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "evaluaciones",
+    title: "Evaluaciones artísticas digitales",
+    description: "Sube tu formato de evaluación en PDF. El profesor evalúa digitalmente, firma y el padre lo ve en su portal.",
+    benefits: [
+      "Sube tu propio formato de evaluación",
+      "Firma digital del profesor",
+      "Acceso inmediato del padre desde su portal",
+      "Historial de evaluaciones por semestre",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "portal-padres",
+    title: "Portal para padres",
+    description: "Los padres ven clases, horarios, pagos pendientes y progreso de sus hijos. Sin necesidad de llamar a la academia.",
+    benefits: [
+      "Horarios y clases en tiempo real",
+      "Pagos pendientes y recibos descargables",
+      "Evaluaciones artísticas del alumno",
+      "Notificaciones de cambios y avisos",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "sitio-web",
+    title: "Tu propia página web",
+    description: "Crea el sitio web de tu academia en minutos con el wizard de 7 pasos. Formulario de contacto integrado al CRM.",
+    benefits: [
+      "Wizard guiado de 7 pasos",
+      "Se auto-completa con tus datos y disciplinas",
+      "Formulario de contacto → CRM automático",
+      "Formulario de inscripción en línea",
+    ],
+    imageLeft: true,
+  },
+];
+---
+
+<Layout
+  title="Software para Academias de Danza y Ballet | AKDEMIApp"
+  description="Gestiona tu academia de danza con AKDEMIApp. Control de bailarines, horarios por disciplina, cobros, evaluaciones artísticas y portales para padres. 14 días gratis."
+>
+  <Navbar />
+
+  <main>
+
+    <!-- ── 1. HERO ── -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-20 pb-20">
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold px-3.5 py-1.5 rounded-full mb-7 tracking-widest uppercase">
+          Academias de Danza y Ballet
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
+          Tu academia de danza, organizada y profesional
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+          Gestiona bailarines, horarios por disciplina, recitales, cobros y comunicación con padres desde un solo lugar. Con inteligencia artificial.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Agenda una demo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. PAIN POINTS ── -->
+    <section class="bg-white py-20 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-12 tracking-tight">
+          ¿Te suena familiar?
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <!-- Clock -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Horas armando horarios de ballet, jazz, contemporáneo y recital en Excel o papel
+            </p>
+          </div>
+
+          <!-- MessageCircle -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Grupos de WhatsApp con padres preguntando horarios, pagos y fechas de recital
+            </p>
+          </div>
+
+          <!-- DollarSign -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Perseguir pagos de mensualidades y no saber quién debe y quién no
+            </p>
+          </div>
+
+          <!-- ClipboardList -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <line x1="12" y1="11" x2="16" y2="11"/><line x1="12" y1="16" x2="16" y2="16"/><line x1="8" y1="11" x2="8.01" y2="11"/><line x1="8" y1="16" x2="8.01" y2="16"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Evaluaciones artísticas en papel que se pierden y nunca llegan a los padres
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. FEATURES ── -->
+    <section class="py-6 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-4 tracking-tight">
+          Todo lo que tu academia de danza necesita
+        </h2>
+      </div>
+    </section>
+
+    {features.map((feature, index) => (
+      <section
+        id={feature.id}
+        class={`py-20 px-6 ${index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"}`}
+      >
+        <div class="max-w-6xl mx-auto">
+          <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
+
+            <!-- Screenshot placeholder -->
+            <div class="w-full lg:w-1/2 shrink-0">
+              <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
+                <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
+              </div>
+            </div>
+
+            <!-- Text -->
+            <div class="w-full lg:w-1/2">
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-4">
+                {feature.title}
+              </h2>
+              <p class="text-[16px] text-gray-500 leading-relaxed mb-8">
+                {feature.description}
+              </p>
+              <ul class="space-y-3">
+                {feature.benefits.map((benefit) => (
+                  <li class="flex items-center gap-3">
+                    <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </span>
+                    <span class="text-[15px] text-gray-700 font-medium">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- ── 4. CTA ── -->
+    <section class="bg-[#101828] py-24 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+          ¿Lista para profesionalizar tu academia de danza?
+        </h2>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+        <p class="text-gray-500 text-xs">14 días gratis · Sin tarjeta de crédito</p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

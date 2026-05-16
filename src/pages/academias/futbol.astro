@@ -1,0 +1,282 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+
+const REGISTRO_URL = "/registro";
+const DEMO_WA = "https://wa.me/50765726078?text=Hola%2C%20tengo%20una%20escuela%20de%20f%C3%BAtbol%20y%20quiero%20saber%20m%C3%A1s";
+
+interface Feature {
+  id: string;
+  title: string;
+  description: string;
+  benefits: string[];
+  imageLeft: boolean;
+}
+
+const features: Feature[] = [
+  {
+    id: "jugadores",
+    title: "Jugadores por categoría",
+    description: "Organiza tus jugadores por Sub-8, Sub-10, Sub-12 y más. Ficha completa con datos, contacto de padres y asistencia.",
+    benefits: [
+      "Categorías Sub-8, Sub-10, Sub-12, Sub-14 y más",
+      "Ficha completa con foto y datos del jugador",
+      "Contacto de padres y tutor vinculado",
+      "Historial de asistencia por jugador",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "calendario",
+    title: "Calendario por cancha",
+    description: "Vista semanal y mensual con colores por categoría. Sabe exactamente qué grupo entrena en qué cancha y a qué hora.",
+    benefits: [
+      "Color distinto por categoría en el calendario",
+      "Vista semanal y mensual de canchas",
+      "Detección automática de conflictos de cancha",
+      "Clases especiales y partidos en el mismo calendario",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "cobros",
+    title: "Cobros automáticos",
+    description: "Mensualidades, inscripciones y torneos. Recordatorios por WhatsApp cuando un padre no ha pagado.",
+    benefits: [
+      "Recordatorios automáticos de vencimiento",
+      "Registro de mensualidades, inscripciones y torneos",
+      "Panel de morosos en tiempo real",
+      "Recibos digitales al instante",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "asistencia",
+    title: "Asistencia con un clic",
+    description: "Toma asistencia de cada entrenamiento desde el celular. Historial completo por jugador y reporte por período.",
+    benefits: [
+      "Lista de asistencia desde el celular del entrenador",
+      "Historial completo por jugador",
+      "Reportes de asistencia por período",
+      "Notificación al padre si el jugador no asistió",
+    ],
+    imageLeft: true,
+  },
+  {
+    id: "portal-padres",
+    title: "Portal para padres",
+    description: "Los padres ven el calendario, pagos pendientes y asistencia de sus hijos. Sin llamadas ni mensajes innecesarios.",
+    benefits: [
+      "Calendario y horarios en tiempo real",
+      "Pagos pendientes y recibos descargables",
+      "Asistencia del jugador por mes",
+      "Notificaciones de cambios y avisos",
+    ],
+    imageLeft: false,
+  },
+  {
+    id: "comunicacion",
+    title: "Comunicación masiva",
+    description: "Avisa de cambios de horario, suspensiones por clima o torneos a todos los padres de una categoría con un clic.",
+    benefits: [
+      "Mensaje masivo por categoría o toda la escuela",
+      "Envío por WhatsApp, correo o notificación push",
+      "Plantillas de aviso rápido preconfiguradas",
+      "Registro de comunicaciones enviadas",
+    ],
+    imageLeft: true,
+  },
+];
+---
+
+<Layout
+  title="Software para Escuelas de Fútbol | AKDEMIApp"
+  description="Gestiona tu escuela de fútbol con AKDEMIApp. Control de jugadores, categorías, cobros, asistencia por cancha y comunicación con padres. 14 días gratis."
+>
+  <Navbar />
+
+  <main>
+
+    <!-- ── 1. HERO ── -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-20 pb-20">
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold px-3.5 py-1.5 rounded-full mb-7 tracking-widest uppercase">
+          Escuelas de Fútbol
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
+          Tu escuela de fútbol, bajo control total
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+          Gestiona jugadores, categorías, horarios por cancha, cobros y comunicación con padres desde un solo lugar. Con inteligencia artificial.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Agenda una demo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. PAIN POINTS ── -->
+    <section class="bg-white py-20 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-12 tracking-tight">
+          ¿Te suena familiar?
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <!-- Clock -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Coordinar horarios de Sub-8, Sub-10, Sub-12 y Sub-14 en canchas compartidas
+            </p>
+          </div>
+
+          <!-- MessageCircle -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Padres preguntando por WhatsApp si hay entrenamiento hoy o si se suspendió por lluvia
+            </p>
+          </div>
+
+          <!-- DollarSign -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Cobrar mensualidades a 100+ jugadores y no saber quién lleva 3 meses sin pagar
+            </p>
+          </div>
+
+          <!-- Users -->
+          <div class="flex gap-4 items-start bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-[#EFF8FF] flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <p class="text-[15px] text-gray-700 leading-relaxed">
+              Manejar listas de jugadores por categoría en hojas de Excel que nadie actualiza
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. FEATURES ── -->
+    <section class="py-6 px-6">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] text-center mb-4 tracking-tight">
+          Todo lo que tu escuela de fútbol necesita
+        </h2>
+      </div>
+    </section>
+
+    {features.map((feature, index) => (
+      <section
+        id={feature.id}
+        class={`py-20 px-6 ${index % 2 === 0 ? "bg-white" : "bg-[#F8FAFC]"}`}
+      >
+        <div class="max-w-6xl mx-auto">
+          <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
+
+            <!-- Screenshot placeholder -->
+            <div class="w-full lg:w-1/2 shrink-0">
+              <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
+                <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
+              </div>
+            </div>
+
+            <!-- Text -->
+            <div class="w-full lg:w-1/2">
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-4">
+                {feature.title}
+              </h2>
+              <p class="text-[16px] text-gray-500 leading-relaxed mb-8">
+                {feature.description}
+              </p>
+              <ul class="space-y-3">
+                {feature.benefits.map((benefit) => (
+                  <li class="flex items-center gap-3">
+                    <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </span>
+                    <span class="text-[15px] text-gray-700 font-medium">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- ── 4. CTA ── -->
+    <section class="bg-[#101828] py-24 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-10 tracking-tight">
+          ¿Listo para profesionalizar tu escuela de fútbol?
+        </h2>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={DEMO_WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+        <p class="text-gray-500 text-xs">14 días gratis · Sin tarjeta de crédito</p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>
