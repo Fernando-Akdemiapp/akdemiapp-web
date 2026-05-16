@@ -24,6 +24,7 @@
 import type { Section } from '@/types';
 import { getComponentForSection } from '@/lib/componentRegistry';
 import WebsitePromoSection from '@/components/sections/WebsitePromoSection.astro';
+import AISection from '@/components/sections/AISection.astro';
 
 interface Props {
   sections: Section[];
@@ -128,15 +129,18 @@ console.log('[DynamicPageRenderer] Valid sections:', validSections.length);
         {isPricing && <WebsitePromoSection slug={slug} />}
         <Component {...section} key={`section-${section.id || index}`} />
         {isFeaturesSection && (
-          <section style="background:#e8f4f8; padding:4rem 0; text-align:center;">
-            <div style="max-width:800px; margin:0 auto; padding:0 1.5rem;">
-              <h2 style="font-size:clamp(1.5rem,3vw,2rem); font-weight:800; color:#1a1a2e; margin:0 0 0.75rem;">¿Listo para transformar tu academia?</h2>
-              <p style="font-size:1rem; color:#475569; margin:0 0 2rem;">Más de 30 herramientas incluidas en todos los planes</p>
-              <a href="https://app.akdemiapp.online/registro/academia" style="display:inline-flex; align-items:center; justify-content:center; background:#399ABE; color:#fff; font-weight:700; font-size:1rem; padding:0.85rem 2rem; border-radius:0.75rem; text-decoration:none; box-shadow:0 4px 20px rgba(57,154,190,0.3); transition:all 0.2s;">
-                Empieza gratis ahora
-              </a>
-            </div>
-          </section>
+          <>
+            <section style="background:#e8f4f8; padding:4rem 0; text-align:center;">
+              <div style="max-width:800px; margin:0 auto; padding:0 1.5rem;">
+                <h2 style="font-size:clamp(1.5rem,3vw,2rem); font-weight:800; color:#1a1a2e; margin:0 0 0.75rem;">¿Listo para transformar tu academia?</h2>
+                <p style="font-size:1rem; color:#475569; margin:0 0 2rem;">Más de 30 herramientas incluidas en todos los planes</p>
+                <a href="https://app.akdemiapp.online/registro/academia" style="display:inline-flex; align-items:center; justify-content:center; background:#399ABE; color:#fff; font-weight:700; font-size:1rem; padding:0.85rem 2rem; border-radius:0.75rem; text-decoration:none; box-shadow:0 4px 20px rgba(57,154,190,0.3); transition:all 0.2s;">
+                  Empieza gratis ahora
+                </a>
+              </div>
+            </section>
+            <AISection />
+          </>
         )}
         {isTestimonialsSection && (
           <section style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); padding:4rem 0; text-align:center;">
