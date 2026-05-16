@@ -1,0 +1,215 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+
+const REGISTRO_URL = "https://app.akdemiapp.online/registro/academia";
+const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20AKDEMIApp";
+---
+
+<Layout
+  title="Nosotros — AKDEMIApp"
+  description="Conoce la historia detrás de AKDEMIApp: una familia panameña que construyó el software que necesitaba para su propia academia."
+>
+  <Navbar />
+
+  <main>
+
+    <!-- ── 1. HERO ── -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-20 pb-20">
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Familia. Código. Propósito.
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
+          Construido en familia,<br class="hidden sm:block" /> para tu academia.
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto">
+          AKDEMIApp nació en Panamá, en la academia de nuestra propia familia. Lo que ves hoy es el resultado de años de trabajo, frustraciones y una misión clara: darle a cada director de academia las herramientas que merecen.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 2. ORIGIN STORY ── -->
+    <section class="bg-white py-20">
+      <div class="max-w-3xl mx-auto px-6 space-y-6 text-gray-600 text-[1.05rem] leading-[1.85]">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-6">Cómo empezó todo</h2>
+
+        <p>
+          En 2018, Fernando Sánchez —nuestro padre— abrió una academia de taekwondo en Ciudad de Panamá. Como la mayoría de los directores, empezó con cuadernos, hojas de Excel y grupos de WhatsApp para manejar alumnos, pagos y horarios. Era caótico, pero era lo que había.
+        </p>
+        <p>
+          Fernando Jr., estudiante de ingeniería en ese momento, veía el problema de cerca. Después de meses viendo a su padre luchar con datos duplicados, cobros olvidados y comunicaciones perdidas, decidió construir algo mejor. La primera versión de AKDEMIApp era un sistema sencillo hecho para una sola academia: la nuestra.
+        </p>
+        <p>
+          Lo que empezó como un proyecto familiar se convirtió en algo más grande cuando otros directores del mismo gremio preguntaron: "¿Puedo usar ese sistema también?" Ahí entendimos que el problema no era solo nuestro.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 3. MARKET DISCOVERY ── -->
+    <section class="bg-gray-50 py-20">
+      <div class="max-w-3xl mx-auto px-6 space-y-6 text-gray-600 text-[1.05rem] leading-[1.85]">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-[#101828] mb-6">El problema era mayor de lo que creíamos</h2>
+
+        <p>
+          Hablamos con más de 60 directores de academia en Panamá, Costa Rica, Colombia y México. Todos compartían la misma historia: herramientas genéricas que no entienden el modelo de negocio de una academia, software caro pensado para gimnasios o escuelas formales, o nada más que grupos de WhatsApp y Excel.
+        </p>
+        <p>
+          Las academias de artes marciales, danza, música, idiomas y deportes tienen una dinámica única: alumnos que entran y salen por temporadas, profesores que cobran por clase, padres que necesitan información en tiempo real y directores que deben hacer todo esto solos o con un equipo mínimo.
+        </p>
+        <p>
+          Esa investigación definió cada módulo de AKDEMIApp. No construimos características porque se ven bien en una demo. Las construimos porque un director real, con una academia real, las necesitaba ayer.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 4. THE FAMILY ── -->
+    <section class="bg-white py-20">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-14">
+          <p class="text-xs font-bold tracking-[0.15em] uppercase text-[#399ABE] mb-3">El equipo</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828]">Las personas detrás de la plataforma</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+
+          <!-- Card: Fernando Sr. -->
+          <div class="bg-[#f8fbfe] border border-[#e0eef8] rounded-2xl p-8 text-center">
+            <div class="w-16 h-16 rounded-full bg-[#EFF8FF] border-2 border-[#B9E0FB] flex items-center justify-center mx-auto mb-5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#101828] mb-1">Fernando Sánchez</h3>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">Director & Co-fundador</p>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Maestro de taekwondo con más de 20 años de experiencia. Fundó la academia familiar en 2018 y es quien valida cada nueva funcionalidad desde la perspectiva de un director real.
+            </p>
+          </div>
+
+          <!-- Card: Fernando Jr. -->
+          <div class="bg-[#f8fbfe] border border-[#e0eef8] rounded-2xl p-8 text-center">
+            <div class="w-16 h-16 rounded-full bg-[#EFF8FF] border-2 border-[#B9E0FB] flex items-center justify-center mx-auto mb-5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#101828] mb-1">Fernando Jr.</h3>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">CTO & Co-fundador</p>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Ingeniero de software y arquitecto de la plataforma. Construyó la primera versión de AKDEMIApp para resolver el caos administrativo de la academia de su padre y no paró desde entonces.
+            </p>
+          </div>
+
+          <!-- Card: Valeria -->
+          <div class="bg-[#f8fbfe] border border-[#e0eef8] rounded-2xl p-8 text-center">
+            <div class="w-16 h-16 rounded-full bg-[#EFF8FF] border-2 border-[#B9E0FB] flex items-center justify-center mx-auto mb-5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-[#101828] mb-1">Valeria Sánchez</h3>
+            <p class="text-sm text-[#399ABE] font-semibold mb-4">Directora de Éxito del Cliente</p>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              Asegura que cada academia que se une a AKDEMIApp tenga una adopción exitosa. Es la voz de los directores dentro del equipo y quien convierte el feedback en mejoras reales.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 5. MISSION ── -->
+    <section class="bg-slate-900 py-20">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-xs font-bold tracking-[0.15em] uppercase text-[#399ABE] mb-6">Nuestra misión</p>
+        <blockquote class="text-2xl sm:text-3xl lg:text-[2.1rem] font-extrabold text-white leading-[1.25] tracking-[-0.02em]">
+          "Que cada director de academia en Latinoamérica pueda enfocarse en enseñar, no en administrar."
+        </blockquote>
+        <p class="mt-8 text-gray-400 text-base leading-relaxed max-w-2xl mx-auto">
+          Creemos que el éxito de una academia no depende de cuántos formularios llena su director, sino de cuánto tiempo pasa con sus alumnos. AKDEMIApp existe para que la tecnología haga el trabajo pesado.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 6. STATS STRIP ── -->
+    <section class="bg-white border-b border-gray-100">
+      <div class="max-w-5xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">6 años</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">en el mercado</p>
+          </div>
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">600+</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">academias contactadas</p>
+          </div>
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">70+</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">academias activas</p>
+          </div>
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">25</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">tipos de academia</p>
+          </div>
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">35+</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">herramientas integradas</p>
+          </div>
+          <div>
+            <p class="text-3xl font-extrabold text-[#155D88] tracking-tight">5</p>
+            <p class="text-xs text-gray-400 mt-1 leading-snug">funcionalidades con IA</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. CTA ── -->
+    <section class="bg-[#101828] py-24">
+      <div class="max-w-2xl mx-auto px-6 text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+          ¿Tienes una academia?<br />Hablemos.
+        </h2>
+        <p class="text-gray-400 text-base mb-10 leading-relaxed">
+          Fernando responde personalmente cada consulta. Cuéntanos sobre tu academia y te mostramos cómo AKDEMIApp puede ayudarte.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={DEMO_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Hablar con Fernando
+          </a>
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>
