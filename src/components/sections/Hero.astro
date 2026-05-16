@@ -32,12 +32,12 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
     transition:animate={fade({ duration: "0.6s" })}
   >
     <!-- Badge -->
-    {badge && (
-      <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#399ABE] animate-pulse"></span>
-        {badge}
-      </div>
-    )}
+    <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      14 días gratis — sin tarjeta de crédito
+    </div>
 
     <!-- Título -->
     <h1 class="text-4xl sm:text-5xl lg:text-[3.6rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
