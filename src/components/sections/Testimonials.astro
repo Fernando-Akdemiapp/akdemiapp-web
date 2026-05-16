@@ -20,8 +20,7 @@ const {
   showAvatars = true,
 } = Astro.props;
 
-// Use new props or fall back to old ones for backwards compatibility
-const finalTitle = sectionTitle || title || "Testimonios";
+const finalTitle = "Directores que ya transformaron su academia";
 const finalSubtitle = sectionSubtitle || subtitle || "";
 const finalDescription = sectionDescription || description || "";
 
@@ -31,19 +30,12 @@ function getStars(rating: number) {
 }
 ---
 
-<section class="py-16 lg:py-24 bg-gray-50" id="testimonials">
+<section class="pt-16 lg:pt-24 pb-8 bg-gray-50" id="testimonials">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="text-center mb-16">
-      {badge && <Badge variant="primary" class="mb-4">{badge}</Badge>}
-
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
         {finalTitle}
-        {finalSubtitle && (
-          <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-            {" "}{finalSubtitle}
-          </span>
-        )}
       </h2>
 
       {finalDescription && (

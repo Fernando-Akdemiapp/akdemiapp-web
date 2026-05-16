@@ -15,7 +15,7 @@ const description = "Gestiona alumnos, clases, cobros y comunicaciones desde un 
 const imageUrl = image ? getStrapiMedia(image.url) : null;
 const finalImageAlt = imageAlt || image?.alternativeText || "Academia";
 
-const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20vi%20AKDEMIApp%20y%20me%20interesa%20una%20demostraci%C3%B3n%20para%20mi%20academia";
+const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20AKDEMIApp";
 const LOGIN_URL = "https://app.akdemiapp.online/login";
 ---
 
@@ -43,11 +43,13 @@ const LOGIN_URL = "https://app.akdemiapp.online/login";
         <div class="flex flex-col sm:flex-row gap-3">
           <a href="https://app.akdemiapp.online/registro/academia"
              class="inline-flex items-center justify-center gap-2.5 bg-[#399ABE] hover:bg-[#2d85a8] text-white font-bold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5">
-            Crea tu academia gratis
+            Empieza gratis
           </a>
-          <a href="/funcionalidades"
+          <a href={WA_LINK}
+             target="_blank"
+             rel="noopener noreferrer"
              class="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-[#155D88]/10 text-[#155D88] font-semibold text-[15px] px-6 py-3.5 rounded-xl border border-[#155D88] transition-all duration-200">
-            Ver cómo funciona →
+            Agenda una demo
           </a>
         </div>
         <p style="opacity:0.6; font-size:0.85rem; color:#475569; margin-top:0.75rem;">Sin tarjeta de crédito · Listo en 2 minutos · Gratis para siempre</p>

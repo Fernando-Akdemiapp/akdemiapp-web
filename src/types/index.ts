@@ -18,7 +18,6 @@ export type {
   Page,
   StrapiPage,
   StrapiPagesResponse,
-  AcademyType,
   Section,
 
   // Base interfaces

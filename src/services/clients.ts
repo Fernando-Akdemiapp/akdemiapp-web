@@ -13,7 +13,7 @@ import type { ClientLogo, StrapiClientLogo } from '../types';
 function transformClientLogo(strapiClient: any): ClientLogo {
   // Strapi 5 format - data is directly on the object
   const logoUrl = strapiClient.logo?.url
-    ? getStrapiMedia(strapiClient.logo.url)
+    ? getStrapiMedia(strapiClient.logo.url) ?? ''
     : '';
 
   return {

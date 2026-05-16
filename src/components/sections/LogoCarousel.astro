@@ -34,28 +34,8 @@ const logos = apiLogos.map((logo) => ({
 }));
 ---
 
-<section class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-white to-gray-50">
+<section class="relative pt-4 pb-12 overflow-hidden bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Header -->
-    <div class="text-center mb-16">
-      {finalBadge && <Badge variant="primary" class="mb-4">{finalBadge}</Badge>}
-
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-        {title}
-        {subtitle && (
-          <span class="bg-gradient-to-r from-[#155D88] to-[#1a7aad] bg-clip-text text-transparent">
-            {" "}{subtitle}
-          </span>
-        )}
-      </h2>
-
-      {description && (
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          {description}
-        </p>
-      )}
-    </div>
-
     <!-- Carousel Container -->
     {logos.length > 0 ? (
       <div class="relative">
@@ -93,11 +73,7 @@ const logos = apiLogos.map((logo) => ({
       <EmptyContentState title="Logos No Disponibles" message="Los logos de clientes no están disponibles en este momento." icon="🖼️" />
     )}
 
-    {trustIndicatorText && (
-      <div class="text-center mt-12">
-        <p class="text-sm text-gray-500" set:html={trustIndicatorText}></p>
-      </div>
-    )}
+    <p class="text-center text-sm text-gray-400 mt-8">Academias de toda Latinoamérica</p>
   </div>
 </section>
 
