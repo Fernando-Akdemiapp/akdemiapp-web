@@ -4,7 +4,6 @@ description: "La deserción es el enemigo silencioso de toda academia. Aprende a
 date: 2026-05-05
 author: "Fernando Sánchez"
 category: "Retención"
-slug: "5-estrategias-retener-alumnos-academia"
 ---
 
 Conseguir un alumno nuevo cuesta aproximadamente cinco veces más que mantener uno que ya tienes. Publicidad, tiempo de ventas, onboarding, las primeras clases de adaptación — todo eso tiene un costo. Y aun así, la mayoría de los directores de academia invierten toda su energía en atraer alumnos nuevos y casi ninguna en retener los que ya tienen.

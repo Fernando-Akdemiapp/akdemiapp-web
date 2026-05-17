@@ -4,7 +4,6 @@ description: "Analizamos cuándo Excel es suficiente y cuándo necesitas un sist
 date: 2026-05-10
 author: "Fernando Sánchez"
 category: "Gestión"
-slug: "excel-vs-software-que-necesita-tu-academia"
 ---
 
 Excel no es el villano de esta historia. Es una herramienta increíblemente poderosa que millones de negocios usan todos los días — y con razón. El problema no es Excel. El problema es seguir usando Excel cuando tu academia ya creció más allá de lo que una hoja de cálculo puede manejar, y no darte cuenta hasta que ya estás enterrado en caos.

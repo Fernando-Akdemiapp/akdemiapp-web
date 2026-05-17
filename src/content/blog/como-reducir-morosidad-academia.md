@@ -4,7 +4,6 @@ description: "5 estrategias probadas para cobrar mensualidades a tiempo sin dañ
 date: 2026-05-15
 author: "Fernando Sánchez"
 category: "Finanzas"
-slug: "como-reducir-morosidad-academia"
 ---
 
 Hay una verdad incómoda que casi ningún director de academia quiere decir en voz alta: entre el 15% y el 25% de los alumnos tiene pagos atrasados en cualquier mes del año. No es un problema de mala fe. Es un problema de sistema — o de la falta de uno.
