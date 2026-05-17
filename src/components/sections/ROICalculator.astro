@@ -48,7 +48,7 @@
       </div>
 
       <!-- Input 3: Morosos -->
-      <div class="mb-10">
+      <div class="mb-0">
         <div class="flex items-center justify-between mb-3">
           <label for="roi-morosos" class="text-[15px] font-semibold text-[#101828]">
             ¿Cuántos alumnos te deben este mes?
@@ -59,10 +59,11 @@
         <div class="flex justify-between text-[11px] text-gray-400 mt-1.5"><span>0</span><span>100</span></div>
       </div>
 
-      <!-- Results — hidden initially -->
+      <!-- Results — hidden initially, display:none so it takes zero space -->
       <div
         id="roi-results"
-        style="opacity:0; transform:translateY(14px); transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:none;"
+        style="display:none; overflow:hidden; max-height:0; transition:max-height 0.5s ease;"
+        class="pt-8 border-t border-gray-100"
       >
         <!-- Three result cards -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -215,9 +216,9 @@
 
         if (!revealed) {
           revealed = true;
-          results.style.opacity = '1';
-          results.style.transform = 'translateY(0)';
-          results.style.pointerEvents = 'auto';
+          results.style.display = 'block';
+          results.offsetHeight; // force reflow so transition fires
+          results.style.maxHeight = '500px';
         }
       }
 
