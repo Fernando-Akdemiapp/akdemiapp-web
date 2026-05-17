@@ -12,11 +12,16 @@ const posts = allPosts.sort(
 const featured = posts[0];
 const rest = posts.slice(1);
 
+const categories = [
+  "Todos",
+  ...[...new Set(posts.map((p) => p.data.category))].sort(),
+];
+
 function accentColor(category: string): string {
   const map: Record<string, string> = {
-    "Finanzas":   "#155D88",
-    "Gestión":    "#2b7a9e",
-    "Retención":  "#399ABE",
+    "Finanzas":       "#155D88",
+    "Gestión":        "#2b7a9e",
+    "Retención":      "#399ABE",
     "Cobros":         "#059669",
     "Crecimiento":    "#22c55e",
     "Marketing":      "#8b5cf6",
@@ -46,12 +51,24 @@ function formatDate(date: Date): string {
 
   <main>
     <!-- PAGE HEADER -->
-    <section class="bg-white pt-20 pb-10 px-6 border-b border-gray-100">
+    <section class="bg-white pt-20 pb-0 px-6">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-[#101828] tracking-tight mb-3">Blog</h1>
-        <p class="text-lg text-gray-500 font-normal">
+        <p class="text-lg text-gray-500 font-normal mb-8">
           Consejos prácticos para gestionar tu academia, retener alumnos y crecer tu negocio.
         </p>
+
+        <!-- Category filter pills -->
+        <div class="flex flex-wrap gap-2 pb-6 border-b border-gray-100">
+          {categories.map((cat) => (
+            <button
+              class={`pill-btn${cat === "Todos" ? " active" : ""}`}
+              data-pill={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
     </section>
 
@@ -62,7 +79,7 @@ function formatDate(date: Date): string {
           <p class="text-center text-gray-400 py-20">No hay artículos publicados aún.</p>
         ) : (
           <>
-            <!-- Featured article -->
+            <!-- Featured article (not affected by filter) -->
             <a
               href={`/blog/${featured.slug}`}
               class="group block bg-white rounded-2xl border border-gray-100 shadow-sm p-10 mb-8 hover:shadow-md transition-shadow duration-200"
@@ -97,43 +114,62 @@ function formatDate(date: Date): string {
               </div>
             </a>
 
-            <!-- Remaining articles -->
+            <!-- Secondary articles grid -->
             {rest.length > 0 && (
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {rest.map((post) => (
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="group bg-white rounded-xl border border-gray-100 shadow-sm p-7 flex flex-col hover:shadow-md transition-shadow duration-200"
-                    style={`border-left: 4px solid ${accentColor(post.data.category)}`}
-                  >
-                    <span
-                      class="inline-block self-start text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-gray-100 mb-4"
-                      style={`color: ${accentColor(post.data.category)}`}
+              <>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="cards-grid">
+                  {rest.map((post, i) => (
+                    <a
+                      href={`/blog/${post.slug}`}
+                      data-secondary
+                      data-cat={post.data.category}
+                      class="group bg-white rounded-xl border border-gray-100 shadow-sm p-7 flex flex-col hover:shadow-md transition-shadow duration-200"
+                      style={`border-left: 4px solid ${accentColor(post.data.category)}${i >= 6 ? "; display:none" : ""}`}
                     >
-                      {post.data.category}
-                    </span>
-                    <h2 class="text-[17px] font-bold text-[#101828] leading-snug mb-2 line-clamp-2 group-hover:text-[#155D88] transition-colors flex-1">
-                      {post.data.title}
-                    </h2>
-                    <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-5">
-                      {post.data.description}
-                    </p>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
-                      <p class="text-[12px] text-gray-400">
-                        {formatDate(post.data.date)}
-                        <span class="mx-1">·</span>
-                        {post.data.author}
-                      </p>
                       <span
-                        class="text-[13px] font-semibold group-hover:translate-x-1 transition-transform inline-block whitespace-nowrap"
+                        class="inline-block self-start text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-gray-100 mb-4"
                         style={`color: ${accentColor(post.data.category)}`}
                       >
-                        Leer artículo →
+                        {post.data.category}
                       </span>
-                    </div>
-                  </a>
-                ))}
-              </div>
+                      <h2 class="text-[17px] font-bold text-[#101828] leading-snug mb-2 line-clamp-2 group-hover:text-[#155D88] transition-colors flex-1">
+                        {post.data.title}
+                      </h2>
+                      <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-5">
+                        {post.data.description}
+                      </p>
+                      <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                        <p class="text-[12px] text-gray-400">
+                          {formatDate(post.data.date)}
+                          <span class="mx-1">·</span>
+                          {post.data.author}
+                        </p>
+                        <span
+                          class="text-[13px] font-semibold group-hover:translate-x-1 transition-transform inline-block whitespace-nowrap"
+                          style={`color: ${accentColor(post.data.category)}`}
+                        >
+                          Leer artículo →
+                        </span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+
+                <!-- Load more button -->
+                {rest.length > 6 && (
+                  <div id="load-more-wrapper" class="flex justify-center mt-10">
+                    <button
+                      id="load-more-btn"
+                      class="px-8 py-3 rounded-xl border-2 border-[#155D88] text-[#155D88] font-semibold text-[15px] hover:bg-[#155D88] hover:text-white transition-all duration-200 flex items-center gap-2"
+                    >
+                      Ver más artículos
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
@@ -143,3 +179,108 @@ function formatDate(date: Date): string {
 
   <Footer />
 </Layout>
+
+<style>
+  .pill-btn {
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+  .pill-btn:hover:not(.active) {
+    background: #e5e7eb;
+  }
+  .pill-btn.active {
+    background: #155D88;
+    color: #ffffff;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initBlog() {
+      var pills = Array.from(document.querySelectorAll('.pill-btn'));
+      var cards = Array.from(document.querySelectorAll('[data-secondary]'));
+      var wrapper = document.getElementById('load-more-wrapper');
+      var loadMoreBtn = document.getElementById('load-more-btn');
+
+      if (!pills.length || !cards.length) return;
+
+      var BATCH = 6;
+      var currentFilter = 'Todos';
+      var visibleCount = BATCH;
+
+      function updateVisibility() {
+        var isFiltered = currentFilter !== 'Todos';
+
+        cards.forEach(function (card, i) {
+          var catMatch = isFiltered
+            ? card.getAttribute('data-cat') === currentFilter
+            : true;
+          var loadMatch = isFiltered ? true : i < visibleCount;
+
+          if (catMatch && loadMatch) {
+            if (card.style.display === 'none') {
+              card.style.display = '';
+            }
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (wrapper) {
+          wrapper.style.display =
+            !isFiltered && visibleCount < cards.length ? 'flex' : 'none';
+        }
+      }
+
+      function setActivePill(target) {
+        pills.forEach(function (p) {
+          p.classList.toggle('active', p === target);
+        });
+      }
+
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          currentFilter = pill.getAttribute('data-pill') || 'Todos';
+          setActivePill(pill);
+          updateVisibility();
+        });
+      });
+
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+          var toReveal = cards.slice(visibleCount, visibleCount + BATCH);
+          visibleCount += BATCH;
+
+          toReveal.forEach(function (card) {
+            card.style.opacity = '0';
+            card.style.transition = 'opacity 0.35s ease';
+            card.style.display = '';
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                card.style.opacity = '1';
+              });
+            });
+          });
+
+          if (wrapper) {
+            wrapper.style.display = visibleCount < cards.length ? 'flex' : 'none';
+          }
+        });
+      }
+
+      // Initial render — sync with SSR state (first 6 visible, rest hidden)
+      updateVisibility();
+    }
+
+    initBlog();
+    document.addEventListener('astro:page-load', initBlog);
+  })();
+</script>
