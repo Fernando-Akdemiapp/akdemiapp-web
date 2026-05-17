@@ -12,32 +12,23 @@ const posts = allPosts.sort(
 const featured = posts[0];
 const rest = posts.slice(1);
 
-function categoryColor(category: string): string {
+function accentColor(category: string): string {
   const map: Record<string, string> = {
-    "Gestión":    "from-[#155D88] to-[#399ABE]",
-    "Cobros":     "from-emerald-500 to-teal-400",
-    "Finanzas":   "from-amber-500 to-yellow-400",
-    "Retención":  "from-rose-500 to-pink-400",
-    "Marketing":  "from-violet-500 to-purple-400",
-    "Tecnología": "from-slate-600 to-slate-400",
-    "Alumnos":    "from-orange-400 to-amber-300",
-    "IA":         "from-indigo-500 to-blue-400",
+    "Finanzas":   "#155D88",
+    "Gestión":    "#2b7a9e",
+    "Retención":  "#399ABE",
+    "Cobros":     "#059669",
+    "Marketing":  "#7c3aed",
+    "Tecnología": "#475569",
+    "Alumnos":    "#d97706",
+    "IA":         "#4338ca",
   };
-  return map[category] ?? "from-[#155D88] to-[#399ABE]";
+  return map[category] ?? "#155D88";
 }
 
-function categoryBadgeColor(category: string): string {
-  const map: Record<string, string> = {
-    "Gestión":    "text-[#155D88] bg-[#EFF8FF]",
-    "Cobros":     "text-emerald-700 bg-emerald-50",
-    "Finanzas":   "text-amber-700 bg-amber-50",
-    "Retención":  "text-rose-700 bg-rose-50",
-    "Marketing":  "text-violet-700 bg-violet-50",
-    "Tecnología": "text-slate-700 bg-slate-100",
-    "Alumnos":    "text-orange-700 bg-orange-50",
-    "IA":         "text-indigo-700 bg-indigo-50",
-  };
-  return map[category] ?? "text-[#155D88] bg-[#EFF8FF]";
+function readingTime(body: string): string {
+  const minutes = Math.max(1, Math.round(body.split(/\s+/).length / 200));
+  return `${minutes} min de lectura`;
 }
 
 function formatDate(date: Date): string {
@@ -52,83 +43,89 @@ function formatDate(date: Date): string {
   <Navbar />
 
   <main>
-    <!-- HERO -->
-    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-20 pb-16">
-      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-      <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#101828] leading-tight tracking-[-0.03em] mb-4">
-          Blog
-        </h1>
-        <p class="text-lg text-gray-500 font-normal leading-relaxed">
+    <!-- PAGE HEADER -->
+    <section class="bg-white pt-20 pb-10 px-6 border-b border-gray-100">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#101828] tracking-tight mb-3">Blog</h1>
+        <p class="text-lg text-gray-500 font-normal">
           Consejos prácticos para gestionar tu academia, retener alumnos y crecer tu negocio.
         </p>
       </div>
     </section>
 
     <!-- ARTICLES -->
-    <section class="bg-white py-20 px-6">
-      <div class="max-w-5xl mx-auto">
+    <section class="bg-[#f9fafb] py-16 px-6">
+      <div class="max-w-4xl mx-auto">
         {posts.length === 0 ? (
           <p class="text-center text-gray-400 py-20">No hay artículos publicados aún.</p>
         ) : (
           <>
-            <!-- Featured article (most recent) -->
+            <!-- Featured article -->
             <a
               href={`/blog/${featured.slug}`}
-              class="group flex flex-col sm:flex-row bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden mb-10"
+              class="group block bg-white rounded-2xl border border-gray-100 shadow-sm p-10 mb-8 hover:shadow-md transition-shadow duration-200"
+              style={`border-left: 4px solid ${accentColor(featured.data.category)}`}
             >
-              <!-- Gradient panel -->
-              <div class={`sm:w-2/5 h-52 sm:h-auto bg-gradient-to-br ${categoryColor(featured.data.category)} shrink-0`}></div>
-
-              <!-- Content -->
-              <div class="flex flex-col justify-center p-8 sm:p-10 flex-1">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${categoryBadgeColor(featured.data.category)}`}>
-                    {featured.data.category}
-                  </span>
-                  <span class="text-[11px] text-gray-400 font-medium">Artículo destacado</span>
-                </div>
-                <h2 class="text-2xl sm:text-[1.75rem] font-extrabold text-[#101828] leading-snug tracking-tight mb-3 group-hover:text-[#155D88] transition-colors">
-                  {featured.data.title}
-                </h2>
-                <p class="text-[15px] text-gray-500 leading-relaxed mb-6">
-                  {featured.data.description}
+              <span
+                class="inline-block text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-gray-100 mb-5"
+                style={`color: ${accentColor(featured.data.category)}`}
+              >
+                {featured.data.category}
+              </span>
+              <h2 class="text-3xl font-bold text-[#101828] leading-snug tracking-tight mb-4 group-hover:text-[#155D88] transition-colors">
+                {featured.data.title}
+              </h2>
+              <p class="text-gray-600 text-base leading-relaxed mb-8">
+                {featured.data.description}
+              </p>
+              <div class="flex items-center justify-between">
+                <p class="text-[13px] text-gray-400">
+                  {formatDate(featured.data.date)}
+                  <span class="mx-1.5">·</span>
+                  {featured.data.author}
+                  <span class="mx-1.5">·</span>
+                  {readingTime(featured.body)}
                 </p>
-                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div>
-                    <p class="text-[13px] text-gray-400">{formatDate(featured.data.date)}</p>
-                    <p class="text-[13px] text-gray-600 font-medium">{featured.data.author}</p>
-                  </div>
-                  <span class="text-[14px] font-semibold text-[#155D88] group-hover:translate-x-1 transition-transform inline-block">
-                    Leer artículo →
-                  </span>
-                </div>
+                <span
+                  class="text-[14px] font-semibold group-hover:translate-x-1 transition-transform inline-block"
+                  style={`color: ${accentColor(featured.data.category)}`}
+                >
+                  Leer artículo →
+                </span>
               </div>
             </a>
 
-            <!-- Remaining articles — grid-cols-2 -->
+            <!-- Remaining articles -->
             {rest.length > 0 && (
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {rest.map((post) => (
                   <a
                     href={`/blog/${post.slug}`}
-                    class="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col p-7"
+                    class="group bg-white rounded-xl border border-gray-100 shadow-sm p-7 flex flex-col hover:shadow-md transition-shadow duration-200"
+                    style={`border-left: 4px solid ${accentColor(post.data.category)}`}
                   >
-                    <span class={`inline-block self-start text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-4 ${categoryBadgeColor(post.data.category)}`}>
+                    <span
+                      class="inline-block self-start text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-gray-100 mb-4"
+                      style={`color: ${accentColor(post.data.category)}`}
+                    >
                       {post.data.category}
                     </span>
-                    <h2 class="text-[17px] font-bold text-[#101828] mb-2 leading-snug line-clamp-2 group-hover:text-[#155D88] transition-colors">
+                    <h2 class="text-[17px] font-bold text-[#101828] leading-snug mb-2 line-clamp-2 group-hover:text-[#155D88] transition-colors flex-1">
                       {post.data.title}
                     </h2>
-                    <p class="text-[14px] text-gray-500 leading-relaxed line-clamp-3 mb-5 flex-1">
+                    <p class="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-5">
                       {post.data.description}
                     </p>
                     <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
-                      <div>
-                        <p class="text-[12px] text-gray-400">{formatDate(post.data.date)}</p>
-                        <p class="text-[12px] text-gray-600 font-medium">{post.data.author}</p>
-                      </div>
-                      <span class="text-[13px] font-semibold text-[#155D88] group-hover:translate-x-1 transition-transform inline-block whitespace-nowrap">
+                      <p class="text-[12px] text-gray-400">
+                        {formatDate(post.data.date)}
+                        <span class="mx-1">·</span>
+                        {post.data.author}
+                      </p>
+                      <span
+                        class="text-[13px] font-semibold group-hover:translate-x-1 transition-transform inline-block whitespace-nowrap"
+                        style={`color: ${accentColor(post.data.category)}`}
+                      >
                         Leer artículo →
                       </span>
                     </div>
