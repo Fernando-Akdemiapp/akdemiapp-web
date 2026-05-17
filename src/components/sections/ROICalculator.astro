@@ -1,0 +1,232 @@
+---
+// ROI Calculator — injected before the pricing section
+---
+
+<section id="roi-calculator" class="bg-gray-50 py-20 px-6">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] tracking-tight mb-4">
+        ¿Cuánto estás dejando de cobrar?
+      </h2>
+      <p class="text-lg text-gray-500 font-normal leading-relaxed">
+        Responde 3 preguntas y descubre lo que tu academia podría recuperar
+      </p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+
+      <!-- Input 1: Alumnos -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <label for="roi-alumnos" class="text-[15px] font-semibold text-[#101828]">
+            ¿Cuántos alumnos tienes?
+          </label>
+          <span id="roi-alumnos-val" class="text-[14px] font-bold text-[#155D88] bg-[#EFF8FF] px-3 py-0.5 rounded-full min-w-[2.5rem] text-center">50</span>
+        </div>
+        <input type="range" id="roi-alumnos" min="10" max="500" value="50" class="roi-slider w-full" />
+        <div class="flex justify-between text-[11px] text-gray-400 mt-1.5"><span>10</span><span>500</span></div>
+      </div>
+
+      <!-- Input 2: Mensualidad -->
+      <div class="mb-8">
+        <label for="roi-mensualidad" class="block text-[15px] font-semibold text-[#101828] mb-3">
+          ¿Cuánto cobras de mensualidad?
+        </label>
+        <div class="flex items-center gap-2.5 border border-gray-200 rounded-xl px-4 focus-within:ring-2 focus-within:ring-[#399ABE]/40 focus-within:border-[#399ABE] transition-all">
+          <span class="text-gray-400 font-semibold text-base shrink-0">$</span>
+          <input
+            type="number"
+            id="roi-mensualidad"
+            min="1"
+            max="9999"
+            value="50"
+            placeholder="50"
+            class="w-full py-3 text-[15px] text-[#101828] outline-none bg-transparent"
+          />
+        </div>
+      </div>
+
+      <!-- Input 3: Morosos -->
+      <div class="mb-10">
+        <div class="flex items-center justify-between mb-3">
+          <label for="roi-morosos" class="text-[15px] font-semibold text-[#101828]">
+            ¿Cuántos alumnos te deben este mes?
+          </label>
+          <span id="roi-morosos-val" class="text-[14px] font-bold text-[#155D88] bg-[#EFF8FF] px-3 py-0.5 rounded-full min-w-[2.5rem] text-center">10</span>
+        </div>
+        <input type="range" id="roi-morosos" min="0" max="100" value="10" class="roi-slider w-full" />
+        <div class="flex justify-between text-[11px] text-gray-400 mt-1.5"><span>0</span><span>100</span></div>
+      </div>
+
+      <!-- Results — hidden initially -->
+      <div
+        id="roi-results"
+        style="opacity:0; transform:translateY(14px); transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:none;"
+      >
+        <!-- Three result cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+          <!-- Card 1: En riesgo -->
+          <div class="bg-[#FEF2F2] rounded-xl p-5 text-center border border-red-100">
+            <div class="flex justify-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+            </div>
+            <p id="roi-r1" class="text-2xl font-extrabold text-[#101828] mb-1">$500</p>
+            <p class="text-[12px] text-gray-500 leading-snug">en riesgo de perder este mes</p>
+          </div>
+
+          <!-- Card 2: Recuperable -->
+          <div class="bg-[#F0FDF4] rounded-xl p-5 text-center border border-green-100">
+            <div class="flex justify-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+            </div>
+            <p id="roi-r2" class="text-2xl font-extrabold text-[#101828] mb-1">$350</p>
+            <p class="text-[12px] text-gray-500 leading-snug">recuperable con recordatorios automáticos</p>
+          </div>
+
+          <!-- Card 3: Horas -->
+          <div class="bg-[#EFF8FF] rounded-xl p-5 text-center border border-[#B9E0FB]">
+            <div class="flex justify-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-[#DBEAFE] flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+            </div>
+            <p id="roi-r3" class="text-2xl font-extrabold text-[#101828] mb-1">20</p>
+            <p class="text-[12px] text-gray-500 leading-snug">horas al mes que puedes ahorrar</p>
+          </div>
+
+        </div>
+
+        <!-- Summary sentence -->
+        <p id="roi-summary" class="text-center text-[14px] text-gray-600 mb-7 leading-relaxed">
+          Con AKDEMIApp a <strong class="text-[#155D88]">costo $0</strong>, tu inversión se recupera en los primeros días.
+        </p>
+
+        <!-- CTA -->
+        <div class="text-center">
+          <a
+            href="/registro"
+            class="inline-flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5"
+          >
+            Empieza gratis
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .roi-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    outline: none;
+    cursor: pointer;
+  }
+  .roi-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #155D88;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 6px rgba(21, 93, 136, 0.35);
+    transition: transform 0.15s;
+  }
+  .roi-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+  .roi-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #155D88;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 6px rgba(21, 93, 136, 0.35);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initROI() {
+      var alumnosEl = document.getElementById('roi-alumnos');
+      var alumnosVal = document.getElementById('roi-alumnos-val');
+      var mensualidadEl = document.getElementById('roi-mensualidad');
+      var morososEl = document.getElementById('roi-morosos');
+      var morososVal = document.getElementById('roi-morosos-val');
+      var results = document.getElementById('roi-results');
+      var r1 = document.getElementById('roi-r1');
+      var r2 = document.getElementById('roi-r2');
+      var r3 = document.getElementById('roi-r3');
+      var summary = document.getElementById('roi-summary');
+
+      if (!alumnosEl || !results) return;
+
+      var revealed = false;
+
+      function getPrice(n) {
+        if (n <= 30) return 'costo $0';
+        if (n <= 100) return '$39/mes';
+        if (n <= 250) return '$59/mes';
+        return '$89/mes';
+      }
+
+      function fmt(n) {
+        return n.toLocaleString('en-US');
+      }
+
+      function calculate() {
+        var alumnos = parseInt(alumnosEl.value) || 50;
+        var mensualidad = parseInt(mensualidadEl.value) || 50;
+        var morosos = parseInt(morososEl.value) || 0;
+
+        alumnosVal.textContent = alumnos;
+        morososVal.textContent = morosos;
+
+        r1.textContent = '$' + fmt(morosos * mensualidad);
+        r2.textContent = '$' + fmt(Math.round(morosos * mensualidad * 0.7));
+        r3.textContent = Math.round(alumnos * 0.4);
+
+        summary.innerHTML =
+          'Con AKDEMIApp a <strong style="color:#155D88">' +
+          getPrice(alumnos) +
+          '</strong>, tu inversión se recupera en los primeros días.';
+
+        if (!revealed) {
+          revealed = true;
+          results.style.opacity = '1';
+          results.style.transform = 'translateY(0)';
+          results.style.pointerEvents = 'auto';
+        }
+      }
+
+      alumnosEl.addEventListener('input', calculate);
+      mensualidadEl.addEventListener('input', calculate);
+      morososEl.addEventListener('input', calculate);
+    }
+
+    initROI();
+    document.addEventListener('astro:page-load', initROI);
+  })();
+</script>
