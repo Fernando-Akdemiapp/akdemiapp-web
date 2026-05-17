@@ -17,11 +17,13 @@ function accentColor(category: string): string {
     "Finanzas":   "#155D88",
     "Gestión":    "#2b7a9e",
     "Retención":  "#399ABE",
-    "Cobros":     "#059669",
-    "Marketing":  "#7c3aed",
-    "Tecnología": "#475569",
-    "Alumnos":    "#d97706",
-    "IA":         "#4338ca",
+    "Cobros":         "#059669",
+    "Crecimiento":    "#22c55e",
+    "Marketing":      "#8b5cf6",
+    "Comunicaciones": "#f59e0b",
+    "Tecnología":     "#475569",
+    "Alumnos":        "#d97706",
+    "IA":             "#4338ca",
   };
   return map[category] ?? "#155D88";
 }
@@ -97,7 +99,7 @@ function formatDate(date: Date): string {
 
             <!-- Remaining articles -->
             {rest.length > 0 && (
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {rest.map((post) => (
                   <a
                     href={`/blog/${post.slug}`}
