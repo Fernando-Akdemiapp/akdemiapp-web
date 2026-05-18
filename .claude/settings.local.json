@@ -7,7 +7,10 @@
       "Bash(git rm *)",
       "Bash(npm run *)",
       "Bash(npx tsc *)",
-      "Bash(del *)"
+      "Bash(del *)",
+      "Bash(cat .env.example)",
+      "Bash(ls -la .env*)",
+      "Bash(dir .env*)"
     ]
   }
 }
