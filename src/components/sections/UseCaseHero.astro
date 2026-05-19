@@ -7,10 +7,12 @@ type Props = UseCaseHeroSectionProps;
 const {
   image,
   imageAlt,
+  title: propTitle,
+  subtitle: propSubtitle,
 } = Astro.props;
 
-const title = "Tu academia, sin caos.";
-const description = "Gestiona alumnos, clases, cobros y comunicaciones desde un solo lugar. Con inteligencia artificial que trabaja para ti.";
+const title = propTitle || "Tu academia, sin caos.";
+const description = propSubtitle || "Gestiona alumnos, clases, cobros y comunicaciones desde un solo lugar. Con inteligencia artificial que trabaja para ti.";
 
 const imageUrl = image ? getStrapiMedia(image.url) : null;
 const finalImageAlt = imageAlt || image?.alternativeText || "Academia";

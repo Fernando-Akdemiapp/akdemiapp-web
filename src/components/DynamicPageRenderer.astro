@@ -50,6 +50,42 @@ if (!sections || !Array.isArray(sections)) {
   console.error('DynamicPageRenderer: sections prop is required and must be an array');
 }
 
+// Per-slug hero title/subtitle overrides for academy pages
+const academyHeroOverrides: Record<string, { title: string; subtitle: string }> = {
+  'academia-danzas': {
+    title: 'Tu academia de danza, organizada y profesional',
+    subtitle: 'Gestiona bailarines, horarios por disciplina, recitales, cobros y comunicación con padres desde un solo lugar.',
+  },
+  'academia-musica': {
+    title: 'Tu escuela de música, afinada y organizada',
+    subtitle: 'Gestiona alumnos, instrumentos, horarios, cobros y audiciones desde un solo lugar.',
+  },
+  'academia-artes-marciales': {
+    title: 'Tu dojo, tu academia, tu control total',
+    subtitle: 'Gestiona alumnos, cinturones, exámenes de grado, cobros y comunicación con padres desde un solo lugar.',
+  },
+  'academia-futbol': {
+    title: 'Tu escuela de fútbol, bajo control total',
+    subtitle: 'Gestiona jugadores, categorías, horarios por cancha, cobros y comunicación con padres desde un solo lugar.',
+  },
+  'academia-baloncesto': {
+    title: 'Tu academia de basketball, organizada al máximo',
+    subtitle: 'Gestiona jugadores, categorías, horarios, cobros y comunicación con padres desde un solo lugar.',
+  },
+  'academia-beisbol': {
+    title: 'Tu academia de béisbol, profesional desde el día uno',
+    subtitle: 'Gestiona jugadores, categorías, horarios, cobros y comunicación con padres desde un solo lugar.',
+  },
+  'academia-yoga': {
+    title: 'Tu estudio de yoga, en armonía total',
+    subtitle: 'Gestiona alumnos, horarios, cobros y comunicación desde un solo lugar. Yoga, pilates y bienestar.',
+  },
+  'academia-arte': {
+    title: 'Tu taller de arte, organizado para crear',
+    subtitle: 'Gestiona alumnos, talleres, horarios, cobros y exposiciones desde un solo lugar.',
+  },
+};
+
 // Filter out any null/undefined sections
 const validSections = sections?.filter((section) => section != null) || [];
 console.log('[DynamicPageRenderer] Valid sections:', validSections.length);
@@ -124,13 +160,19 @@ console.log('[DynamicPageRenderer] Valid sections:', validSections.length);
     const isFeaturesSection = section.__component === 'sections.features-section' || section.__component === 'sections.use-case-features-section';
     const isHeroSection = section.__component === 'sections.hero-section' || section.__component === 'sections.use-case-hero-section';
     const isTestimonialsSection = section.__component === 'sections.testimonials-section';
+    // Merge slug-based hero overrides when applicable
+    const heroOverride = section.__component === 'sections.use-case-hero-section' && slug && academyHeroOverrides[slug]
+      ? academyHeroOverrides[slug]
+      : {};
+    const resolvedSection = { ...section, ...heroOverride };
+
     // Render the component with all section props
     // The spread operator passes all section properties as props
     return (
       <>
         {isPricing && !isAcademyPage && <ROICalculator />}
         {isPricing && <WebsitePromoSection slug={slug} />}
-        <Component {...section} key={`section-${section.id || index}`} />
+        <Component {...resolvedSection} key={`section-${section.id || index}`} />
         {isHeroSection && isAcademyPage && (
           <section style="background:#fff; padding:5rem 0;">
             <div style="max-width:1200px; margin:0 auto; padding:0 1.5rem;">
