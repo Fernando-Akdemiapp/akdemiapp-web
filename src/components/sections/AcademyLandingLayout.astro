@@ -1,0 +1,756 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/layout/Navbar.astro";
+import Footer from "@/components/layout/Footer.astro";
+
+interface Benefit {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  badge: string;
+  title: string;
+  subtitle: string;
+  whatsappText: string;
+  benefits: Benefit[];
+  benefitsTitle: string;
+  features: Feature[];
+  featuresTitle: string;
+  featuresSubtitle: string;
+  finalCtaTitle: string;
+  seoTitle?: string;
+  seoDescription?: string;
+}
+
+const {
+  badge,
+  title,
+  subtitle,
+  whatsappText,
+  benefits,
+  benefitsTitle,
+  features,
+  featuresTitle,
+  featuresSubtitle,
+  finalCtaTitle,
+  seoTitle,
+  seoDescription,
+} = Astro.props;
+
+const WA_LINK = `https://wa.me/50765726078?text=${encodeURIComponent(whatsappText)}`;
+const REGISTRO_URL = "/registro";
+
+const BORDER_COLORS = ["#155D88", "#2b7a9e", "#399ABE"];
+function getBorderColor(index: number): string {
+  return BORDER_COLORS[index % BORDER_COLORS.length] ?? "#155D88";
+}
+
+function cleanEmoji(str: string): string {
+  return str.replace(/[​‌﻿️⃣]/g, "").trim();
+}
+
+const ICONS: Record<string, string> = {
+  "⏱️": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 3h6"/><path d="M12 3v2"/></svg>`,
+  "⏱": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 3h6"/><path d="M12 3v2"/></svg>`,
+  "💹": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  "🥇": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+  "✅": `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  "📂": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+  "🌟": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  "🖥️": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  "🖥": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  "🗒️": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  "🗒": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  "🎨": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`,
+  "🌐": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a14.5 14.5 0 0 1 4 10 14.5 14.5 0 0 1-4 10 14.5 14.5 0 0 1-4-10 14.5 14.5 0 0 1 4-10z"/></svg>`,
+  "📝": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+  "💰": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  "💳": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`,
+  "📊": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+  "📅": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  "👥": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  "🔔": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
+  "🏆": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 21 12 17 16 21"/><path d="M7 4H4a2 2 0 0 0-2 2v2a6 6 0 0 0 6 6"/><path d="M17 4h3a2 2 0 0 1 2 2v2a6 6 0 0 1-6 6"/><path d="M12 17V4"/></svg>`,
+  "📋": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`,
+  "🔒": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  "🤖": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>`,
+  "📱": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+  "🎓": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+  // Lucide icon name keys
+  "Calendar": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  "Users": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  "Award": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+  "FileText": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>`,
+  "Globe": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  "Palette": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`,
+  "Image": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+  "BookOpen": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  "Clock": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  "TrendingUp": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  "MessageCircle": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  "DollarSign": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  "CheckSquare": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+  "Smartphone": `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+};
+
+function getIconSVG(emoji: string): string | null {
+  if (!emoji) return null;
+  const cleaned = cleanEmoji(emoji);
+  return ICONS[cleaned] ?? ICONS[emoji] ?? null;
+}
+---
+
+<Layout
+  title={seoTitle ?? title}
+  description={seoDescription ?? subtitle}
+>
+  <Navbar />
+
+  <main>
+
+    <!-- ── 1. HERO ── -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-24 pb-16">
+      <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold px-3.5 py-1.5 rounded-full mb-7 tracking-widest uppercase">
+          {badge}
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl font-bold text-[#101828] leading-tight tracking-tight mb-5">
+          {title}
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
+          {subtitle}
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Agenda una demo
+          </a>
+        </div>
+
+        <p class="text-xs text-gray-400 mb-12">Sin tarjeta de crédito · Listo en 2 minutos · Gratis para siempre</p>
+
+        <!-- Stats bar -->
+        <div class="flex items-center justify-center gap-8 sm:gap-14 pt-8 border-t border-gray-100">
+          <div class="text-center">
+            <p class="text-[28px] font-extrabold text-[#155D88] tracking-tight">70+</p>
+            <p class="text-[13px] text-gray-500 mt-0.5">Academias activas</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[28px] font-extrabold text-[#155D88] tracking-tight">5,000+</p>
+            <p class="text-[13px] text-gray-500 mt-0.5">Alumnos gestionados</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[28px] font-extrabold text-[#155D88] tracking-tight">98%</p>
+            <p class="text-[13px] text-gray-500 mt-0.5">Satisfacción</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. CRM SECTION ── -->
+    <section class="py-20 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+
+          <!-- Left: Text -->
+          <div class="w-full lg:w-1/2">
+            <span class="inline-block bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+              CAPTACIÓN DE ALUMNOS (CRM)
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-4">
+              Nuevos alumnos llegan solos a tu academia
+            </h2>
+            <p class="text-[16px] text-gray-500 leading-relaxed mb-6">
+              Formularios de inscripción online, seguimiento de prospectos y recordatorios automáticos. Convierte interesados en alumnos sin trabajo manual.
+            </p>
+            <ul class="space-y-3 mb-8">
+              {[
+                "Formulario de inscripción integrado en tu sitio web",
+                "Seguimiento automático de prospectos con recordatorios",
+                "Convierte leads en alumnos inscritos con 1 clic",
+              ].map((bullet) => (
+                <li class="flex items-center gap-3">
+                  <span class="shrink-0 w-5 h-5 rounded-full bg-[#EFF8FF] flex items-center justify-center">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span class="text-[15px] text-gray-700 font-medium">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-direct="true"
+              class="inline-flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[14px] px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+            >
+              Ver el CRM en acción →
+            </a>
+          </div>
+
+          <!-- Right: Image -->
+          <div class="w-full lg:w-1/2 shrink-0">
+            <img
+              src="/screenshots/crm.png"
+              alt="CRM de captación de alumnos"
+              class="rounded-2xl border border-gray-200 w-full"
+            />
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. BENEFITS GRID ── -->
+    <section class="py-20 px-6 bg-[#F8FAFC]">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-12">
+          <span class="inline-block bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+            ¿POR QUÉ AKDEMIAPP?
+          </span>
+          <h2 class="text-3xl lg:text-4xl font-extrabold text-[#101828] tracking-tight leading-tight">
+            {benefitsTitle}
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          {benefits.map((benefit) => {
+            const iconSVG = getIconSVG(benefit.icon);
+            return (
+              <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-center">
+                <div class="w-12 h-12 bg-[#EFF8FF] rounded-xl flex items-center justify-center mx-auto mb-4">
+                  {iconSVG
+                    ? <Fragment set:html={iconSVG} />
+                    : <span class="text-2xl">{benefit.icon}</span>
+                  }
+                </div>
+                <h3 class="text-[15px] font-bold text-[#101828] mb-2 tracking-tight">{benefit.title}</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">{benefit.description}</p>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 4. FEATURES GRID ── -->
+    <section class="py-20 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="mb-12">
+          <span class="inline-block bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+            CARACTERÍSTICAS
+          </span>
+          <h2 class="text-3xl lg:text-4xl font-extrabold text-[#101828] tracking-tight leading-tight mb-3">
+            {featuresTitle}
+          </h2>
+          <p class="text-[16px] text-gray-500 leading-relaxed max-w-2xl">
+            {featuresSubtitle}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((feature, index) => {
+            const borderColor = getBorderColor(index);
+            const iconSVG = getIconSVG(feature.icon);
+            return (
+              <div
+                class="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+                style={`border-left: 4px solid ${borderColor};`}
+              >
+                <div class="flex items-start gap-4">
+                  <div class="w-11 h-11 bg-[#EFF8FF] rounded-xl flex items-center justify-center shrink-0">
+                    {iconSVG
+                      ? <Fragment set:html={iconSVG} />
+                      : <span class="text-xl">{feature.icon}</span>
+                    }
+                  </div>
+                  <div>
+                    <h3 class="text-[15px] font-bold text-[#101828] mb-1.5 tracking-tight">{feature.title}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 5. CTA BAR ── -->
+    <section class="py-8 px-6 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-gray-50 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-[15px] font-semibold text-[#101828]">
+            ¿Necesitas funcionalidades personalizadas para tu Academia?
+          </p>
+          <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-[#155D88] hover:bg-[#124e75] text-white px-5 py-2.5 rounded-xl text-[13px] font-bold whitespace-nowrap transition-colors shrink-0"
+          >
+            <svg class="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 6. MAIN CTA ── -->
+    <section class="bg-slate-900 py-20 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">
+          ¿Listo para transformar tu academia?
+        </h2>
+        <p class="text-gray-400 text-[16px] leading-relaxed mb-8">
+          Más de 35 herramientas incluidas en todos los planes.
+        </p>
+        <a
+          href={REGISTRO_URL}
+          class="inline-flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-8 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5"
+        >
+          Empieza gratis
+        </a>
+      </div>
+    </section>
+
+    <!-- ── 7. AI SECTION ── -->
+    <section id="ai-section-landing" class="relative overflow-hidden py-24">
+
+      <div class="ai-bg-base"></div>
+      <div class="ai-bg-glow"></div>
+
+      <div class="relative z-10 max-w-6xl mx-auto px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="text-center mb-14">
+          <div class="inline-flex items-center gap-2 mb-5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5z"/>
+              <path d="M19 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>
+            </svg>
+            <span class="ai-badge-label">Inteligencia Artificial</span>
+          </div>
+          <h2 class="ai-section-title">
+            Tu academia con superpoderes
+          </h2>
+          <p class="ai-section-subtitle">
+            La única plataforma para academias con Inteligencia Artificial integrada
+          </p>
+        </div>
+
+        <!-- Row 1: 3fr + 2fr -->
+        <div class="ai-row-1">
+
+          <!-- AKDI -->
+          <div class="ai-card ai-card-akdi">
+            <span class="ai-watermark">3s</span>
+            <div class="ai-icon-wrap">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 7h34a2.5 2.5 0 0 1 2.5 2.5v19A2.5 2.5 0 0 1 41 31H21.5L13 39.5V9.5A2.5 2.5 0 0 1 15.5 7z"/>
+                <path d="M23 19l1.6 3.8 3.8 1.6-3.8 1.6L23 30l-1.6-3.8-3.8-1.6 3.8-1.6z"/>
+                <path d="M32 15l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9z"/>
+                <circle cx="36" cy="24" r="1.2" fill="#399ABE" stroke="none"/>
+              </svg>
+            </div>
+            <div class="ai-card-tag">AKDI</div>
+            <p class="ai-card-sub">Tu asistente con inteligencia artificial</p>
+            <p class="ai-card-desc">
+              Pregúntale cualquier cosa sobre tu academia. ¿Cuántos alumnos tengo? ¿Quién no ha pagado? AKDI responde al instante con datos reales. Como tener un gerente que nunca duerme.
+            </p>
+            <div class="ai-big-stat">
+              <span class="ai-big-num">3s</span>
+              <span class="ai-big-label">tiempo de respuesta</span>
+            </div>
+          </div>
+
+          <!-- Escaneo IA -->
+          <div class="ai-card ai-card-escaneo">
+            <div class="ai-icon-wrap">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="11" y="5" width="26" height="34" rx="3"/>
+                <line x1="17" y1="14" x2="31" y2="14"/>
+                <line x1="17" y1="20" x2="31" y2="20"/>
+                <line x1="17" y1="26" x2="24" y2="26"/>
+                <line x1="5" y1="31" x2="43" y2="31" stroke-width="2"/>
+                <path d="M5 27v-5h5" stroke-width="1.5"/>
+                <path d="M43 27v-5h-5" stroke-width="1.5"/>
+                <path d="M5 35v5h5" stroke-width="1.5"/>
+                <path d="M43 35v5h-5" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="ai-card-tag">Escaneo Inteligente</div>
+            <p class="ai-card-desc">
+              Fotografía cualquier factura. La IA extrae monto, proveedor y categoría. Tu gasto queda registrado en segundos.
+            </p>
+            <div class="ai-big-stat">
+              <span class="ai-big-num">0</span>
+              <span class="ai-big-label">entrada manual</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 2: 3 equal cols -->
+        <div class="ai-row-2">
+
+          <!-- Salud Financiera -->
+          <div class="ai-card ai-card-salud">
+            <div class="ai-icon-wrap">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 41S6 29 6 17a10 10 0 0 1 18-6 10 10 0 0 1 18 6c0 12-18 24-18 24z"/>
+                <polyline points="13,24 16,24 19,17 22,32 25,21 27,24 35,24"/>
+              </svg>
+            </div>
+            <div class="ai-card-tag">Salud Financiera</div>
+            <p class="ai-card-desc">
+              ¿Tu academia gana o pierde? La IA analiza ingresos, gastos y cobros pendientes. Te dice qué hacer para mejorar.
+            </p>
+            <div class="ai-big-stat">
+              <span class="ai-big-num">24/7</span>
+              <span class="ai-big-label">asesor financiero</span>
+            </div>
+          </div>
+
+          <!-- Evaluaciones Digitales -->
+          <div class="ai-card ai-card-evaluaciones">
+            <div class="ai-icon-wrap">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 6h20l8 8v30H10z"/>
+                <path d="M30 6v8h8"/>
+                <line x1="16" y1="22" x2="32" y2="22"/>
+                <line x1="16" y1="28" x2="26" y2="28"/>
+                <circle cx="30" cy="37" r="8" fill="rgba(57,154,190,0.12)"/>
+                <polyline points="25.5,37 28.5,40 34.5,34"/>
+              </svg>
+            </div>
+            <div class="ai-card-tag">Evaluaciones Digitales</div>
+            <p class="ai-card-desc">
+              Sube tu formato en PDF. La IA lo transforma en digital. El profesor evalúa, firma y se publica en los portales de padres y alumnos.
+            </p>
+            <div class="ai-big-stat">
+              <span class="ai-big-num">1 clic</span>
+              <span class="ai-big-label">de PDF a digital</span>
+            </div>
+          </div>
+
+          <!-- Centinela -->
+          <div class="ai-card ai-card-centinela">
+            <div class="ai-icon-wrap">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#399ABE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M24 4l17 6.5v13c0 11-8.5 19.5-17 24-8.5-4.5-17-13-17-24v-13z"/>
+                <path d="M16 24c0 0 3.5-5.5 8-5.5s8 5.5 8 5.5-3.5 5.5-8 5.5-8-5.5-8-5.5z"/>
+                <circle cx="24" cy="24" r="2.5"/>
+                <path d="M19 19.5a7 7 0 0 1 10 0" stroke-width="1.25" opacity="0.6"/>
+                <path d="M17 17.5a11 11 0 0 1 14 0" stroke-width="1" opacity="0.4"/>
+              </svg>
+            </div>
+            <div class="ai-card-header-row">
+              <span class="ai-card-tag">Centinela</span>
+            </div>
+            <p class="ai-card-desc">
+              Vigila tu academia 24/7. Detecta alumnos en riesgo de deserción por faltas, pagos atrasados o bajo rendimiento. Te sugiere un mensaje de WhatsApp personalizado para retenerlos.
+            </p>
+            <div class="ai-big-stat">
+              <span class="ai-big-num">24/7</span>
+              <span class="ai-big-label">monitoreo continuo</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Attribution -->
+        <div class="mt-14 text-center">
+          <p class="ai-attribution">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#556677" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l1.4 4.2L18 8l-4.6 1.8L12 14l-1.4-4.2L6 8l4.6-1.8z"/>
+              <path d="M19 14l.7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7z"/>
+            </svg>
+            Potenciado por Anthropic Claude AI
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── 8. FINAL CTA ── -->
+    <section class="bg-[#101828] py-24 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+          {finalCtaTitle}
+        </h2>
+        <p class="text-gray-400 text-[16px] leading-relaxed mb-10">
+          Únete a más de 100 academias que ya automatizaron su gestión, ahorrando tiempo y aumentando sus ingresos. Sin contratos y sin riesgo.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-medium text-[15px] px-6 py-3.5 rounded-xl border border-white/20 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Agenda una demo
+          </a>
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#399ABE] hover:bg-[#2e87ab] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#399ABE]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* AI Section background */
+  #ai-section-landing {
+    position: relative;
+  }
+
+  .ai-bg-base {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0f1624 0%, #1a1a2e 100%);
+    z-index: 0;
+  }
+
+  .ai-bg-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(57, 154, 190, 0.09) 0%, transparent 70%);
+    z-index: 1;
+  }
+
+  /* AI section header text */
+  .ai-badge-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #399ABE;
+  }
+
+  .ai-section-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+  }
+
+  .ai-section-subtitle {
+    font-size: 1.1rem;
+    color: #8899aa;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Grid layouts */
+  .ai-row-1 {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .ai-row-2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  /* Base card */
+  .ai-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(57, 154, 190, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @keyframes ai-border-pulse {
+    0%, 100% { border-color: rgba(57, 154, 190, 0.4); }
+    50% { border-color: rgba(57, 154, 190, 0.7); }
+  }
+
+  .ai-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35), 0 0 32px rgba(57, 154, 190, 0.08);
+    animation: ai-border-pulse 1.8s ease-in-out infinite;
+  }
+
+  .ai-icon-wrap svg {
+    transition: transform 0.3s ease;
+  }
+
+  .ai-card:hover .ai-icon-wrap svg {
+    transform: scale(1.1);
+  }
+
+  /* Per-card accent borders */
+  .ai-card-akdi {
+    border-left: 3px solid #399ABE;
+    border-top-color: rgba(57, 154, 190, 0.45);
+    box-shadow: 0 0 40px rgba(57, 154, 190, 0.1);
+  }
+
+  .ai-card-escaneo { border-left: 3px solid #22c55e; }
+  .ai-card-salud { border-left: 3px solid #f59e0b; }
+  .ai-card-evaluaciones { border-left: 3px solid #8b5cf6; }
+  .ai-card-centinela { border-left: 3px solid #6366f1; opacity: 0.85; }
+
+  /* Watermark */
+  .ai-watermark {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #399ABE;
+    opacity: 0.15;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.04em;
+  }
+
+  /* Icon wrapper */
+  .ai-icon-wrap {
+    width: 64px;
+    height: 64px;
+    background: rgba(57, 154, 190, 0.08);
+    border: 1px solid rgba(57, 154, 190, 0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Card text */
+  .ai-card-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .ai-card-tag {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .ai-card-sub {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #399ABE;
+    margin: 0 0 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .ai-card-desc {
+    font-size: 0.88rem;
+    color: #aabbcc;
+    line-height: 1.75;
+    flex: 1;
+    margin: 0 0 20px;
+  }
+
+  .ai-big-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: auto;
+  }
+
+  .ai-big-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #399ABE;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .ai-big-label {
+    font-size: 0.8rem;
+    color: #8899aa;
+    font-weight: 500;
+  }
+
+  .ai-attribution {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: #556677;
+    letter-spacing: 0.02em;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .ai-row-1,
+    .ai-row-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-card {
+      padding: 24px;
+    }
+
+    .ai-watermark {
+      font-size: 2.2rem;
+    }
+  }
+</style>
