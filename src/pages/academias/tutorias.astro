@@ -12,6 +12,7 @@ interface Feature {
   description: string;
   benefits: string[];
   imageLeft: boolean;
+  image: string;
 }
 
 const features: Feature[] = [
@@ -26,6 +27,7 @@ const features: Feature[] = [
       "Historial de temas cubiertos en cada sesión",
     ],
     imageLeft: false,
+    image: "/screenshots/alumnos.png",
   },
   {
     id: "horarios",
@@ -38,6 +40,7 @@ const features: Feature[] = [
       "Clases por hora o por bloque de tiempo",
     ],
     imageLeft: true,
+    image: "/screenshots/calendario.png",
   },
   {
     id: "cobros",
@@ -50,6 +53,7 @@ const features: Feature[] = [
       "Recibos digitales al momento del pago",
     ],
     imageLeft: false,
+    image: "/screenshots/cobros.png",
   },
   {
     id: "progreso",
@@ -62,6 +66,7 @@ const features: Feature[] = [
       "Historial completo por materia y período",
     ],
     imageLeft: true,
+    image: "/screenshots/evaluaciones.png",
   },
   {
     id: "portal-padres",
@@ -74,6 +79,7 @@ const features: Feature[] = [
       "Sin llamadas ni mensajes de WhatsApp innecesarios",
     ],
     imageLeft: false,
+    image: "/screenshots/portal-alumno.png",
   },
   {
     id: "comunicacion",
@@ -86,6 +92,7 @@ const features: Feature[] = [
       "Recordatorios automáticos de exámenes próximos",
     ],
     imageLeft: true,
+    image: "/screenshots/comunicaciones.png",
   },
 ];
 ---
@@ -215,11 +222,13 @@ const features: Feature[] = [
         <div class="max-w-6xl mx-auto">
           <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
 
-            <!-- Screenshot placeholder -->
+            <!-- Screenshot -->
             <div class="w-full lg:w-1/2 shrink-0">
-              <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
-                <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
-              </div>
+              <img
+                src={feature.image}
+                alt={feature.title}
+                class="rounded-2xl border border-gray-200 w-full"
+              />
             </div>
 
             <!-- Text -->

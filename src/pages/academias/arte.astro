@@ -12,6 +12,7 @@ interface Feature {
   description: string;
   benefits: string[];
   imageLeft: boolean;
+  image: string;
 }
 
 const features: Feature[] = [
@@ -26,6 +27,7 @@ const features: Feature[] = [
       "Clases especiales de exposición y crítica",
     ],
     imageLeft: false,
+    image: "/screenshots/alumnos.png",
   },
   {
     id: "alumnos",
@@ -38,6 +40,7 @@ const features: Feature[] = [
       "Contacto de emergencia siempre disponible",
     ],
     imageLeft: true,
+    image: "/screenshots/evaluaciones.png",
   },
   {
     id: "cobros",
@@ -50,6 +53,7 @@ const features: Feature[] = [
       "Panel de morosos en tiempo real",
     ],
     imageLeft: false,
+    image: "/screenshots/cobros.png",
   },
   {
     id: "asistencia",
@@ -62,6 +66,7 @@ const features: Feature[] = [
       "Contacta a la familia antes de que abandone",
     ],
     imageLeft: true,
+    image: "/screenshots/asistencia.png",
   },
   {
     id: "portal-alumno",
@@ -74,6 +79,7 @@ const features: Feature[] = [
       "Acceso web y móvil sin instalar nada",
     ],
     imageLeft: false,
+    image: "/screenshots/portal-alumno.png",
   },
   {
     id: "sitio-web",
@@ -86,6 +92,7 @@ const features: Feature[] = [
       "Tienda de materiales integrada",
     ],
     imageLeft: true,
+    image: "/screenshots/sitio-web.png",
   },
 ];
 ---
@@ -215,11 +222,13 @@ const features: Feature[] = [
         <div class="max-w-6xl mx-auto">
           <div class={`flex flex-col gap-12 lg:gap-16 lg:flex-row items-center ${feature.imageLeft ? "" : "lg:flex-row-reverse"}`}>
 
-            <!-- Screenshot placeholder -->
+            <!-- Screenshot -->
             <div class="w-full lg:w-1/2 shrink-0">
-              <div class="rounded-2xl border border-gray-200 bg-gray-100 flex items-center justify-center aspect-video">
-                <p class="text-gray-400 text-sm font-medium">Screenshot próximamente</p>
-              </div>
+              <img
+                src={feature.image}
+                alt={feature.title}
+                class="rounded-2xl border border-gray-200 w-full"
+              />
             </div>
 
             <!-- Text -->
