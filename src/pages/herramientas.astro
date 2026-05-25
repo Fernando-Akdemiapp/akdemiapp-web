@@ -1,0 +1,473 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+
+const REGISTRO_URL = "https://app.akdemiapp.online/registro/academia";
+const WA_DEMO = "https://wa.me/50765726078?text=Hola%2C%20quiero%20ver%20una%20demo%20de%20las%20herramientas%20exclusivas%20de%20AKDEMIApp";
+const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%20saber%20m%C3%A1s%20sobre%20AKDEMIApp";
+---
+
+<Layout
+  title="Herramientas Exclusivas | AKDEMIApp"
+  description="Competencias deportivas, competencias de danza y planificación de entrenamientos. Herramientas que ninguna otra plataforma para academias tiene."
+>
+  <Navbar />
+
+  <main class="pt-16">
+
+    <!-- ══════════════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════════════ -->
+    <section class="bg-gradient-to-b from-[#EFF8FF] to-white py-24 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#155D88] bg-[#EFF8FF] border border-[#155D88]/20 px-3 py-1 rounded-full mb-5">
+          Herramientas Exclusivas
+        </span>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-[#101828] leading-tight tracking-tight mb-5">
+          Herramientas que ninguna otra plataforma tiene
+        </h1>
+        <p class="text-[17px] text-gray-500 leading-relaxed mb-8 max-w-2xl mx-auto">
+          Competencias deportivas con tabla en vivo, competencias de danza con panel de jueces, y planificación de entrenamientos profesional. Solo en AKDEMIApp.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={REGISTRO_URL}
+            class="inline-flex items-center justify-center bg-[#155D88] hover:bg-[#124e75] text-white text-[15px] font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/20 transition-all duration-200 w-full sm:w-auto"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={WA_DEMO}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-[#155D88] text-[15px] font-bold px-7 py-3.5 rounded-xl border border-[#155D88]/30 transition-all duration-200 w-full sm:w-auto"
+          >
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="#155D88"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Agenda una demo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         TOOL 1 — COMPETENCIAS Y TORNEOS
+    ══════════════════════════════════════════════════════ -->
+    <section id="competencias-deportivas" class="py-20 px-6 bg-white" style="scroll-margin-top:72px;">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col gap-12 lg:gap-16 lg:flex-row items-start">
+
+          <!-- Image left -->
+          <div class="w-full lg:w-1/2 shrink-0 lg:sticky lg:top-24">
+            <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+              <img
+                src="/screenshots/hero-torneos.jpg"
+                alt="Módulo de Competencias y Torneos en AKDEMIApp"
+                class="w-full h-auto block"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- Content right -->
+          <div class="w-full lg:w-1/2">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#155D88] bg-[#EFF8FF] border border-[#155D88]/20 px-3 py-1 rounded-full mb-4">
+              Deportes
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-3">
+              Gestión de Competencias y Torneos
+            </h2>
+            <p class="text-[16px] text-gray-500 leading-relaxed mb-6">
+              Organiza torneos, ligas y competencias desde una sola plataforma. Fixture automático, tabla en vivo y página pública compartible.
+            </p>
+
+            <!-- Format cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Liga (todos contra todos)</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Fixture automático con jornadas, calendario y emparejamientos.</p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Eliminatoria directa</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Bracket visual con cruces automáticos desde octavos hasta la final.</p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Grupos + Eliminatoria</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Fase de grupos con clasificación automática a ronda eliminatoria.</p>
+              </div>
+            </div>
+
+            <!-- Feature grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                    <path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Fixture y calendario automático</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Un clic genera el fixture completo con jornadas equilibradas y rotación de localía.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Tabla de posiciones en vivo</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Puntos, goles a favor, en contra, diferencia y posición. Se actualiza automáticamente.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Eventos del partido</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Goles, asistencias, tarjetas amarillas/rojas, cambios. Línea de tiempo visual minuto a minuto.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Ranking de goleadores</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Top goleadores, asistencias y tarjetas acumuladas. Actualización en tiempo real.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Equipos y jugadores</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Inscribe equipos por categoría (Sub-8 a Libre). Cada jugador vinculado a su perfil de alumno.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                    <path d="M2 12h20"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Página pública del torneo</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Link compartible con tabla, resultados, fixture y goleadores. Sin crear cuenta.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         TOOL 2 — COMPETENCIAS DE DANZA
+    ══════════════════════════════════════════════════════ -->
+    <section id="competencias-danza" class="py-20 px-6 bg-[#F8FAFC]" style="scroll-margin-top:72px;">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col gap-12 lg:gap-16 lg:flex-row-reverse items-start">
+
+          <!-- Image right -->
+          <div class="w-full lg:w-1/2 shrink-0 lg:sticky lg:top-24">
+            <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+              <img
+                src="/screenshots/hero-danza-competencia.jpg"
+                alt="Módulo de Competencias de Danza en AKDEMIApp"
+                class="w-full h-auto block"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- Content left -->
+          <div class="w-full lg:w-1/2">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#155D88] bg-[#EFF8FF] border border-[#155D88]/20 px-3 py-1 rounded-full mb-4">
+              Danza y Artes
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-3">
+              Competencias de Danza y Artes Escénicas
+            </h2>
+            <p class="text-[16px] text-gray-500 leading-relaxed mb-6">
+              Sistema profesional de evaluación por jueces, gestión de música y clasificaciones en vivo.
+            </p>
+
+            <!-- Format cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Solo</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Cada participante actúa individualmente y es evaluado por el panel de jueces.</p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Grupo</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Equipos o compañías se presentan como conjunto con una coreografía.</p>
+              </div>
+              <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
+                <p class="font-semibold text-[#101828] text-[13px] mb-1">Battle</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Enfrentamientos directos uno a uno con eliminación progresiva.</p>
+              </div>
+            </div>
+
+            <!-- Feature grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Panel de jueces en tablet</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Cada juez recibe un enlace único. Interfaz táctil con criterios configurables de 0 a 10.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Gestión de música</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Asigna pista musical por participante con canción, artista y duración. Orden de presentación.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Leaderboard en vivo</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Clasificación con medallas, puntaje promedio y desglose por juez. Proyectable en pantalla grande.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Callbacks entre rondas</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Selecciona quién avanza a la siguiente fase. El sistema genera las nuevas presentaciones.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Criterios configurables</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Técnica, Expresión, Musicalidad, Coreografía, Presencia Escénica — o los que tú definas.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                    <path d="M2 12h20"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Página pública</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Resultados, participantes y puntajes finales compartibles sin necesidad de cuenta.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         TOOL 3 — NKS COACH
+    ══════════════════════════════════════════════════════ -->
+    <section id="nks-coach" class="py-20 px-6 bg-white" style="scroll-margin-top:72px;">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col gap-12 lg:gap-16 lg:flex-row items-start">
+
+          <!-- Image left -->
+          <div class="w-full lg:w-1/2 shrink-0 lg:sticky lg:top-24">
+            <div class="rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+              <img
+                src="/screenshots/hero-coach.jpg"
+                alt="NKS Coach — Módulo de Planificación de Entrenamientos"
+                class="w-full h-auto block"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- Content right -->
+          <div class="w-full lg:w-1/2">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-[#155D88] bg-[#EFF8FF] border border-[#155D88]/20 px-3 py-1 rounded-full mb-4">
+              Entrenamiento
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#101828] leading-tight tracking-tight mb-3">
+              NKS Coach — Planificación de Entrenamientos
+            </h2>
+            <p class="text-[16px] text-gray-500 leading-relaxed mb-7">
+              Planifica sesiones, diseña ejercicios, organiza microciclos y registra rendimiento. Pensado para entrenadores que exigen más que un Excel.
+            </p>
+
+            <!-- Feature grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                    <path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Sesiones estructuradas</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Calentamiento, parte principal y vuelta a la calma. Ejercicios con duración, series y repeticiones.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Biblioteca de ejercicios</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Base de datos por categoría: técnico, táctico, físico, recreativo. Filtros por dificultad y deporte.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Microciclos semanales</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Planifica cada día con enfoque e intensidad (alta/media/baja). Ejecutado vs planificado.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 11 12 14 22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Asistencia y rendimiento</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Presente, ausente, tarde, justificado. Evaluación individual con estrellas y comentarios.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Conectado con tu academia</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Los jugadores son los mismos alumnos. La asistencia a entrenamientos complementa la de clases.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Rendimiento individual</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Historial deportivo por jugador con evaluaciones del entrenador sesión por sesión.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         CTA FINAL
+    ══════════════════════════════════════════════════════ -->
+    <section class="bg-slate-900 py-24 px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight mb-4">
+          ¿Listo para llevar tu academia al siguiente nivel?
+        </h2>
+        <p class="text-[17px] text-slate-400 leading-relaxed mb-8">
+          Estas herramientas están incluidas en AKDEMIApp. Empieza gratis y actívalas cuando las necesites.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5">
+          <a
+            href={REGISTRO_URL}
+            class="inline-flex items-center justify-center bg-white hover:bg-[#EFF8FF] text-[#155D88] text-[15px] font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 w-full sm:w-auto"
+          >
+            Empieza gratis
+          </a>
+          <a
+            href={WA_FERNANDO}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-wa-direct="true"
+            class="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 text-white text-[15px] font-bold px-7 py-3.5 rounded-xl border-2 border-white/30 hover:border-white/60 transition-all duration-200 w-full sm:w-auto"
+          >
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Hablar con Fernando
+          </a>
+        </div>
+        <p class="text-[13px] text-slate-500">14 días gratis · Sin tarjeta de crédito</p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>
