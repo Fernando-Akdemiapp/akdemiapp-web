@@ -84,7 +84,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
               Gestión de Competencias y Torneos
             </h2>
             <p class="text-[16px] text-gray-500 leading-relaxed mb-6">
-              Organiza torneos, ligas y competencias desde una sola plataforma. Fixture automático, tabla en vivo y página pública compartible.
+              Organiza torneos profesionales desde la inscripción de equipos hasta la entrega de premios. Fixture automático, tabla de posiciones en tiempo real, estadísticas completas y página pública compartible.
             </p>
 
             <!-- Format cards -->
@@ -99,12 +99,12 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
               </div>
               <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
                 <p class="font-semibold text-[#101828] text-[13px] mb-1">Grupos + Eliminatoria</p>
-                <p class="text-[12px] text-gray-500 leading-relaxed">Fase de grupos con clasificación automática a ronda eliminatoria.</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Fase de grupos con sorteo automático tipo serpiente. Los mejores clasifican a eliminatoria con cruces cruzados (1ro Grupo A vs 2do Grupo B).</p>
               </div>
             </div>
 
             <!-- Feature grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
@@ -117,7 +117,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Fixture y calendario automático</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Un clic genera el fixture completo con jornadas equilibradas y rotación de localía.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Un clic genera el fixture completo con jornadas equilibradas y rotación de localía. Para eliminatorias, bracket con seeds automáticos. Para grupos, distribución y cruces internos.</p>
                 </div>
               </div>
 
@@ -129,7 +129,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Tabla de posiciones en vivo</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Puntos, goles a favor, en contra, diferencia y posición. Se actualiza automáticamente.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Puntos, goles a favor, en contra, diferencia y posición. Se actualiza automáticamente al registrar cada resultado. Desempates configurables.</p>
                 </div>
               </div>
 
@@ -140,8 +140,8 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Eventos del partido</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Goles, asistencias, tarjetas amarillas/rojas, cambios. Línea de tiempo visual minuto a minuto.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Página de partido con timeline</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Registra goles con jugador y minuto, asistencias, tarjetas amarillas y rojas, cambios. Línea de tiempo visual del partido. Marcador en vivo editable.</p>
                 </div>
               </div>
 
@@ -152,8 +152,8 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Ranking de goleadores</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Top goleadores, asistencias y tarjetas acumuladas. Actualización en tiempo real.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Ranking de goleadores y asistencias</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Tres rankings separados actualizados en tiempo real: top goleadores, mejores asistidores y acumulación de tarjetas por jugador.</p>
                 </div>
               </div>
 
@@ -166,21 +166,66 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Equipos y jugadores</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Inscribe equipos por categoría (Sub-8 a Libre). Cada jugador vinculado a su perfil de alumno.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Inscribe equipos por categoría (Sub-8 a Libre). Asigna colores y escudos. Cada jugador vinculado a su perfil de alumno con historial completo.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Layout -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="9" y1="21" x2="9" y2="9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Dashboard en tiempo real</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Donut de partidos jugados vs total, goles totales, tarjetas, equipos inscritos. Gráfico de goles por jornada. Top 5 goleadores. Feed de últimos resultados y próximos partidos.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- GitBranch -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="6" y1="3" x2="6" y2="15"/>
+                    <circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+                    <path d="M18 9a9 9 0 0 1-9 9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Bracket visual de eliminatorias</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Vista de llaves con rondas etiquetadas (Octavos, Cuartos, Semifinal, Final). Ganadores resaltados. Click en cualquier partido para ver detalle.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
-                    <path d="M2 12h20"/>
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Página pública del torneo</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Link compartible con tabla, resultados, fixture y goleadores. Sin crear cuenta.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Clasificación grupos a eliminatoria</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Botón automático que clasifica a los mejores equipos de cada grupo a la eliminatoria con cruces cruzados estilo UEFA/FIFA.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- FileText -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">5 reportes descargables</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Tabla de posiciones PDF, fixture completo PDF, estadísticas del torneo PDF, acta de partido PDF, equipos y estadísticas individuales Excel.</p>
                 </div>
               </div>
 
@@ -224,7 +269,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
               Competencias de Danza y Artes Escénicas
             </h2>
             <p class="text-[16px] text-gray-500 leading-relaxed mb-6">
-              Sistema profesional de evaluación por jueces, gestión de música y clasificaciones en vivo.
+              Sistema profesional de evaluación por jueces con criterios configurables, gestión de música con archivos reales, clasificaciones en vivo y herramientas para todo el equipo del evento.
             </p>
 
             <!-- Format cards -->
@@ -239,34 +284,36 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
               </div>
               <div class="bg-white rounded-lg p-4 border-l-4 border-[#155D88] shadow-sm border border-gray-100">
                 <p class="font-semibold text-[#101828] text-[13px] mb-1">Battle</p>
-                <p class="text-[12px] text-gray-500 leading-relaxed">Enfrentamientos directos uno a uno con eliminación progresiva.</p>
+                <p class="text-[12px] text-gray-500 leading-relaxed">Enfrentamientos directos uno a uno con evaluación de jueces y eliminación progresiva hasta la final. Bracket automático con seeds.</p>
               </div>
             </div>
 
             <!-- Feature grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Tablet -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
                   </svg>
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Panel de jueces en tablet</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Cada juez recibe un enlace único. Interfaz táctil con criterios configurables de 0 a 10.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Enlace único por juez. Criterios configurables de 0 a 10 con incrementos de 0.5. Modo oscuro para jornadas largas. Texto ajustable. Foto del participante en pantalla.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Music -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Gestión de música</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Asigna pista musical por participante con canción, artista y duración. Orden de presentación.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Música con archivos reales</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Los participantes suben su pista (MP3, WAV, M4A — hasta 20MB) al inscribirse. Reproductor integrado para verificar antes del evento.</p>
                 </div>
               </div>
 
@@ -277,8 +324,23 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Leaderboard en vivo</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Clasificación con medallas, puntaje promedio y desglose por juez. Proyectable en pantalla grande.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Clasificación en vivo con medallas</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Ranking con 🥇🥈🥉 actualizado en tiempo real. Desglose por juez con puntaje individual, no solo promedio. Transparencia total.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Monitor -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="14" x="2" y="3" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Modo proyección</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Pantalla completa con fondo oscuro, texto extra grande y auto-actualización cada 15 segundos. Diseñado para proyectar en pantalla grande durante el evento.</p>
                 </div>
               </div>
 
@@ -289,8 +351,8 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Callbacks entre rondas</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Selecciona quién avanza a la siguiente fase. El sistema genera las nuevas presentaciones.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Avance entre rondas</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Selecciona quién avanza a la siguiente fase (Clasificatoria → Semifinal → Final). Define cuántos pasan. El sistema genera las nuevas presentaciones automáticamente.</p>
                 </div>
               </div>
 
@@ -302,7 +364,34 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Criterios configurables</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Técnica, Expresión, Musicalidad, Coreografía, Presencia Escénica — o los que tú definas.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Técnica, Expresión Artística, Musicalidad, Coreografía, Presencia Escénica — o define los criterios que necesites con pesos personalizados.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Headphones -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Control del presentador</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">El presentador reproduce la música del participante actual desde su tablet con controles grandes de play, pause y volumen. Avanza al siguiente con un botón.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Hash -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/>
+                    <line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Navegación por bibs</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Chips numerados con estado visual: evaluado (verde), actual (azul), pendiente (gris). El juez siempre sabe en quién está.</p>
                 </div>
               </div>
 
@@ -316,7 +405,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Página pública</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Resultados, participantes y puntajes finales compartibles sin necesidad de cuenta.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Resultados, participantes por categoría y puntajes finales compartibles sin necesidad de cuenta.</p>
                 </div>
               </div>
 
@@ -328,7 +417,7 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
     </section>
 
     <!-- ══════════════════════════════════════════════════════
-         TOOL 3 — NKS COACH
+         TOOL 3 — AKDEMI COACH
     ══════════════════════════════════════════════════════ -->
     <section id="nks-coach" class="py-20 px-6 bg-white" style="scroll-margin-top:72px;">
       <div class="max-w-6xl mx-auto">
@@ -360,14 +449,15 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
               AKDEMI Coach — Planificación de Entrenamientos
             </h2>
             <p class="text-[16px] text-gray-500 leading-relaxed mb-7">
-              Planifica sesiones, diseña ejercicios, organiza microciclos y registra rendimiento. Pensado para entrenadores que exigen más que un Excel.
+              Planifica entrenamientos, diseña ejercicios, organiza microciclos y registra el rendimiento de tus jugadores. Todo desde una plataforma pensada para entrenadores que quieren llevar su metodología al siguiente nivel.
             </p>
 
             <!-- Feature grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- ClipboardList -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
                     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
@@ -376,12 +466,13 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Sesiones estructuradas</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Calentamiento, parte principal y vuelta a la calma. Ejercicios con duración, series y repeticiones.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Tres fases: calentamiento, parte principal y vuelta a la calma. Asigna ejercicios de tu biblioteca con duración, series, repeticiones y descanso.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- BookOpen -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
@@ -389,12 +480,13 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Biblioteca de ejercicios</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Base de datos por categoría: técnico, táctico, físico, recreativo. Filtros por dificultad y deporte.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Base de datos por categoría (técnico, táctico, físico, recreativo), nivel de dificultad y deporte. Incluye ejercicios predefinidos para empezar. Filtra por categoría o dificultad.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Calendar -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                     <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
@@ -403,12 +495,13 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Microciclos semanales</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Planifica cada día con enfoque e intensidad (alta/media/baja). Ejecutado vs planificado.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Planifica con enfoque por día e intensidad con colores (alta, media, baja, descanso). Indicadores visuales: verde (completado), rojo (no ejecutado), azul (pendiente). Barra de progreso.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- CheckSquare -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 11 12 14 22 4"/>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
@@ -416,12 +509,59 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Asistencia y rendimiento</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Presente, ausente, tarde, justificado. Evaluación individual con estrellas y comentarios.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Presente, ausente, tarde, justificado. Evaluación individual con estrellas (1-5) y comentarios del entrenador por sesión.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- User (single) -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Historial deportivo por jugador</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Sección AKDEMI Coach en el perfil del alumno: sesiones asistidas, rating promedio, tasa de asistencia, gráfico de evolución y tabla de últimas 20 sesiones.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Layout -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="9" y1="21" x2="9" y2="9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Dashboard en tiempo real</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Sesiones completadas vs planificadas (donut), asistencia promedio, horas entrenadas, ejercicios en biblioteca. Gráficos de sesiones por semana.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- FileText -->
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">3 reportes descargables</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Plan de sesión PDF con ejercicios y asistencia. Microciclo semanal PDF con intensidades. Resumen mensual PDF con KPIs y top alumnos por rendimiento.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Users -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
@@ -429,19 +569,20 @@ const WA_FERNANDO = "https://wa.me/50765726078?text=Hola%20Fernando%2C%20quiero%
                 </div>
                 <div>
                   <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Conectado con tu academia</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Los jugadores son los mismos alumnos. La asistencia a entrenamientos complementa la de clases.</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Los jugadores son los mismos alumnos inscritos en tu clase. La asistencia a entrenamientos complementa la asistencia regular. Sin duplicar información.</p>
                 </div>
               </div>
 
               <div class="flex gap-3">
                 <div class="shrink-0 w-9 h-9 rounded-lg bg-[#EFF8FF] flex items-center justify-center">
+                  <!-- Star -->
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155D88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Rendimiento individual</p>
-                  <p class="text-[12px] text-gray-500 leading-relaxed">Historial deportivo por jugador con evaluaciones del entrenador sesión por sesión.</p>
+                  <p class="font-semibold text-[#101828] text-[13px] mb-0.5">Evaluación por sesión</p>
+                  <p class="text-[12px] text-gray-500 leading-relaxed">Rating de 1 a 5 estrellas por jugador por sesión. Comentarios del entrenador. Historial que alimenta el perfil deportivo de cada alumno.</p>
                 </div>
               </div>
 
