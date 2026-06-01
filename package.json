@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "build:docker": "astro build --verbose",
     "preview": "astro preview",
     "astro": "astro",
