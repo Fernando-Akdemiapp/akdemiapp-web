@@ -11,8 +11,8 @@ const {
   satisfactionRate = 98,
 } = Astro.props;
 
-const displayTitle = "Cobra a tiempo. Enseña tranquilo.";
-const displaySubtitle = "Deja de perseguir pagos por WhatsApp y de adivinar cuánto te deben. AKDEMIApp cobra, recuerda y concilia por ti — para que tú vuelvas a tu academia.";
+const displayTitle = "El sistema operativo de tu academia.";
+const displaySubtitle = "Cobra a tiempo, organiza tus clases y mantén conectadas a tus familias — todo en una sola plataforma con IA, pensada para academias de LATAM.";
 
 const REGISTRO_URL = "https://app.akdemiapp.online/registro/academia";
 const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20AKDEMIApp";
@@ -20,61 +20,72 @@ const DEMO_LINK = "https://wa.me/50765726078?text=Hola%2C%20quiero%20agendar%20u
 
 <section
   id="hero"
-  class="relative overflow-hidden bg-gradient-to-b from-[#EFF8FF] via-[#f5faff] to-white pt-16"
+  class="relative overflow-hidden bg-white pt-16"
 >
-  <!-- Decorative blobs -->
-  <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-[#B9E0FB] rounded-full filter blur-[100px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-  <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-[#399ABE] rounded-full filter blur-[100px] opacity-10 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-
-  <!-- Hero content — centrado -->
+  <!-- Hero content -->
   <div
-    class="relative z-10 max-w-4xl mx-auto px-6 pt-16 pb-12 text-center"
+    class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12"
     transition:animate={fade({ duration: "0.6s" })}
   >
-    <!-- Badge -->
-    <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
-      14 días gratis — sin tarjeta de crédito
-    </div>
+    <!-- Two-column row: texto + imagen -->
+    <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <!-- Columna izquierda — texto -->
+      <div class="text-center md:text-left">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-1.5 bg-[#EFF8FF] border border-[#B9E0FB] text-[#155D88] text-xs font-semibold px-3.5 py-1.5 rounded-full mb-7">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#399ABE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          14 días gratis — sin tarjeta de crédito
+        </div>
 
-    <!-- Título -->
-    <h1 class="text-4xl sm:text-5xl lg:text-[3.6rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
-      {displayTitle}
-    </h1>
+        <!-- Título -->
+        <h1 class="text-4xl sm:text-5xl lg:text-[3.6rem] font-extrabold text-[#101828] leading-[1.08] tracking-[-0.03em] mb-5">
+          {displayTitle}
+        </h1>
 
-    <!-- Subtítulo -->
-    <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto mb-9">
-      {displaySubtitle}
-    </p>
+        <!-- Subtítulo -->
+        <p class="text-lg sm:text-xl text-gray-500 font-normal leading-relaxed max-w-2xl mx-auto md:mx-0 mb-9">
+          {displaySubtitle}
+        </p>
 
-    <!-- Social proof -->
-    <p class="text-sm text-gray-400 text-center mb-9">
-      Construido tras visitar +500 academias en LATAM
-    </p>
+        <!-- Social proof -->
+        <p class="text-sm text-gray-400 text-center md:text-left mb-9">
+          Construido tras visitar +500 academias en LATAM
+        </p>
 
-    <!-- Botones -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
-      <a
-        href={REGISTRO_URL}
-        class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
-      >
-        Empieza gratis
-      </a>
+        <!-- Botones -->
+        <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
+          <a
+            href={REGISTRO_URL}
+            class="flex items-center gap-2.5 bg-[#155D88] hover:bg-[#124e75] text-white font-semibold text-[15px] px-7 py-3.5 rounded-xl shadow-lg shadow-[#155D88]/25 transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+          >
+            Empieza gratis
+          </a>
 
-      <a
-        href={DEMO_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
-      >
-        Ver cómo funciona
-      </a>
+          <a
+            href={DEMO_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium text-[15px] px-6 py-3.5 rounded-xl border border-gray-200 transition-all duration-200 w-full sm:w-auto justify-center"
+          >
+            Ver cómo funciona
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha — imagen -->
+      <div class="flex justify-center">
+        <img
+          src="/images/hero-mockup.png"
+          alt="AKDEMIApp funcionando en laptop, tablet y teléfono"
+          class="max-w-full h-auto"
+        />
+      </div>
     </div>
 
     <!-- Video — ancho completo, pegado hacia abajo estilo Notion -->
-    <div class="relative mx-auto max-w-5xl -mb-1">
+    <div class="relative mx-auto max-w-5xl -mb-1 mt-16">
       <div class="rounded-t-2xl overflow-hidden shadow-2xl shadow-[#155D88]/15 border border-[#155D88]/10 border-b-0">
         <video
           autoplay
