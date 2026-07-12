@@ -1,0 +1,82 @@
+---
+/**
+ * AcademyLogosStrip — static "Academias de toda Latinoamérica" social-proof strip.
+ *
+ * Static replacement for the Strapi-driven LogoCarousel on the home page. The
+ * original client logo images (admin.akdemiapp.com) are permanently lost, so the
+ * client academies are rendered as text wordmarks instead of images. Fully static:
+ * no Strapi call, no external image requests. Visual treatment (bg, edge fades,
+ * infinite marquee, caption) mirrors the original LogoCarousel.
+ */
+import { academies } from "@/data/academies";
+---
+
+<section class="relative pt-4 pb-12 overflow-hidden bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative">
+      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+
+      <div class="academy-track">
+        <div class="academy-content">
+          {academies.map((a) => (
+            <div class="academy-item"><span class="academy-wordmark">{a.name}</span></div>
+          ))}
+          {academies.map((a) => (
+            <div class="academy-item" aria-hidden="true"><span class="academy-wordmark">{a.name}</span></div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-sm text-gray-400 mt-8">Academias de toda Latinoamérica</p>
+  </div>
+</section>
+
+<style>
+  .academy-track {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .academy-content {
+    display: flex;
+    animation: academyScroll 40s linear infinite;
+    will-change: transform;
+    flex-shrink: 0;
+  }
+  .academy-item {
+    flex: 0 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+  }
+  .academy-wordmark {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: #94a3b8;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  .academy-wordmark:hover {
+    color: #155d88;
+  }
+  .academy-track:hover .academy-content {
+    animation-play-state: paused;
+  }
+  @keyframes academyScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  @media (max-width: 768px) {
+    .academy-item { min-width: 150px; padding: 0 1.5rem; }
+    .academy-content { animation-duration: 28s; }
+  }
+  @media (max-width: 480px) {
+    .academy-item { min-width: 120px; padding: 0 1rem; }
+  }
+</style>
