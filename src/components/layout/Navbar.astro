@@ -1,11 +1,5 @@
 ---
-import { getSettings } from "../../services/settings";
-import { getStrapiMedia } from "../../lib/api";
-
-const settings = await getSettings();
-const logoUrl = settings?.navbar?.logo
-  ? getStrapiMedia(settings.navbar.logo.url)
-  : "/AKDEMIApp-Logo.png";
+const logoUrl = "/AKDEMIApp-Logo.png";
 
 const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20vi%20AKDEMIApp%20y%20me%20interesa%20una%20demostraci%C3%B3n%20para%20mi%20academia";
 const LOGIN_URL = "https://app.akdemiapp.online/login";
