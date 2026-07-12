@@ -1,5 +1,11 @@
 ---
-const logoUrl = "/AKDEMIApp-Logo.png";
+import { getSettings } from "@/services/settings";
+import { getStrapiMedia } from "@/lib/api";
+
+const settings = await getSettings();
+const logoUrl = settings?.footer?.logo
+  ? getStrapiMedia(settings.footer.logo.url)
+  : "/AKDEMIApp-Logo.png";
 
 const currentYear = new Date().getFullYear();
 const WA_LINK = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20una%20demo%20de%20AKDEMIApp";
