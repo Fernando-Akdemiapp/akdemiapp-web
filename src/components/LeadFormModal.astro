@@ -124,11 +124,11 @@
 }
 #akdemi-modal-root .overlay {
   position: fixed; inset: 0; z-index: 9999;
-  background: rgba(15,23,42,.55);
+  background: rgba(15,23,42,.55); backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center; padding: 16px;
-  opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s ease, visibility .3s ease;
+  opacity: 0; pointer-events: none; transition: opacity .3s ease;
 }
-#akdemi-modal-root .overlay.open { opacity: 1; visibility: visible; pointer-events: all; backdrop-filter: blur(8px); }
+#akdemi-modal-root .overlay.open { opacity: 1; pointer-events: all; }
 #akdemi-modal-root .modal {
   width: 100%; max-width: 520px; background: #fff;
   border: 1px solid rgba(0,0,0,.08); border-radius: 24px;
