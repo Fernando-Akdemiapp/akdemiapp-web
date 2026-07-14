@@ -1,5 +1,5 @@
 ---
-const LOGIN_URL = "https://app.akdemiapp.online/login";
+const SIGNUP_URL = "https://app.akdemiapp.online/registro/academia";
 const WA_ENT = "https://wa.me/50765726078?text=Hola%2C%20me%20interesa%20el%20plan%20Enterprise%20de%20AKDEMIApp%20para%20mi%20organizaci%C3%B3n";
 
 interface PlanTopBadge { text: string; classes: string; }
@@ -223,7 +223,7 @@ const plans: Plan[] = [
           </div>
 
           <!-- CTA -->
-          <a href={LOGIN_URL} class={`block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 ${plan.ctaExtra}`}>
+          <a href={SIGNUP_URL} class={`block w-full text-center py-2.5 px-4 rounded-xl text-[13px] font-bold transition-all duration-150 mb-4 ${plan.ctaExtra}`}>
             {plan.ctaText}
           </a>
 
