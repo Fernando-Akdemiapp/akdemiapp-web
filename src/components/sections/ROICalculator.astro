@@ -114,7 +114,7 @@
 
         <!-- Summary sentence -->
         <p id="roi-summary" class="text-center text-[14px] text-gray-600 mb-7 leading-relaxed">
-          Con AKDEMIApp a <strong class="text-[#155D88]">costo $0</strong>, tu inversión se recupera en los primeros días.
+          Con AKDEMIApp desde <strong class="text-[#155D88]">$39/mes</strong>, recuperar un solo cobro atrasado ya paga tu suscripción.
         </p>
 
         <!-- CTA -->
@@ -186,13 +186,6 @@
 
       var revealed = false;
 
-      function getPrice(n) {
-        if (n <= 30) return 'costo $0';
-        if (n <= 100) return '$39/mes';
-        if (n <= 250) return '$59/mes';
-        return '$89/mes';
-      }
-
       function fmt(n) {
         return n.toLocaleString('en-US');
       }
@@ -210,9 +203,8 @@
         r3.textContent = Math.round(alumnos * 0.4);
 
         summary.innerHTML =
-          'Con AKDEMIApp a <strong style="color:#155D88">' +
-          getPrice(alumnos) +
-          '</strong>, tu inversión se recupera en los primeros días.';
+          'Con AKDEMIApp desde <strong style="color:#155D88">$39/mes</strong>, ' +
+          'recuperar un solo cobro atrasado ya paga tu suscripción.';
 
         if (!revealed) {
           revealed = true;
