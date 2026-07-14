@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/academias/arte", "destination": "/academia-teatro", "statusCode": 301 },
+    { "source": "/academias/artes-marciales", "destination": "/academia-artes-marciales", "statusCode": 301 },
+    { "source": "/academias/danza", "destination": "/academia-danzas", "statusCode": 301 },
+    { "source": "/academias/futbol", "destination": "/academia-futbol", "statusCode": 301 }
+  ]
+}
